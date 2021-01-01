@@ -47,6 +47,7 @@ libbf::login_cookie libbf::login_cookie::login(std::string email,
     throw libbf::login_failed_exception();
 
   auto a = libbf::login_cookie();
-  a.cookie_value = r.cookies["CakeCookie[Customer]"];
+  a.customer_value = r.cookies["CakeCookie[Customer]"];
+  a.cakephp_value = r.cookies["CAKEPHP"];
   return a;
 }
