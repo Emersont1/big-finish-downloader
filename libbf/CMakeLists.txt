@@ -7,6 +7,8 @@ include_directories(
 
 add_library(bf
     src/login.cpp
+    src/downloads.cpp
+    src/downloads_scraper.cpp
 )
 
 target_link_libraries(bf

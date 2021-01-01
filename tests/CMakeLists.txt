@@ -9,3 +9,6 @@ add_executable(json_test json_test.cpp)
 
 add_executable(login_test login_test.cpp)
 target_link_libraries(login_test bf)
+
+add_executable(downloads_test downloads_test.cpp)
+target_link_libraries(downloads_test bf)
