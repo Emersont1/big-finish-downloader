@@ -11,4 +11,5 @@ add_library(bf
 
 target_link_libraries(bf
     CONAN_PKG::cpr
+    CONAN_PKG::tinyxml2
 )
