@@ -6,7 +6,6 @@ pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/libbf/include
-    ${CMAKE_SOURCE_DIR}/libbf-gui/include
 
     ${CMAKE_BINARY_DIR}
     ${GTK3_INCLUDE_DIRS}
@@ -23,8 +22,5 @@ target_link_libraries(downloads_test bf)
 add_executable(download_file_test download_file_test.cpp)
 target_link_libraries(download_file_test bf)
 
-add_executable(secret_store_test secret_store_test.cpp)
-target_link_libraries(secret_store_test bf-gui)
-
 add_executable(glade_login_test glade_login_test.cpp)
-target_link_libraries(glade_login_test bf-gui ${GTK3_LIBRARIES})
+target_link_libraries(glade_login_test ${GTK3_LIBRARIES})

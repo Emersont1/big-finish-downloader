@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.38.2 -->
+<interface>
+  <requires lib="gtk+" version="3.24"/>
+  <object class="GtkListStore" id="downloaded">
+    <columns>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+      <!-- column-name gboolean1 -->
+      <column type="gboolean"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">fsd</col>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">fdsafdsafd</col>
+        <col id="1">True</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkApplicationWindow" id="downloader">
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <!-- n-columns=2 n-rows=3 -->
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="xpad">20</property>
+                <property name="ypad">20</property>
+                <property name="pixbuf">../../small.jpg</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+                <property name="height">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">False</property>
+                <property name="label" translatable="yes">Downloading: The Chimes of Midnight</property>
+                <property name="yalign">1</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkProgressBar">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="valign">baseline</property>
+                <property name="margin-start">5</property>
+                <property name="margin-end">5</property>
+                <property name="hexpand">True</property>
+                <property name="fraction">0.48999999999999999</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="label" translatable="yes">words</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="halign">start</property>
+            <property name="valign">baseline</property>
+            <property name="hexpand">True</property>
+            <property name="xpad">5</property>
+            <property name="label" translatable="yes">Downloading</property>
+            <property name="xalign">0</property>
+            <property name="yalign">1</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="padding">3</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-top">2</property>
+            <property name="margin-bottom">2</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="shadow-type">in</property>
+            <child>
+              <object class="GtkTreeView">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="vexpand">True</property>
+                <property name="model">downloading</property>
+                <property name="search-column">0</property>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="title" translatable="yes">column</property>
+                    <child>
+                      <object class="GtkCellRendererText"/>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-top">2</property>
+            <property name="margin-bottom">2</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="valign">baseline</property>
+            <property name="xpad">6</property>
+            <property name="label" translatable="yes">Downloaded:</property>
+            <property name="xalign">0</property>
+            <property name="yalign">1</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="padding">2</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="shadow-type">in</property>
+            <child>
+              <object class="GtkTreeView">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="vexpand">True</property>
+                <property name="model">downloaded</property>
+                <property name="search-column">0</property>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="title" translatable="yes">column</property>
+                    <child>
+                      <object class="GtkCellRendererText"/>
+                      <attributes>
+                        <attribute name="text">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-top">2</property>
+            <property name="margin-bottom">2</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">9</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="xpad">5</property>
+            <property name="label" translatable="yes">Logged in as peter@peterhenryemerson.co.uk</property>
+            <property name="xalign">1</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">10</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkListStore" id="downloading">
+    <columns>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+      <!-- column-name gboolean1 -->
+      <column type="gboolean"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">fsd</col>
+        <col id="1">True</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">fdsafdsafd</col>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes"/>
+        <col id="1">False</col>
+      </row>
+    </data>
+  </object>
+</interface>

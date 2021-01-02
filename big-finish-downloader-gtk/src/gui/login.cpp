@@ -1,10 +1,11 @@
 #include <iostream>
 
-#include <ui/login.hpp>
+#include <libbf/gui/secret_storage.hpp>
+#include <libbf/gui/modules/login.hpp>
 
 #include <glade_login.hpp>
 
-ui::login::login() {
+libbf::gui::login::login() {
   GtkBuilder * builder = gtk_builder_new();
 
   gtk_builder_add_from_string(builder, (const gchar *) GLADE_LOGIN_STR.data(),
@@ -28,14 +29,20 @@ ui::login::login() {
                    this);
 
   g_object_unref(builder);
+
+  gtk_widget_show(window); 
 }
 
-void ui::login::ok_button_activate_cb(GtkWidget * sender, void * d) {
-  ui::login * l = (ui::login *) d;
-  l->cookie = libbf::login_cookie::login(std::string(gtk_entry_get_text((GtkEntry *) l->email_input)), gtk_entry_get_text((GtkEntry *) l->password_input));
+void libbf::gui::login::ok_button_activate_cb(GtkWidget * sender, void * d) {
+  libbf::gui::login * l = (libbf::gui::login *) d;
+  l->cookie = libbf::login_cookie::login(
+      std::string(gtk_entry_get_text((GtkEntry *) l->email_input)),
+      gtk_entry_get_text((GtkEntry *) l->password_input));
+      libbf::gui::store(l->cookie);
+
 }
 
-void ui::login::cancel_button_activate_cb(GtkWidget * sender, void * d) {
-      ui::login * l = (ui::login *) d;
+void libbf::gui::login::cancel_button_activate_cb(GtkWidget * sender, void * d) {
+  libbf::gui::login * l = (libbf::gui::login *) d;
   gtk_widget_destroy(l->window);
 }

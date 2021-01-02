@@ -1,8 +1,7 @@
-#include <ui/login.hpp>
+#include <libbf/gui/modules/login.hpp>
 
 int main(int argc, char ** argv) {
   gtk_init(&argc, &argv);
-  ui::login x;
-  x.show();
+  libbf::gui::login x;
   gtk_main();
 }

@@ -1,8 +1,9 @@
-#include <gtk/gtk.h>
-
+#pragma once
 #include <libbf/login_cookie.hpp>
 
-namespace ui {
+#include <gtk/gtk.h>
+
+namespace libbf::gui {
 class login {
   GtkWidget * ok_button;
   GtkWidget * cancel_button;
@@ -17,6 +18,5 @@ class login {
 
 public:
   login();
-  void show() { gtk_widget_show(window); }
 };
 } // namespace ui
