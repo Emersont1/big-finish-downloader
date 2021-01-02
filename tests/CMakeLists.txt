@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/libbf/include
+    ${CMAKE_SOURCE_DIR}/libbf-gui/include
 )
 
 add_executable(json_test json_test.cpp)
@@ -15,3 +16,6 @@ target_link_libraries(downloads_test bf)
 
 add_executable(download_file_test download_file_test.cpp)
 target_link_libraries(download_file_test bf)
+
+add_executable(secret_store_test secret_store_test.cpp)
+target_link_libraries(secret_store_test bf-gui)

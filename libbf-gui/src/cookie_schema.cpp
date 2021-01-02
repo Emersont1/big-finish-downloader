@@ -1,0 +1,17 @@
+#include <libbf/gui/secret_storage.hpp>
+
+#include <libsecret/secret.h>
+
+const SecretSchema * cookie_schema(void) G_GNUC_CONST;
+
+const SecretSchema * cookie_schema(void) {
+  static const SecretSchema the_schema = {
+      "uk.et1.BigFinishLogin",
+      SECRET_SCHEMA_NONE,
+      {
+          {"CakePHP", SECRET_SCHEMA_ATTRIBUTE_STRING},
+          {"email", SECRET_SCHEMA_ATTRIBUTE_STRING},
+          {"NULL", SECRET_SCHEMA_ATTRIBUTE_STRING},
+      }};
+  return &the_schema;
+}
