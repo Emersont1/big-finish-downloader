@@ -8,16 +8,16 @@
 
 namespace libbf {
 class download {
+public:
   std::string      name;
   std::uint32_t    download_number;
-  bool             m4b_availible;
-  std::vector<int> supplementary_media;
+  bool             m4b_available;
+  std::vector<std::pair<std::string,int>> supplementary_media;
 
-public:
-  download(std::string name, std::uint32_t download_number, bool m4b_availible,
-           std::vector<int> supplementary_media)
+  download(std::string name, std::uint32_t download_number, bool m4b_available,
+           std::vector<std::pair<std::string,int>> supplementary_media)
       : name(name), download_number(download_number),
-        m4b_availible(m4b_availible), supplementary_media(supplementary_media) {
+        m4b_available(m4b_available), supplementary_media(supplementary_media) {
   }
 
   void download_mp3(

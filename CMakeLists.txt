@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD 17)
 include(${CMAKE_SOURCE_DIR}/pmm.cmake)
 pmm(CONAN DEBUG)
 
+add_subdirectory(lexbor)
+
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
