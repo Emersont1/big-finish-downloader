@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include <libbf/gui/secret_storage.hpp>
 #include <libbf/gui/modules/login.hpp>
+#include <libbf/gui/secret_storage.hpp>
 
 #include <glade_login.hpp>
 
@@ -30,7 +30,7 @@ libbf::gui::login::login() {
 
   g_object_unref(builder);
 
-  gtk_widget_show(window); 
+  gtk_widget_show(window);
 }
 
 void libbf::gui::login::ok_button_activate_cb(GtkWidget * sender, void * d) {
@@ -38,11 +38,11 @@ void libbf::gui::login::ok_button_activate_cb(GtkWidget * sender, void * d) {
   l->cookie = libbf::login_cookie::login(
       std::string(gtk_entry_get_text((GtkEntry *) l->email_input)),
       gtk_entry_get_text((GtkEntry *) l->password_input));
-      libbf::gui::store(l->cookie);
-
+  libbf::gui::store(l->cookie);
 }
 
-void libbf::gui::login::cancel_button_activate_cb(GtkWidget * sender, void * d) {
+void libbf::gui::login::cancel_button_activate_cb(GtkWidget * sender,
+                                                  void *      d) {
   libbf::gui::login * l = (libbf::gui::login *) d;
   gtk_widget_destroy(l->window);
 }

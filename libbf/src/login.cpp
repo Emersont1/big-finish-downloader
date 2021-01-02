@@ -13,15 +13,15 @@ libbf::login_cookie libbf::login_cookie::login(std::string email,
                                                std::string password,
                                                bool        remember_me) {
 
-  cpr::Response r = cpr::Post(
-      cpr::Url{"https://www.bigfinish.com/customers/login"},
-      cpr::Payload{{"_method", "POST"},
-                   {"data[post_action]", "login"},
-                   {"data[Customer][email_address]", email},
-                   {"data[Customer][password]", password},
-                   {"data[remember_me]", "1"}});
+  cpr::Response r =
+      cpr::Post(cpr::Url{"https://www.bigfinish.com/customers/login"},
+                cpr::Payload{{"_method", "POST"},
+                             {"data[post_action]", "login"},
+                             {"data[Customer][email_address]", email},
+                             {"data[Customer][password]", password},
+                             {"data[remember_me]", "1"}});
 
-  if (r.text.find("You have successfully logged in.") == std::string::npos) 
+  if (r.text.find("You have successfully logged in.") == std::string::npos)
     throw libbf::login_failed_exception();
 
   auto a = libbf::login_cookie(email, r.cookies["CakeCookie[Customer]"],

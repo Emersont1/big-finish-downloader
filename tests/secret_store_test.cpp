@@ -1,6 +1,7 @@
 #include <libbf/gui/secret_storage.hpp>
 
-// relies on exports from big-finish-downloader-gtk as its currently not in its own library
+// relies on exports from big-finish-downloader-gtk as its currently not in its
+// own library
 // TODO: make a drop-in cross platform secret storage library libbf-secrets
 
 int main(int argc, char ** argv) {
