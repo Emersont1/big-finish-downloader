@@ -10,6 +10,12 @@ class login_cookie {
   std::string customer_value;
 
 public:
+  login_cookie() = default;
+  login_cookie(std::string email, std::string cakephp_value,
+               std::string customer_value)
+      : email(email), cakephp_value(cakephp_value),
+        customer_value(customer_value) {}
+
   static login_cookie   login(std::string email, std::string password,
                               bool remember_me = true);
   friend std::ostream & operator<<(std::ostream & os, const login_cookie & l);

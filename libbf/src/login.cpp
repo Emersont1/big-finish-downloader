@@ -24,17 +24,14 @@ libbf::login_cookie libbf::login_cookie::login(std::string email,
   if (r.text.find("You have successfully logged in.") == std::string::npos)
     throw libbf::login_failed_exception();
 
-  auto a = libbf::login_cookie();
-  a.email = email;
-  a.customer_value = r.cookies["CakeCookie[Customer]"];
-  a.cakephp_value = r.cookies["CAKEPHP"];
+  auto a = libbf::login_cookie(email, r.cookies["CakeCookie[Customer]"],
+                               r.cookies["CAKEPHP"]);
   return a;
 }
 
 libbf::login_cookie libbf::login_cookie::example() {
-  auto a = libbf::login_cookie();
-  a.email = "the_doctor@tardis.vortex";
-  a.customer_value = "long cookie of lots of random stuff";
-  a.cakephp_value = "short cookie";
+  auto a = libbf::login_cookie("the_doctor@tardis.vortex",
+                               "long cookie of lots of random stuff",
+                               "short cookie");
   return a;
 }
