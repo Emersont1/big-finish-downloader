@@ -9,8 +9,7 @@ const SecretSchema * cookie_schema(void) {
       "uk.et1.BigFinishLogin",
       SECRET_SCHEMA_NONE,
       {
-          {"CakePHP", SECRET_SCHEMA_ATTRIBUTE_STRING},
-          {"email", SECRET_SCHEMA_ATTRIBUTE_STRING},
+          {"site", SECRET_SCHEMA_ATTRIBUTE_STRING},
           {"NULL", SECRET_SCHEMA_ATTRIBUTE_STRING},
       }};
   return &the_schema;
