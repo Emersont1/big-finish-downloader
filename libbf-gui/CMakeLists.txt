@@ -4,6 +4,10 @@ cmake_minimum_required(VERSION 3.10)
 find_package(PkgConfig REQUIRED)
 pkg_search_module(LIBSECRET REQUIRED libsecret-1)
 
+include(${CMAKE_SOURCE_DIR}/bin2h.cmake)
+
+bin2h(SOURCE_FILE "glade/Login.glade" HEADER_FILE "${CMAKE_BINARY_DIR}/glade_login.hpp" VARIABLE_NAME "glade_login_str")
+
 
 include_directories(
     include
