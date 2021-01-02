@@ -26,6 +26,7 @@ add_executable(big-finish-downloader-gtk
     src/libsecret/secret_storage.cpp
     src/gui/login.cpp
     src/gui/main_window/init.cpp
+    src/gui/main_window/callbacks/close.cpp
 
     ${CMAKE_BINARY_DIR}/glade_login.hpp
     ${CMAKE_BINARY_DIR}/glade_main.hpp

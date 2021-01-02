@@ -12,6 +12,8 @@ class main_window {
 
   libbf::login_cookie cookie;
 
+  static void close_cb(GtkWidget *, void *);
+
 public:
   main_window();
 };

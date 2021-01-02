@@ -14,6 +14,9 @@ libbf::gui::main_window::main_window(){
   window = GTK_WIDGET(gtk_builder_get_object(builder, "downloader"));
   gtk_builder_connect_signals(builder, NULL);
 
+  g_signal_connect(window, "destroy", G_CALLBACK(&close_cb),
+                   this);
+
     g_object_unref(builder);
 
   gtk_widget_show(window); 
