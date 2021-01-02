@@ -12,3 +12,6 @@ target_link_libraries(login_test bf)
 
 add_executable(downloads_test downloads_test.cpp)
 target_link_libraries(downloads_test bf)
+
+add_executable(download_file_test download_file_test.cpp)
+target_link_libraries(download_file_test bf)
