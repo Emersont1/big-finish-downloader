@@ -9,28 +9,6 @@
 #include <libbf/exceptions.hpp>
 #include <libbf/login_cookie.hpp>
 
-std::string url_encode(std::string & value) {
-  std::ostringstream escaped;
-  escaped.fill('0');
-  escaped << std::hex;
-
-  for (auto c : value) {
-
-    // Keep alphanumeric and other accepted characters intact
-    if (std::isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
-      escaped << c;
-      continue;
-    }
-
-    // Any other characters are percent-encoded
-    escaped << std::uppercase;
-    escaped << '%' << std::setw(2) << int((unsigned char) c);
-    escaped << std::nouppercase;
-  }
-
-  return escaped.str();
-}
-
 libbf::login_cookie libbf::login_cookie::login(std::string email,
                                                std::string password,
                                                bool        remember_me) {
@@ -47,7 +25,16 @@ libbf::login_cookie libbf::login_cookie::login(std::string email,
     throw libbf::login_failed_exception();
 
   auto a = libbf::login_cookie();
+  a.email = email;
   a.customer_value = r.cookies["CakeCookie[Customer]"];
   a.cakephp_value = r.cookies["CAKEPHP"];
+  return a;
+}
+
+libbf::login_cookie libbf::login_cookie::example() {
+  auto a = libbf::login_cookie();
+  a.email = "the_doctor@tardis.vortex";
+  a.customer_value = "long cookie of lots of random stuff";
+  a.cakephp_value = "short cookie";
   return a;
 }
