@@ -17,4 +17,4 @@ class main_window {
 public:
   main_window();
 };
-} // namespace ui
+} // namespace libbf::gui

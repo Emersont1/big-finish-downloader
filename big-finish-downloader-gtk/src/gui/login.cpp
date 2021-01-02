@@ -35,14 +35,15 @@ libbf::gui::login::login() {
 
 void libbf::gui::login::ok_button_activate_cb(GtkWidget * sender, void * d) {
   libbf::gui::login * l = (libbf::gui::login *) d;
-  l->cookie = libbf::login_cookie::login(
-      std::string(gtk_entry_get_text((GtkEntry *) l->email_input)),
-      gtk_entry_get_text((GtkEntry *) l->password_input));
-  libbf::gui::store(l->cookie);
+  l->email = std::string(gtk_entry_get_text((GtkEntry *) l->email_input));
+  l->password = std::string(gtk_entry_get_text((GtkEntry *) l->password_input));
+  gtk_widget_destroy(l->window);
+  gtk_main_quit();
 }
 
 void libbf::gui::login::cancel_button_activate_cb(GtkWidget * sender,
                                                   void *      d) {
   libbf::gui::login * l = (libbf::gui::login *) d;
   gtk_widget_destroy(l->window);
+  gtk_main_quit();
 }

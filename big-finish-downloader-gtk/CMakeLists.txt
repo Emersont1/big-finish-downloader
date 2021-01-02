@@ -24,6 +24,7 @@ add_executable(big-finish-downloader-gtk
     src/main.cpp
     src/libsecret/cookie_schema.cpp
     src/libsecret/secret_storage.cpp
+    src/gui/alert_box.cpp
     src/gui/login.cpp
     src/gui/main_window/init.cpp
     src/gui/main_window/callbacks/close.cpp
