@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.10)
 
 include_directories(
     include
-    ${CMAKE_SOURCE_DIR}/lexbor/source
+    ${CMAKE_SOURCE_DIR}/ext/lexbor/source
+    ${CMAKE_SOURCE_DIR}/ext/cpr/include
 )
 
 add_library(bf
@@ -14,6 +15,6 @@ add_library(bf
 )
 
 target_link_libraries(bf
-    CONAN_PKG::cpr
+    cpr
     lexbor
 )
