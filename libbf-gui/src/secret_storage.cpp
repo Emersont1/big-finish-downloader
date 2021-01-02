@@ -11,8 +11,8 @@ void libbf::gui::store(libbf::login_cookie l) {
   GError *       error = nullptr;
   nlohmann::json j = l;
   secret_password_store_sync(cookie_schema(), SECRET_COLLECTION_DEFAULT,
-                             "Big Finish Login", j.dump().c_str(), nullptr, &error, "site",
-                             "bigfinish.com",  nullptr);
+                             "Big Finish Login", j.dump().c_str(), nullptr,
+                             &error, "site", "bigfinish.com", nullptr);
 
   if (error != nullptr) {
     g_error_free(error);

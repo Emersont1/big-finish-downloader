@@ -15,4 +15,6 @@ conan_basic_setup()
 add_subdirectory(libbf)
 add_subdirectory(libbf-gui)
 
+add_subdirectory(big-finish-downloader-gtk)
+
 add_subdirectory(tests)

@@ -21,8 +21,10 @@ libbf::login_cookie libbf::login_cookie::login(std::string email,
                    {"data%5BCustomer%5D%5Bpassword%5D", password},
                    {"data%5Bremember_me%5D", remember_me ? "1" : "0"}});
 
-  if (r.text.find("You have successfully logged in.") == std::string::npos)
+  if (r.text.find("You have successfully logged in.") == std::string::npos){
+    std::cerr << r.text << std::endl;
     throw libbf::login_failed_exception();
+  }
 
   auto a = libbf::login_cookie(email, r.cookies["CakeCookie[Customer]"],
                                r.cookies["CAKEPHP"]);
