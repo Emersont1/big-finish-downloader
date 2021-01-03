@@ -25,12 +25,14 @@ public:
     internal_thread = std::move(std::thread(f, this, getter));
   }
 
-  ~async_getter(){
-     if(internal_thread.joinable())internal_thread.join();
+  ~async_getter() {
+    if (internal_thread.joinable())
+      internal_thread.join();
   }
 
   void update() {
-    if(is_ready&&internal_thread.joinable())internal_thread.join();
+    if (is_ready && internal_thread.joinable())
+      internal_thread.join();
     was_ready = is_ready;
   }
 

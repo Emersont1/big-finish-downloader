@@ -9,7 +9,9 @@ include(${CMAKE_SOURCE_DIR}/bin2h.cmake)
 
 bin2h(SOURCE_FILE "glade/Login.glade" HEADER_FILE "${CMAKE_BINARY_DIR}/glade_login.hpp" VARIABLE_NAME "glade_login_str")
 bin2h(SOURCE_FILE "glade/Main.glade" HEADER_FILE "${CMAKE_BINARY_DIR}/glade_main.hpp" VARIABLE_NAME "glade_main_str")
+bin2h(SOURCE_FILE "glade/Preferences.glade" HEADER_FILE "${CMAKE_BINARY_DIR}/glade_prefs.hpp" VARIABLE_NAME "glade_prefs_str")
 
+include(${CMAKE_SOURCE_DIR}/gsettings.cmake)
 
 include_directories(
     include
@@ -29,6 +31,9 @@ add_executable(big-finish-downloader-gtk
     src/gui/main_window/init.cpp
     src/gui/main_window/update_func.cpp
     src/gui/main_window/callbacks/close.cpp
+    src/gui/main_window/callbacks/preferences.cpp
+    src/gui/preferences_window/init.cpp
+    src/gui/preferences_window/callbacks.cpp
 
     ${CMAKE_BINARY_DIR}/glade_login.hpp
     ${CMAKE_BINARY_DIR}/glade_main.hpp
@@ -41,3 +46,5 @@ target_link_libraries(big-finish-downloader-gtk
     pthread
     dl
 )
+
+add_schemas(big-finish-downloader-gtk "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<schemalist>
+
+  <schema path="/uk/et1/big-finish/" id="uk.et1.big-finish">
+
+    <key name='prefer-m4b' type='b'>
+      <default>true</default>
+      <summary>Download M4Bs by Default</summary>
+      <description>
+        When Enabled:
+          Will download the M4B version of a title when it is availible
+        When Disabled
+          Will download the MP3 version of a title
+      </description>
+    </key>
+
+    <key name='fallback-mp3' type='b'>
+      <default>true</default>
+      <summary>Download MP3s when M4Bs are unavailible</summary>
+      <description>
+        Has No effect when "Download M4Bs by Default" is enabled
+        When Enabled:
+          Will download the MP3 version of a title when an M4B version is availible
+        When Disabled
+          Will not download titles when no M4B version is unavailible
+        Note: I think this only affects the podcasts
+      </description>
+    </key>
+
+    <key name='download-extras' type='b'>
+      <default>true</default>
+      <summary>Downloads extras from titles</summary>
+      <description>
+        Some titles have extras bundled, this will download them alongside the audiobooks
+      </description>
+    </key>
+
+    <key name='download-directory' type='s'>
+      <default>"~/Music"</default>
+      <summary>Downloads extras from titles</summary>
+      <description>
+        Some titles have extras bundled, this will download them alongside the audiobooks
+      </description>
+    </key>
+
+  </schema>
+
+</schemalist>

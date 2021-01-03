@@ -6,7 +6,7 @@ const SecretSchema * cookie_schema(void) G_GNUC_CONST;
 
 const SecretSchema * cookie_schema(void) {
   static const SecretSchema the_schema = {
-      "uk.et1.BigFinishLogin",
+      "uk.et1.big-finish.login",
       SECRET_SCHEMA_NONE,
       {
           {"site", SECRET_SCHEMA_ATTRIBUTE_STRING},

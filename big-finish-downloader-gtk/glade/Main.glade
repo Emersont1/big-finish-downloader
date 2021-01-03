@@ -24,6 +24,7 @@
   </object>
   <object class="GtkApplicationWindow" id="downloader">
     <property name="can-focus">False</property>
+    <property name="show-menubar">False</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
@@ -37,7 +38,7 @@
             <property name="subtitle" translatable="yes">Version 0.1</property>
             <property name="show-close-button">True</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="pref_button">
                 <property name="label">gtk-preferences</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
