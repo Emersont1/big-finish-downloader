@@ -48,10 +48,11 @@ libbf::gui::preferences_window::preferences_window() {
                         g_settings_get_string(settings, "download-directory"))
                            .c_str());
 
-  cancel_button = GTK_WIDGET(gtk_builder_get_object(builder, "cancel_button"));
-
+  g_signal_connect(browse_button, "clicked", G_CALLBACK(&change_dir_cb), this);
   g_signal_connect(cancel_button, "clicked", G_CALLBACK(&cancel_button_cb),
                    this);
+  g_signal_connect(logout_button, "clicked", G_CALLBACK(&logout_cb), this);
+  g_signal_connect(save_button, "clicked", G_CALLBACK(&save_button_cb), this);
   g_signal_connect(window, "destroy", G_CALLBACK(&cancel_button_cb), this);
 
   g_object_unref(builder);

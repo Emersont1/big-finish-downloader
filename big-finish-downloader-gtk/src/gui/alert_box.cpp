@@ -17,8 +17,8 @@ alert::Selection alert::show(std::string message, std::string title,
 
   gtk_widget_destroy(GTK_WIDGET(dialog));
   gtk_widget_destroy(GTK_WIDGET(parent));
-  while (g_main_context_iteration(nullptr, false))
-    ;
+  /*while (g_main_context_iteration(nullptr, false))
+    ;*/
 
   return selection;
 }
