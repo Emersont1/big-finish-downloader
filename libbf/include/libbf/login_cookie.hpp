@@ -17,9 +17,11 @@ public:
                std::string customer_value)
       : email(email), cakephp_value(cakephp_value),
         customer_value(customer_value) {}
+  bool valid();
 
-  static login_cookie   login(std::string email, std::string password,
-                              bool remember_me = true);
+  static login_cookie login(std::string email, std::string password,
+                            bool remember_me = true);
+
   friend std::ostream & operator<<(std::ostream & os, const login_cookie & l);
   friend void           to_json(nlohmann::json & j, const login_cookie & r);
   friend void           from_json(const nlohmann::json & j, login_cookie & r);

@@ -7,6 +7,7 @@
 #include <libbf/login_cookie.hpp>
 
 namespace libbf {
+typedef std::vector<class download> downloads_t;
 class download {
 public:
   std::string                              name;
@@ -24,7 +25,7 @@ public:
       libbf::login_cookie & cookie,
       std::filesystem::path output_directory = std::filesystem::path());
 
-  static std::vector<download> get_downloads(login_cookie & cookie);
+  static downloads_t get_downloads(login_cookie & cookie);
 };
 
 } // namespace libbf

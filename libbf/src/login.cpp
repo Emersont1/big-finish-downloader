@@ -24,8 +24,8 @@ libbf::login_cookie libbf::login_cookie::login(std::string email,
   if (r.text.find("You have successfully logged in.") == std::string::npos)
     throw libbf::login_failed_exception();
 
-  auto a = libbf::login_cookie(email, r.cookies["CakeCookie[Customer]"],
-                               r.cookies["CAKEPHP"]);
+  auto a = libbf::login_cookie(email, r.cookies["CAKEPHP"],
+                               r.cookies["CakeCookie[Customer]"]);
   return a;
 }
 
@@ -34,4 +34,12 @@ libbf::login_cookie libbf::login_cookie::example() {
                                "long cookie of lots of random stuff",
                                "short cookie");
   return a;
+}
+
+bool libbf::login_cookie::valid() {
+  cpr::Response r =
+      cpr::Get(cpr::Url{"https://www.bigfinish.com/customers/my_account/"},
+               cpr::Cookies{{"CakeCookie[Customer]", customer_value},
+                            {"CAKEPHP", cakephp_value}});
+  return r.status_code == 200;
 }
