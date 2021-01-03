@@ -7,4 +7,5 @@
 namespace libbf::gui {
 void                store(libbf::login_cookie);
 libbf::login_cookie retrieve();
+void                revoke();
 } // namespace libbf::gui

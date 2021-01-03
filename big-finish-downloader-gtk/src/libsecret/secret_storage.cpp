@@ -21,18 +21,18 @@ void libbf::gui::store(libbf::login_cookie l) {
 }
 
 libbf::login_cookie libbf::gui::retrieve() {
-  GError * error = NULL;
+  GError * error = nullptr;
 
   /* The attributes used to lookup the password should conform to the schema. */
-  gchar * password = secret_password_lookup_sync(cookie_schema(), NULL, &error,
-                                                 "site", "bigfinish.com", NULL);
+  gchar * password = secret_password_lookup_sync(
+      cookie_schema(), nullptr, &error, "site", "bigfinish.com", nullptr);
 
-  if (error != NULL) {
+  if (error != nullptr) {
     /* ... handle the failure here */
     g_error_free(error);
     throw libbf::gui::secret_not_found_exception();
 
-  } else if (password == NULL) {
+  } else if (password == nullptr) {
     throw libbf::gui::secret_not_found_exception();
 
   } else {
@@ -41,4 +41,10 @@ libbf::login_cookie libbf::gui::retrieve() {
     secret_password_free(password);
     return j;
   }
+}
+
+void libbf::gui::revoke() {
+  GError * error = nullptr;
+  secret_password_clear_sync(cookie_schema(), nullptr, &error, "site",
+                             "bigfinish.com", nullptr);
 }
