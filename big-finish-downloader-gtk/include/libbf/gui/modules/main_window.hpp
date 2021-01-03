@@ -19,6 +19,11 @@ class main_window {
   GtkWidget * status_bar;
   GtkWidget * window;
 
+  GtkListStore * list_downloading;
+  GtkListStore * list_downloaded;
+  GtkWidget *    view_downloading;
+  GtkWidget *    view_downloaded;
+
   GtkWidget * preferences_button;
 
   libbf::login_cookie cookie;

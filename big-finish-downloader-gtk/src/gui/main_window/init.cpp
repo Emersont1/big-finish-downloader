@@ -32,6 +32,13 @@ libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
       GTK_WIDGET(gtk_builder_get_object(builder, "pref_button"));
   g_signal_connect(preferences_button, "clicked", G_CALLBACK(&prefs_cb), this);
 
+  list_downloading =
+      (GtkListStore *) gtk_builder_get_object(builder, "downloading");
+  list_downloaded =
+      (GtkListStore *) gtk_builder_get_object(builder, "downloaded");
+  view_downloading =
+      GTK_WIDGET(gtk_builder_get_object(builder, "view_downloading"));
+
   g_object_unref(builder);
 
   gtk_widget_show(window);
