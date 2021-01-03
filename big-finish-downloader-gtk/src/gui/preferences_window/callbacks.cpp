@@ -70,12 +70,11 @@ void libbf::gui::preferences_window::change_dir_cb(GtkWidget * sender,
 
 void libbf::gui::preferences_window::logout_cb(GtkWidget * sender, void * d) {
   auto l = (libbf::gui::preferences_window *) d;
-  auto x = alert::show("Would you like to log out?\nIf so the problem will close",
-                  "Confirm Logout", alert::Style::Question,
-                  alert::Buttons::YesNo);
-                  std::cout << "here" << std::endl;
-          std::cout << (int)x<<std::endl<< (int)alert::Selection::Yes<<std::endl<< (int)alert::Selection::No<<std::endl;
-  if ( x == alert::Selection::Yes) {
+  auto x = alert::show(
+      "Would you like to log out?\nIf so the problem will close",
+      "Confirm Logout", alert::Style::Question, alert::Buttons::YesNo);
+
+  if (x == alert::Selection::Yes) {
     libbf::gui::revoke();
     gtk_widget_destroy(l->window);
     gtk_main_quit();
