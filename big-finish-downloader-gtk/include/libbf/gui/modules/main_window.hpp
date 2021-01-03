@@ -4,10 +4,8 @@
 
 namespace libbf::gui {
 class main_window {
-  GtkWidget * ok_button;
-  GtkWidget * cancel_button;
-  GtkWidget * email_input;
-  GtkWidget * password_input;
+  GtkWidget * title_bar;
+  GtkWidget * status_bar;
   GtkWidget * window;
 
   libbf::login_cookie cookie;
@@ -15,6 +13,6 @@ class main_window {
   static void close_cb(GtkWidget *, void *);
 
 public:
-  main_window();
+  main_window(libbf::login_cookie);
 };
 } // namespace libbf::gui

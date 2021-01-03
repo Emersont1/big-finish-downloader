@@ -43,6 +43,6 @@ int main(int argc, char ** argv) {
     }
   }
 
-  libbf::gui::main_window x;
+  libbf::gui::main_window x(c);
   gtk_main();
 }

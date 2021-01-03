@@ -6,8 +6,10 @@
     <columns>
       <!-- column-name name -->
       <column type="gchararray"/>
-      <!-- column-name gboolean1 -->
-      <column type="gboolean"/>
+      <!-- column-name path -->
+      <column type="gchararray"/>
+      <!-- column-name thumbnail -->
+      <column type="GdkPixbuf"/>
     </columns>
   </object>
   <object class="GtkListStore" id="downloading">
@@ -16,6 +18,8 @@
       <column type="gchararray"/>
       <!-- column-name gboolean1 -->
       <column type="gboolean"/>
+      <!-- column-name GdkPixbuf1 -->
+      <column type="GdkPixbuf"/>
     </columns>
   </object>
   <object class="GtkApplicationWindow" id="downloader">
@@ -26,17 +30,40 @@
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
+          <object class="GtkHeaderBar" id="title_bar">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="title" translatable="yes">Big Finish Downloader</property>
+            <property name="subtitle" translatable="yes">Version 0.1</property>
+            <property name="show-close-button">True</property>
+            <child>
+              <object class="GtkButton">
+                <property name="label">gtk-preferences</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="use-stock">True</property>
+                <property name="always-show-image">True</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
           <!-- n-columns=2 n-rows=3 -->
           <object class="GtkGrid">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <child>
-              <object class="GtkImage">
+              <object class="GtkImage" id="thumbnail">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="xpad">20</property>
                 <property name="ypad">20</property>
-                <property name="pixbuf">../../small.jpg</property>
               </object>
               <packing>
                 <property name="left-attach">0</property>
@@ -45,7 +72,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel">
+              <object class="GtkLabel" id="downloading_status_i">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="hexpand">True</property>
@@ -74,7 +101,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel">
+              <object class="GtkLabel" id="downloading_status_ii">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="hexpand">True</property>
@@ -89,7 +116,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">0</property>
+            <property name="position">1</property>
           </packing>
         </child>
         <child>
@@ -135,15 +162,57 @@
                 <property name="can-focus">True</property>
                 <property name="vexpand">True</property>
                 <property name="model">downloading</property>
-                <property name="search-column">0</property>
+                <property name="expander-column">col_title_dl</property>
+                <property name="enable-search">False</property>
+                <property name="search-column">1</property>
+                <property name="enable-grid-lines">both</property>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection"/>
                 </child>
                 <child>
-                  <object class="GtkTreeViewColumn">
-                    <property name="title" translatable="yes">column</property>
+                  <object class="GtkTreeViewColumn" id="col_should_dl">
+                    <property name="sizing">autosize</property>
+                    <property name="clickable">True</property>
+                    <property name="sort-indicator">True</property>
                     <child>
-                      <object class="GtkCellRendererText"/>
+                      <object class="GtkCellRendererToggle" id="col_download_toggle">
+                        <property name="cell-background-gdk">#000000000000</property>
+                        <property name="cell-background-rgba">rgba(0,0,0,0)</property>
+                        <property name="width">3</property>
+                        <property name="height">12</property>
+                        <property name="xpad">2</property>
+                        <property name="ypad">2</property>
+                      </object>
+                      <attributes>
+                        <attribute name="active">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="col_thumbnail_dl">
+                    <property name="title" translatable="yes">Thumbnail</property>
+                    <child>
+                      <object class="GtkCellRendererPixbuf" id="col_thumbnail_image">
+                        <property name="cell-background-gdk">#000000000000</property>
+                        <property name="cell-background-rgba">rgba(0,0,0,0)</property>
+                        <property name="xpad">3</property>
+                        <property name="ypad">3</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="col_title_dl">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">Title</property>
+                    <property name="expand">True</property>
+                    <property name="clickable">True</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="col_title_text"/>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
                     </child>
                   </object>
                 </child>
@@ -202,10 +271,37 @@
                   <object class="GtkTreeSelection"/>
                 </child>
                 <child>
-                  <object class="GtkTreeViewColumn">
-                    <property name="title" translatable="yes">column</property>
+                  <object class="GtkTreeViewColumn" id="thumbnail_saved">
+                    <property name="title" translatable="yes">Thumbnail</property>
                     <child>
-                      <object class="GtkCellRendererText"/>
+                      <object class="GtkCellRendererPixbuf">
+                        <property name="cell-background-gdk">#000000000000</property>
+                        <property name="cell-background-rgba">rgba(0,0,0,0)</property>
+                        <property name="xpad">3</property>
+                        <property name="ypad">3</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="col_title_dd">
+                    <property name="title" translatable="yes">Title</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="col_d_title_text"/>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="open">
+                    <property name="title" translatable="yes">Path (click to open)</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="open_folder_link">
+                        <property name="underline">single</property>
+                        <property name="foreground-rgba">rgb(26,95,180)</property>
+                      </object>
                       <attributes>
                         <attribute name="text">1</attribute>
                       </attributes>
@@ -235,11 +331,10 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel">
+          <object class="GtkLabel" id="status_bar">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="xpad">5</property>
-            <property name="label" translatable="yes">Logged in as peter@peterhenryemerson.co.uk</property>
             <property name="xalign">1</property>
           </object>
           <packing>
