@@ -27,6 +27,7 @@ add_executable(big-finish-downloader-gtk
     src/gui/alert_box.cpp
     src/gui/login.cpp
     src/gui/main_window/init.cpp
+    src/gui/main_window/update_func.cpp
     src/gui/main_window/callbacks/close.cpp
 
     ${CMAKE_BINARY_DIR}/glade_login.hpp
@@ -36,5 +37,7 @@ add_executable(big-finish-downloader-gtk
 target_link_libraries(big-finish-downloader-gtk
     bf
     ${LIBSECRET_LIBRARIES}
-    ${GTK3_LIBRARIES}    
+    ${GTK3_LIBRARIES}
+    pthread
+    dl
 )

@@ -13,6 +13,9 @@ int main(int argc, char ** argv) {
   try {
     // retrieve from libsecret
     c = libbf::gui::retrieve();
+    if (!c.valid()) {
+      throw libbf::gui::secret_not_found_exception();
+    }
   } catch (libbf::gui::secret_not_found_exception) {
     // give loginform
 
@@ -38,7 +41,7 @@ int main(int argc, char ** argv) {
             "open this program",
             "Saving credentials failed!", alert::Style::Warning,
             alert::Buttons::OK);
-            break;
+        break;
       }
     }
   }
