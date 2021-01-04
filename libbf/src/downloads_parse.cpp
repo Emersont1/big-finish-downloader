@@ -23,7 +23,8 @@ libbf::download create_download(lxb_dom_element_t* e) {
             (char*) lxb_dom_element_get_attribute(img, (const lxb_char_t*) "alt", 3, &len));
 
     // remove leading /image/release/
-    auto num = std::stoi(img_src.substr(15, img_src.size() - 26));
+    auto img_num = std::stoi(img_src.substr(15, img_src.size() - 26));
+    int dl_num;
 
     auto downloads = lxb_dom_collection_make(e->node.owner_document, 2);
     lxb_dom_elements_by_class_name(e, downloads, (const lxb_char_t*) "common-btn", 10);
@@ -33,7 +34,11 @@ libbf::download create_download(lxb_dom_element_t* e) {
         std::string type((char*) ((lxb_dom_text*) elem->node.first_child)->char_data.data.data);
         if (type.substr(0, 3) == "M4B") {
             has_m4b = true;
-            break;
+        }else {
+ std::string dl_src(
+            (char*) lxb_dom_element_get_attribute(elem, (const lxb_char_t*) "href", 4, &len));
+            dl_num = std::stoi(dl_src.substr(19));
+
         }
     }
 
@@ -61,5 +66,5 @@ libbf::download create_download(lxb_dom_element_t* e) {
     lxb_dom_collection_destroy(img_coll, true);
     lxb_dom_collection_destroy(downloads, true);
 
-    return libbf::download(title, num, has_m4b, supp_downloads);
+    return libbf::download(title, img_num, dl_num, has_m4b, supp_downloads);
 }

@@ -12,7 +12,7 @@ std::vector<std::pair<libbf::download, GdkPixbuf*>> libbf::gui::main_window::get
     auto ds = libbf::download::get_downloads(c);
     std::vector<std::pair<libbf::download, GdkPixbuf*>> m;
     for (auto x : ds) {
-        std::string y = std::to_string(x.download_number);
+        std::string y = std::to_string(x.image_number);
         if (!std::filesystem::exists(cache + "img/" + y + ".jpg")) {
             std::ofstream of(cache + "img/" + y + ".jpg", std::ios::binary);
             cpr::Response r = cpr::Get(

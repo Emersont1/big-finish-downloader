@@ -2,6 +2,7 @@
 #include <future>
 #include <map>
 #include <queue>
+#include <atomic>
 #include <thread>
 
 #include <libbf/downloads.hpp>
@@ -14,8 +15,9 @@ class main_window {
     std::string cache;
 
     std::promise<void> quit;
+    std::shared_future<void> quitter;
     std::future<int> downloader;
-    double download_progress;
+    std::atomic<double> download_progress;
     std::string status_ii;
 
     std::future<std::vector<std::pair<libbf::download, GdkPixbuf*>>> items_fut;
@@ -56,7 +58,7 @@ class main_window {
 
     void widgets();
     void load_downloaded();
-    int download(libbf::download, std::future<void>);
+    int download(libbf::download, std::shared_future<void>);
 
     void add_to_view(std::pair<libbf::download, GdkPixbuf*>&);
 

@@ -9,6 +9,8 @@
 #include <libbf/gui/secret_storage.hpp>
 
 libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
+    quitter = std::shared_future<void>(quit.get_future());
+
     cache = std::string(std::getenv("HOME")) + "/.cache/big-finish/";
     if (!std::filesystem::exists(cache))
         std::filesystem::create_directory(cache);
@@ -19,6 +21,9 @@ libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
 
     settings = g_settings_new("uk.et1.big-finish");
     dest_dir = std::string(g_settings_get_string(settings, "download-directory"));
+
+    download_progress = 0.0;
+
     if (dest_dir[0] == '~') {
         dest_dir = std::getenv("HOME") + dest_dir.substr(1);
     }

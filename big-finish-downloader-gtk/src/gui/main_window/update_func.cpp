@@ -31,7 +31,7 @@ int libbf::gui::main_window::update_func(void* d) {
                 if (y) {
                     auto item = std::find_if(m->items.begin(), m->items.end(),
                                              [&](std::pair<libbf::download, GdkPixbuf*> i) {
-                                                 return i.first.download_number == id;
+                                                 return i.first.image_number == id;
                                              });
                     if (item == m->items.end()) {
                         return 1;
@@ -39,10 +39,10 @@ int libbf::gui::main_window::update_func(void* d) {
 
                     m->downloader =
                             std::async(std::launch::async, &libbf::gui::main_window::download, m,
-                                       item->first, std::move(m->quit.get_future()));
+                                       item->first, m->quitter);
                     gtk_label_set_text((GtkLabel*) m->downloading_label,
                                        ("Downloading: " + item->first.name).c_str());
-
+                    
                     gtk_image_set_from_pixbuf((GtkImage*) m->thumbnail, item->second);
                     gtk_list_store_remove(GTK_LIST_STORE(a), &iter);
                     break;
@@ -61,10 +61,11 @@ int libbf::gui::main_window::update_func(void* d) {
         m->downloaded_ids.push_back(a);
         auto item = std::find_if(m->items.begin(), m->items.end(),
                                  [&](std::pair<libbf::download, GdkPixbuf*> i) {
-                                     return i.first.download_number == a;
+                                     return i.first.image_number == a;
                                  });
         if (item != m->items.end())
             m->add_to_view(*item);
+        m->download_progress = 0.0;
     }
 
     return 1;
