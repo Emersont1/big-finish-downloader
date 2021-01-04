@@ -7,12 +7,11 @@
 
 #include <libbf/gui/modules/main_window.hpp>
 
-int libbf::gui::main_window::download(int value) {
-
-  for (int i = 0; i < 100; i++) {
-    download_progress = i / 100.0;
+int libbf::gui::main_window::download(libbf::download value) {
+  for (int i = 0; i < 50; i++) {
+    download_progress = i / 50.0;
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    status_ii = std::to_string(download_progress*100);
   }
-
-  return value;
+  return value.download_number;
 }

@@ -14,13 +14,13 @@ namespace libbf::gui {
 class main_window {
   std::string cache;
 
-  libbf::async_getter<int> downloader;
+  std::future<int> downloader;
   double                   download_progress;
-  std::uint64_t            download_size; // maybe use this
+  std::string status_ii;
 
   
   std::future< std::vector< std::pair<libbf::download, GdkPixbuf *>>> items_fut;
-   std::vector<std::pair<libbf::download, GdkPixbuf *>> items;
+  std::vector<std::pair<libbf::download, GdkPixbuf *>> items;
   std::vector<int>                                       downloaded_ids;
   std::map<std::string, bool>                            shoud_download;
 
@@ -31,6 +31,8 @@ class main_window {
 
   GtkWidget * title_bar;
   GtkWidget * status_bar;
+  GtkWidget * downloading_label;
+  GtkWidget * downloading_status_ii;
   GtkWidget * dest_dir_button;
   GtkWidget * window;
 
@@ -55,7 +57,7 @@ class main_window {
 
   void widgets();
   void load_downloaded();
-  int  download(int);
+  int  download(libbf::download);
 
   void add_to_view(std::pair<libbf::download, GdkPixbuf *> &);
 

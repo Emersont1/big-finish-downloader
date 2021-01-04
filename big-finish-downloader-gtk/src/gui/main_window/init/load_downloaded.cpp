@@ -23,7 +23,6 @@ void libbf::gui::main_window::load_downloaded() {
 
 void libbf::gui::main_window::add_to_view(
     std::pair<libbf::download, GdkPixbuf *> & x) {
-        std::cout << x.first.download_number<<std::endl;
   if (std::find(downloaded_ids.begin(), downloaded_ids.end(),
                 x.first.download_number) != downloaded_ids.end()) {
     gtk_list_store_insert_with_values(list_downloaded, nullptr, -1, 0,
