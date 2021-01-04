@@ -20,6 +20,7 @@ public:
       : name(name), download_number(download_number),
         m4b_available(m4b_available), supplementary_media(supplementary_media) {
   }
+  download() = default;
 
   void download_mp3(
       libbf::login_cookie & cookie,

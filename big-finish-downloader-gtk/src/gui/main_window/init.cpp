@@ -1,13 +1,12 @@
 #include <cstdlib>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 
-#include <config.hpp>
+#include <nlohmann/json.hpp>
 
 #include <libbf/gui/modules/main_window.hpp>
 #include <libbf/gui/secret_storage.hpp>
-
-#include <glade_main.hpp>
 
 libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
   cache = std::string(std::getenv("HOME")) + "/.cache/big-finish/";
@@ -17,43 +16,15 @@ libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
     std::filesystem::create_directory(cache + "img/");
   if (!std::filesystem::exists(cache + "locks/"))
     std::filesystem::create_directory(cache + "locks/");
-  GtkBuilder * builder = gtk_builder_new();
 
-  gtk_builder_add_from_string(builder, (const gchar *) GLADE_MAIN_STR.data(),
-                              GLADE_MAIN_STR.size(), nullptr);
+  settings = g_settings_new("uk.et1.big-finish");
+  dest_dir = std::string(g_settings_get_string(settings, "download-directory"));
+  if (dest_dir[0] == '~') {
+    dest_dir = std::getenv("HOME") + dest_dir.substr(1);
+  }
 
-  window = GTK_WIDGET(gtk_builder_get_object(builder, "downloader"));
-  gtk_window_set_decorated((GtkWindow *) window, false);
-  gtk_builder_connect_signals(builder, nullptr);
-
-  g_signal_connect(window, "destroy", G_CALLBACK(&close_cb), this);
-
-  status_bar = GTK_WIDGET(gtk_builder_get_object(builder, "status_bar"));
-  gtk_label_set_text((GtkLabel *) status_bar,
-                     ("You are logged in as: " + cookie.get_email()).c_str());
-
-  title_bar = GTK_WIDGET(gtk_builder_get_object(builder, "title_bar"));
-  gtk_header_bar_set_subtitle((GtkHeaderBar *) title_bar,
-                              (std::string("Version: ") + PROJECT_VER).c_str());
-
-  preferences_button =
-      GTK_WIDGET(gtk_builder_get_object(builder, "pref_button"));
-  g_signal_connect(preferences_button, "clicked", G_CALLBACK(&prefs_cb), this);
-
-  list_downloading =
-      (GtkListStore *) gtk_builder_get_object(builder, "downloading");
-  list_downloaded =
-      (GtkListStore *) gtk_builder_get_object(builder, "downloaded");
-  view_downloading =
-      GTK_TREE_VIEW(gtk_builder_get_object(builder, "view_downloading"));
-  auto x = (GtkCellRendererToggle *) gtk_builder_get_object(
-      builder, "col_download_toggle");
-
-  g_signal_connect(x, "toggled", G_CALLBACK(&toggle_cb), this);
-  g_object_unref(builder);
-
-  gtk_widget_show(window);
-  gdk_threads_add_timeout(100, &libbf::gui::main_window::update_func, this);
+  widgets();
+  load_downloaded();
 
   image_get_thread =
       std::move(std::thread(&libbf::gui::main_window::do_get_images, this,
@@ -61,6 +32,12 @@ libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
 }
 
 libbf::gui::main_window::~main_window() {
+  std::ofstream  o(std::filesystem::path(dest_dir) / ".downloaded.json");
+  nlohmann::json j;
+  j["downloaded_ids"] = downloaded_ids;
+  j["shoud_download"] = shoud_download;
+  o << j;
+
   image_get_close.set_value();
   image_get_thread.join();
 }

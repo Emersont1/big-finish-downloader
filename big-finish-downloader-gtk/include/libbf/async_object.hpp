@@ -36,7 +36,8 @@ public:
     was_ready = is_ready;
   }
 
-  bool complete_trigger() { return is_ready && !was_ready; }
+  bool complete_trigger() {     if (is_ready && internal_thread.joinable())
+      internal_thread.join();return is_ready && !was_ready; }
 
   // returns true if ready
   bool ready() { return is_ready; }
@@ -46,5 +47,6 @@ public:
   }
 
   T * operator->() { return &object; }
+  T & operator* () { return object; }
 };
 } // namespace libbf

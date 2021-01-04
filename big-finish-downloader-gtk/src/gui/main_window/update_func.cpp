@@ -5,31 +5,36 @@
 int libbf::gui::main_window::update_func(void * d) {
   auto m = (libbf::gui::main_window *) d;
 
-  if (!m->dl.active()) {
-    auto f = [](libbf::login_cookie cookie) -> libbf::downloads_t {
-      return libbf::download::get_downloads(cookie);
-    };
-    std::function<libbf::downloads_t()> i = std::bind(f, m->cookie);
-    m->dl.begin(i);
+  gtk_progress_bar_set_fraction((GtkProgressBar *) m->progress_bar,
+                                m->download_progress);
+
+  if (!m->items_scrape.active()) {
+    auto i = std::bind(libbf::download::get_downloads, m->cookie);
+    m->items_scrape.begin(i);
   }
 
-  if (m->dl.complete_trigger()) {
-    for (auto x = m->dl->begin(); x != m->dl->end(); x++) {
-      GtkTreeIter a;
+  if (m->items_scrape.complete_trigger()) {
+    for (auto x = m->items_scrape->begin(); x != m->items_scrape->end(); x++) {
       m->get_images.push(*x);
     }
   }
 
-  m->dl.update();
+  if (!m->downloader.active() || m->downloader.complete_trigger()) {
+    if (m->downloader.complete_trigger()) {
+      std::cout << *(m->downloader) << std::endl;
+      //m->downloaded_ids.push_back();
+    }
+    auto i = std::bind(&libbf::gui::main_window::download, m, 1);
+    m->downloader.begin(i);
+  }
 
-  if (!m->got_images.empty()) {
+  //m->items_scrape.update();
+  m->downloader.update();
+
+  while (!m->got_images.empty()) {
     auto x = m->got_images.front();
-    bool e = std::filesystem::exists(m->cache + "locks/" +
-                                     std::to_string(x.first.download_number) +
-                                     ".lock");
-    gtk_list_store_insert_with_values(m->list_downloading, nullptr, -1, 0,
-                                      x.first.name.c_str(), 1, !e, 2, x.second,
-                                      3, x.first.download_number, -1);
+    m->add_to_view(x);
+    m->items[x.first.download_number] = x;
     m->got_images.pop();
   }
   return 1;

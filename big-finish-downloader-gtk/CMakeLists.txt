@@ -28,9 +28,13 @@ add_executable(big-finish-downloader-gtk
     src/libsecret/secret_storage.cpp
     src/gui/alert_box.cpp
     src/gui/login.cpp
+    src/gui/main_window/download.cpp
     src/gui/main_window/init.cpp
+    src/gui/main_window/init/load_downloaded.cpp
+    src/gui/main_window/init/widgets.cpp
     src/gui/main_window/update_func.cpp
     src/gui/main_window/get_images.cpp
+    src/gui/main_window/callbacks/changed_dir.cpp
     src/gui/main_window/callbacks/close.cpp
     src/gui/main_window/callbacks/preferences.cpp
     src/gui/main_window/callbacks/toggle_cb.cpp

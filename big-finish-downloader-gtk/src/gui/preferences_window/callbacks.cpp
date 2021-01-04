@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <libbf/gui/alert_box.hpp>
+#include <libbf/gui/modules/main_window.hpp>
 #include <libbf/gui/modules/preferences_window.hpp>
 #include <libbf/gui/secret_storage.hpp>
 
@@ -34,6 +35,11 @@ void libbf::gui::preferences_window::save_button_cb(GtkWidget * sender,
 
   g_settings_set_string(l->settings, "download-directory", path.c_str());
   gtk_widget_destroy(l->window);
+
+  if (l->changed_dir) {
+    std::cout << std::endl;
+    l->parent->changed_dir();
+  }
 }
 
 void libbf::gui::preferences_window::change_dir_cb(GtkWidget * sender,
@@ -63,6 +69,7 @@ void libbf::gui::preferences_window::change_dir_cb(GtkWidget * sender,
     gtk_button_set_label((GtkButton *) l->pathlabel,
                          ("Currently: " + p2).c_str());
     g_free(filename);
+    l->changed_dir = true;
   }
 
   gtk_widget_destroy(dialog);

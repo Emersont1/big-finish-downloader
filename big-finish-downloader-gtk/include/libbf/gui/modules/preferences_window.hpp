@@ -4,6 +4,7 @@
 #include <gtk/gtk.h>
 
 namespace libbf::gui {
+class main_window;
 class preferences_window {
   GtkWidget * m4b_slider;
   GtkWidget * fallback_slider;
@@ -17,12 +18,15 @@ class preferences_window {
 
   GSettings * settings;
 
+  libbf::gui::main_window * parent;
+  bool                      changed_dir;
+
   static void change_dir_cb(GtkWidget *, void *);
   static void cancel_button_cb(GtkWidget *, void *);
   static void save_button_cb(GtkWidget *, void *);
   static void logout_cb(GtkWidget *, void *);
 
 public:
-  preferences_window();
+  preferences_window(libbf::gui::main_window *);
 };
 } // namespace libbf::gui
