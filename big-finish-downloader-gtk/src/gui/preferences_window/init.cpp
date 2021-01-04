@@ -10,7 +10,6 @@
 libbf::gui::preferences_window::preferences_window(
     libbf::gui::main_window * parent)
     : parent(parent), changed_dir(false) {
-
   settings = g_settings_new("uk.et1.big-finish");
 
   GtkBuilder * builder = gtk_builder_new();

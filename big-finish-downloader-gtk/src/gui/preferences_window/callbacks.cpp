@@ -56,7 +56,6 @@ void libbf::gui::preferences_window::change_dir_cb(GtkWidget * sender,
 
   int res = gtk_dialog_run(GTK_DIALOG(dialog));
   if (res == GTK_RESPONSE_ACCEPT) {
-
     auto        filename = gtk_file_chooser_get_filename(chooser);
     std::string path(filename);
     auto        p = std::string(std::getenv("HOME"));

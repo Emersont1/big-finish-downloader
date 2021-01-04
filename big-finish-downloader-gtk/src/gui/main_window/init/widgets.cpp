@@ -34,8 +34,10 @@ void libbf::gui::main_window::widgets() {
   gtk_image_set_from_icon_name((GtkImage *) thumbnail, "media-optical",
                                GTK_ICON_SIZE_DIALOG);
 
-  downloading_label = GTK_WIDGET(gtk_builder_get_object(builder, "downloading_status_i"));
-downloading_status_ii = GTK_WIDGET(gtk_builder_get_object(builder, "downloading_status_ii"));
+  downloading_label =
+      GTK_WIDGET(gtk_builder_get_object(builder, "downloading_status_i"));
+  downloading_status_ii =
+      GTK_WIDGET(gtk_builder_get_object(builder, "downloading_status_ii"));
 
   list_downloading =
       (GtkListStore *) gtk_builder_get_object(builder, "downloading");

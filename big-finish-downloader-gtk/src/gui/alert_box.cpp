@@ -5,7 +5,6 @@ namespace alert = libbf::gui::alert;
 
 alert::Selection alert::show(std::string message, std::string title,
                              alert::Style style, alert::Buttons buttons) {
-
   // Create a parent window to stop gtk_dialog_run from complaining
   GtkWidget * parent = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 

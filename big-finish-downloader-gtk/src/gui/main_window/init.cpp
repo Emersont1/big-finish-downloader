@@ -28,6 +28,7 @@ libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
 }
 
 libbf::gui::main_window::~main_window() {
+  quit.set_value();
   std::ofstream  o(std::filesystem::path(dest_dir) / ".downloaded.json");
   nlohmann::json j;
   j["downloaded_ids"] = downloaded_ids;

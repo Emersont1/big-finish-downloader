@@ -12,7 +12,6 @@
 libbf::login_cookie libbf::login_cookie::login(std::string email,
                                                std::string password,
                                                bool        remember_me) {
-
   cpr::Response r =
       cpr::Post(cpr::Url{"https://www.bigfinish.com/customers/login"},
                 cpr::Payload{{"_method", "POST"},

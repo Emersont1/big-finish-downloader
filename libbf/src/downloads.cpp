@@ -10,7 +10,6 @@
 
 void libbf::download::download_mp3(libbf::login_cookie & cookie,
                                    std::filesystem::path output_directory) {
-
   const cpr::WriteCallback cb([&](std::string header) -> bool { return true; });
   std::ofstream            of(output_directory /
                        (std::to_string(download_number) + ".zip"),

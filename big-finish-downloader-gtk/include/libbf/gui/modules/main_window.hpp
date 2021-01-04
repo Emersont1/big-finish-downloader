@@ -4,7 +4,6 @@
 #include <queue>
 #include <thread>
 
-#include <libbf/async_object.hpp>
 #include <libbf/downloads.hpp>
 #include <libbf/gui/modules/preferences_window.hpp>
 
@@ -14,15 +13,15 @@ namespace libbf::gui {
 class main_window {
   std::string cache;
 
+  std::promise<void> quit;
   std::future<int> downloader;
-  double                   download_progress;
-  std::string status_ii;
+  double           download_progress;
+  std::string      status_ii;
 
-  
-  std::future< std::vector< std::pair<libbf::download, GdkPixbuf *>>> items_fut;
-  std::vector<std::pair<libbf::download, GdkPixbuf *>> items;
-  std::vector<int>                                       downloaded_ids;
-  std::map<std::string, bool>                            shoud_download;
+  std::future<std::vector<std::pair<libbf::download, GdkPixbuf *>>> items_fut;
+  std::vector<std::pair<libbf::download, GdkPixbuf *>>              items;
+  std::vector<int>            downloaded_ids;
+  std::map<std::string, bool> shoud_download;
 
   GSettings * settings;
   std::string dest_dir;
@@ -53,11 +52,12 @@ class main_window {
 
   static int update_func(void *);
 
-  std::vector<std::pair<libbf::download, GdkPixbuf *>>  get_items(libbf::login_cookie c);
+  std::vector<std::pair<libbf::download, GdkPixbuf *>>
+  get_items(libbf::login_cookie c);
 
   void widgets();
   void load_downloaded();
-  int  download(libbf::download);
+  int  download(libbf::download, std::future<void>);
 
   void add_to_view(std::pair<libbf::download, GdkPixbuf *> &);
 
