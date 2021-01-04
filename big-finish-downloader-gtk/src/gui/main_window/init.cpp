@@ -37,8 +37,11 @@ libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
   list_downloaded =
       (GtkListStore *) gtk_builder_get_object(builder, "downloaded");
   view_downloading =
-      GTK_WIDGET(gtk_builder_get_object(builder, "view_downloading"));
+      GTK_TREE_VIEW(gtk_builder_get_object(builder, "view_downloading"));
+  auto x = (GtkCellRendererToggle *) gtk_builder_get_object(
+      builder, "col_download_toggle");
 
+  g_signal_connect(x, "toggled", G_CALLBACK(&toggle_cb), this);
   g_object_unref(builder);
 
   gtk_widget_show(window);

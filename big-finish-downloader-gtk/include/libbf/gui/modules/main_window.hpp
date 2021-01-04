@@ -21,7 +21,7 @@ class main_window {
 
   GtkListStore * list_downloading;
   GtkListStore * list_downloaded;
-  GtkWidget *    view_downloading;
+  GtkTreeView *  view_downloading;
   GtkWidget *    view_downloaded;
 
   GtkWidget * preferences_button;
@@ -30,6 +30,7 @@ class main_window {
 
   static void close_cb(GtkWidget *, void *);
   static void prefs_cb(GtkWidget *, void *);
+  static void toggle_cb(GtkCellRendererToggle *, char *, void *);
 
   static int update_func(void *);
 
