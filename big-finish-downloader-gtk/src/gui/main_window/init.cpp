@@ -1,3 +1,5 @@
+#include <cstdlib>
+#include <filesystem>
 #include <iostream>
 
 #include <config.hpp>
@@ -8,6 +10,9 @@
 #include <glade_main.hpp>
 
 libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
+  cache = std::string(std::getenv("HOME")) + "/.cache/big-finish/";
+  if (!std::filesystem::exists(cache))
+    std::filesystem::create_directory(cache);
 
   GtkBuilder * builder = gtk_builder_new();
 
@@ -46,4 +51,13 @@ libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
 
   gtk_widget_show(window);
   gdk_threads_add_idle(&libbf::gui::main_window::update_func, this);
+
+  image_get_thread =
+      std::move(std::thread(&libbf::gui::main_window::do_get_images, this,
+                            image_get_close.get_future()));
+}
+
+libbf::gui::main_window::~main_window() {
+  image_get_close.set_value();
+  image_get_thread.join();
 }

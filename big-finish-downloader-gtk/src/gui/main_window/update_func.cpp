@@ -15,12 +15,21 @@ int libbf::gui::main_window::update_func(void * d) {
 
   if (m->dl.complete_trigger()) {
     for (auto x = m->dl->begin(); x != m->dl->end(); x++) {
-      gtk_list_store_insert_with_values(m->list_downloading, nullptr, -1, 0,
-                                        x->name.c_str(), 1, false, 2, nullptr,
-                                        -1);
+      GtkTreeIter a;
+      m->get_images.push(*x);
     }
   }
 
   m->dl.update();
+
+  if (!m->got_images.empty()) {
+    auto x = m->got_images.front();
+    bool e = std::filesystem::exists(
+        m->cache + std::to_string(x.first.download_number) + ".lock");
+    gtk_list_store_insert_with_values(m->list_downloading, nullptr, -1, 0,
+                                      x.first.name.c_str(), 1, !e, 2, x.second,
+                                      3, x.first.download_number, -1);
+    m->got_images.pop();
+  }
   return 1;
 }

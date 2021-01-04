@@ -1,6 +1,6 @@
 #pragma once
 #include <future>
-#include <memory>
+#include <queue>
 #include <thread>
 
 #include <libbf/async_object.hpp>
@@ -11,6 +11,13 @@
 
 namespace libbf::gui {
 class main_window {
+  std::string cache;
+
+  std::thread                                         image_get_thread;
+  std::promise<void>                                  image_get_close;
+  std::queue<libbf::download>                         get_images;
+  std::queue<std::pair<libbf::download, GdkPixbuf *>> got_images;
+
   libbf::async_getter<libbf::downloads_t> dl;
 
   std::unique_ptr<libbf::gui::preferences_window> p;
@@ -34,7 +41,10 @@ class main_window {
 
   static int update_func(void *);
 
+  void do_get_images(std::future<void>);
+
 public:
   main_window(libbf::login_cookie);
+  ~main_window();
 };
 } // namespace libbf::gui
