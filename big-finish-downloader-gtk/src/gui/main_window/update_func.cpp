@@ -24,8 +24,9 @@ int libbf::gui::main_window::update_func(void * d) {
 
   if (!m->got_images.empty()) {
     auto x = m->got_images.front();
-    bool e = std::filesystem::exists(
-        m->cache + std::to_string(x.first.download_number) + ".lock");
+    bool e = std::filesystem::exists(m->cache + "locks/" +
+                                     std::to_string(x.first.download_number) +
+                                     ".lock");
     gtk_list_store_insert_with_values(m->list_downloading, nullptr, -1, 0,
                                       x.first.name.c_str(), 1, !e, 2, x.second,
                                       3, x.first.download_number, -1);

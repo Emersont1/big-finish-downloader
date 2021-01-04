@@ -13,7 +13,10 @@ libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
   cache = std::string(std::getenv("HOME")) + "/.cache/big-finish/";
   if (!std::filesystem::exists(cache))
     std::filesystem::create_directory(cache);
-
+  if (!std::filesystem::exists(cache + "img/"))
+    std::filesystem::create_directory(cache + "img/");
+  if (!std::filesystem::exists(cache + "locks/"))
+    std::filesystem::create_directory(cache + "locks/");
   GtkBuilder * builder = gtk_builder_new();
 
   gtk_builder_add_from_string(builder, (const gchar *) GLADE_MAIN_STR.data(),
@@ -50,7 +53,7 @@ libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
   g_object_unref(builder);
 
   gtk_widget_show(window);
-  gdk_threads_add_idle(&libbf::gui::main_window::update_func, this);
+  gdk_threads_add_timeout(100, &libbf::gui::main_window::update_func, this);
 
   image_get_thread =
       std::move(std::thread(&libbf::gui::main_window::do_get_images, this,

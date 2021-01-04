@@ -13,15 +13,15 @@ void libbf::gui::main_window::do_get_images(std::future<void> should_close) {
     if (!get_images.empty()) {
       auto        x = get_images.front();
       std::string y = std::to_string(x.download_number);
-      if (!std::filesystem::exists(cache + y + ".jpg")) {
-        std::ofstream of(cache + y + ".jpg", std::ios::binary);
+      if (!std::filesystem::exists(cache + "img/" + y + ".jpg")) {
+        std::ofstream of(cache + "img/" + y + ".jpg", std::ios::binary);
         cpr::Response r = cpr::Get(cpr::Url{
             "https://www.bigfinish.com/image/release/" + y + "/small.jpg"});
         of.write(r.text.c_str(), r.text.size());
         of.close();
       }
-      auto pixbuf = gdk_pixbuf_new_from_file_at_size((y + ".jpg").c_str(), 50,
-                                                     50, nullptr);
+      auto pixbuf = gdk_pixbuf_new_from_file_at_size(
+          (cache + "img/" + y + ".jpg").c_str(), 50, 50, nullptr);
       get_images.pop();
       got_images.emplace(x, pixbuf);
     }

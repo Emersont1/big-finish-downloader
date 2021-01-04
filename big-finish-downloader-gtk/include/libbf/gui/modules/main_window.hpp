@@ -18,6 +18,8 @@ class main_window {
   std::queue<libbf::download>                         get_images;
   std::queue<std::pair<libbf::download, GdkPixbuf *>> got_images;
 
+  GSettings * settings;
+
   libbf::async_getter<libbf::downloads_t> dl;
 
   std::unique_ptr<libbf::gui::preferences_window> p;

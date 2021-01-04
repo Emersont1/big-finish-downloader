@@ -13,14 +13,15 @@ void libbf::gui::main_window::toggle_cb(GtkCellRendererToggle * cell,
 
   int id;
   gtk_tree_model_get(a, &iter, 3, &id, -1);
-  std::cout << id << std::endl;
   if (gtk_cell_renderer_toggle_get_active(cell)) {
-    std::ofstream out(m->cache + "/" + std::to_string(id) + ".lock",
+    std::ofstream out(m->cache + "locks/" + std::to_string(id) + ".lock",
                       std::ios::out);
     out << "x" << std::endl;
   } else {
-    if (std::filesystem::exists(m->cache + std::to_string(id) + ".lock"))
-      std::filesystem::remove(m->cache + std::to_string(id) + ".lock");
+    if (std::filesystem::exists(m->cache + "locks/" + std::to_string(id) +
+                                ".lock"))
+      std::filesystem::remove(m->cache + "locks/" + std::to_string(id) +
+                              ".lock");
   }
   gtk_list_store_set_value(m->list_downloading, &iter, 1, &x);
   g_value_unset(&x);
