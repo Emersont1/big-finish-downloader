@@ -20,14 +20,16 @@ void libbf::gui::main_window::load_downloaded() {
   gtk_button_set_label((GtkButton *) dest_dir_button,
                        ("Open Library folder (" + dest_dir + ")").c_str());
 }
+
 void libbf::gui::main_window::add_to_view(
     std::pair<libbf::download, GdkPixbuf *> & x) {
+        std::cout << x.first.download_number<<std::endl;
   if (std::find(downloaded_ids.begin(), downloaded_ids.end(),
                 x.first.download_number) != downloaded_ids.end()) {
     gtk_list_store_insert_with_values(list_downloaded, nullptr, -1, 0,
                                       x.first.name.c_str(), 1, x.second, -1);
   } else {
-    bool e = shoud_download[std::to_string(x.first.download_number)];
+    bool e = shoud_download.count(std::to_string(x.first.download_number))&&shoud_download[std::to_string(x.first.download_number)];
     gtk_list_store_insert_with_values(list_downloading, nullptr, -1, 0,
                                       x.first.name.c_str(), 1, !e, 2, x.second,
                                       3, x.first.download_number, -1);

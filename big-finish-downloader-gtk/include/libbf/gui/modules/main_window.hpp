@@ -18,19 +18,14 @@ class main_window {
   double                   download_progress;
   std::uint64_t            download_size; // maybe use this
 
-  std::thread                                         image_get_thread;
-  std::promise<void>                                  image_get_close;
-  std::queue<libbf::download>                         get_images;
-  std::queue<std::pair<libbf::download, GdkPixbuf *>> got_images;
-
-  std::map<int, std::pair<libbf::download, GdkPixbuf *>> items;
+  
+  std::future< std::vector< std::pair<libbf::download, GdkPixbuf *>>> items_fut;
+   std::vector<std::pair<libbf::download, GdkPixbuf *>> items;
   std::vector<int>                                       downloaded_ids;
   std::map<std::string, bool>                            shoud_download;
 
   GSettings * settings;
   std::string dest_dir;
-
-  libbf::async_getter<libbf::downloads_t> items_scrape;
 
   std::unique_ptr<libbf::gui::preferences_window> p;
 
@@ -56,7 +51,7 @@ class main_window {
 
   static int update_func(void *);
 
-  void do_get_images(std::future<void>);
+  std::vector<std::pair<libbf::download, GdkPixbuf *>>  get_items(libbf::login_cookie c);
 
   void widgets();
   void load_downloaded();

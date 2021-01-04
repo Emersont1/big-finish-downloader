@@ -25,10 +25,6 @@ libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
 
   widgets();
   load_downloaded();
-
-  image_get_thread =
-      std::move(std::thread(&libbf::gui::main_window::do_get_images, this,
-                            image_get_close.get_future()));
 }
 
 libbf::gui::main_window::~main_window() {
@@ -37,7 +33,4 @@ libbf::gui::main_window::~main_window() {
   j["downloaded_ids"] = downloaded_ids;
   j["shoud_download"] = shoud_download;
   o << j;
-
-  image_get_close.set_value();
-  image_get_thread.join();
 }
