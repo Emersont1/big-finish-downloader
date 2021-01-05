@@ -42,7 +42,7 @@ int libbf::gui::main_window::update_func(void* d) {
                                        item->first, m->quitter);
                     gtk_label_set_text((GtkLabel*) m->downloading_label,
                                        ("Downloading: " + item->first.name).c_str());
-                    
+
                     gtk_image_set_from_pixbuf((GtkImage*) m->thumbnail, item->second);
                     gtk_list_store_remove(GTK_LIST_STORE(a), &iter);
                     break;

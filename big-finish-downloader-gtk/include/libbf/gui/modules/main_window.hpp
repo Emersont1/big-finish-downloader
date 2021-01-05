@@ -1,8 +1,8 @@
 #pragma once
+#include <atomic>
 #include <future>
 #include <map>
 #include <queue>
-#include <atomic>
 #include <thread>
 
 #include <libbf/downloads.hpp>
@@ -27,6 +27,7 @@ class main_window {
 
     GSettings* settings;
     std::string dest_dir;
+    bool prefer_m4b, fallback_mp3, download_extras;
 
     std::unique_ptr<libbf::gui::preferences_window> p;
 

@@ -1,5 +1,6 @@
  [requires]
 nlohmann_json/3.9.1
+libzippp/4.0
 
  [generators]
  cmake

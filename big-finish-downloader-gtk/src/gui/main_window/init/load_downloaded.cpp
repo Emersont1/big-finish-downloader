@@ -18,6 +18,10 @@ void libbf::gui::main_window::load_downloaded() {
     gtk_link_button_set_uri((GtkLinkButton*) dest_dir_button, ("file://" + dest_dir).c_str());
     gtk_button_set_label((GtkButton*) dest_dir_button,
                          ("Open Library folder (" + dest_dir + ")").c_str());
+
+    prefer_m4b = g_settings_get_boolean(settings, "prefer-m4b");
+    fallback_mp3 = g_settings_get_boolean(settings, "fallback-mp3");
+    download_extras = g_settings_get_boolean(settings, "download-extras");
 }
 
 void libbf::gui::main_window::add_to_view(std::pair<libbf::download, GdkPixbuf*>& x) {

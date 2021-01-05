@@ -28,6 +28,10 @@ libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
         dest_dir = std::getenv("HOME") + dest_dir.substr(1);
     }
 
+    prefer_m4b = g_settings_get_boolean(settings, "prefer-m4b");
+    fallback_mp3 = g_settings_get_boolean(settings, "fallback-mp3");
+    download_extras = g_settings_get_boolean(settings, "download-extras");
+
     widgets();
     load_downloaded();
 }

@@ -34,11 +34,10 @@ libbf::download create_download(lxb_dom_element_t* e) {
         std::string type((char*) ((lxb_dom_text*) elem->node.first_child)->char_data.data.data);
         if (type.substr(0, 3) == "M4B") {
             has_m4b = true;
-        }else {
- std::string dl_src(
-            (char*) lxb_dom_element_get_attribute(elem, (const lxb_char_t*) "href", 4, &len));
+        } else {
+            std::string dl_src((char*) lxb_dom_element_get_attribute(
+                    elem, (const lxb_char_t*) "href", 4, &len));
             dl_num = std::stoi(dl_src.substr(19));
-
         }
     }
 

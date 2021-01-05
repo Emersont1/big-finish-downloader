@@ -17,15 +17,24 @@ class download {
     bool m4b_available;
     std::vector<std::pair<std::string, int>> supplementary_media;
 
-    download(std::string name, std::uint32_t image_number, std::uint32_t download_number, bool m4b_available,
-             std::vector<std::pair<std::string, int>> supplementary_media)
-            : name(name), download_number(download_number), image_number(image_number) ,m4b_available(m4b_available),
-              supplementary_media(supplementary_media) {}
+    download(std::string name, std::uint32_t image_number, std::uint32_t download_number,
+             bool m4b_available, std::vector<std::pair<std::string, int>> supplementary_media)
+            : name(name), download_number(download_number), image_number(image_number),
+              m4b_available(m4b_available), supplementary_media(supplementary_media) {}
     download() = default;
 
-    void download_mp3(
+    std::filesystem::path download_mp3(
             libbf::login_cookie& cookie,
-            std::filesystem::path output_directory = std::filesystem::path(),
+            std::function<bool(size_t, size_t, size_t, size_t)> progress_callback =
+                    [](size_t, size_t, size_t, size_t) { return true; });
+
+    std::filesystem::path download_m4b(
+            libbf::login_cookie& cookie,
+            std::function<bool(size_t, size_t, size_t, size_t)> progress_callback =
+                    [](size_t, size_t, size_t, size_t) { return true; });
+
+    std::pair<std::filesystem::path, std::string> download_extra(
+            std::pair<std::string, int> extra, libbf::login_cookie& cookie,
             std::function<bool(size_t, size_t, size_t, size_t)> progress_callback =
                     [](size_t, size_t, size_t, size_t) { return true; });
 
