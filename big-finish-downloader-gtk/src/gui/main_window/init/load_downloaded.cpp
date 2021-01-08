@@ -6,7 +6,7 @@
 
 void libbf::gui::main_window::load_downloaded() {
     downloaded_ids.clear();
-    std::ifstream i(std::filesystem::path(dest_dir) / ".downloaded.json");
+    std::ifstream i(settings.get_path() / ".downloaded.json");
 
     if (i.is_open()) {
         nlohmann::json j;
@@ -15,13 +15,10 @@ void libbf::gui::main_window::load_downloaded() {
         shoud_download = j["shoud_download"].get<std::map<std::string, bool>>();
     }
 
-    gtk_link_button_set_uri((GtkLinkButton*) dest_dir_button, ("file://" + dest_dir).c_str());
+    gtk_link_button_set_uri((GtkLinkButton*) dest_dir_button,
+                            ("file://" + settings.get_path().string()).c_str());
     gtk_button_set_label((GtkButton*) dest_dir_button,
-                         ("Open Library folder (" + dest_dir + ")").c_str());
-
-    prefer_m4b = g_settings_get_boolean(settings, "prefer-m4b");
-    fallback_mp3 = g_settings_get_boolean(settings, "fallback-mp3");
-    download_extras = g_settings_get_boolean(settings, "download-extras");
+                         ("Open Library folder (" + settings.get_path().string() + ")").c_str());
 }
 
 void libbf::gui::main_window::add_to_view(std::pair<libbf::download, GdkPixbuf*>& x) {

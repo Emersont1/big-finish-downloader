@@ -1,9 +1,9 @@
 #include <libbf/exceptions.hpp>
 #include <libbf/gui/alert_box.hpp>
-#include <libbf/gui/exceptions.hpp>
 #include <libbf/gui/modules/login.hpp>
 #include <libbf/gui/modules/main_window.hpp>
-#include <libbf/gui/secret_storage.hpp>
+#include <libbf/os/exceptions.hpp>
+#include <libbf/os/secret_storage.hpp>
 
 namespace alert = libbf::gui::alert;
 
@@ -12,11 +12,11 @@ int main(int argc, char** argv) {
     libbf::login_cookie c;
     try {
         // retrieve from libsecret
-        c = libbf::gui::retrieve();
+        c = libbf::os::retrieve();
         if (!c.valid()) {
-            throw libbf::gui::secret_not_found_exception();
+            throw libbf::os::secret_not_found_exception();
         }
-    } catch (libbf::gui::secret_not_found_exception) {
+    } catch (libbf::os::secret_not_found_exception) {
         // give loginform
 
         while (true) {
@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 
             try {
                 c = libbf::login_cookie::login(l.email, l.password);
-                libbf::gui::store(c);
+                libbf::os::store(c);
                 break;
             } catch (libbf::login_failed_exception) {
                 std::cerr << "login failed" << std::endl;
@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
                                 "Login Failed", alert::Style::Error,
                                 alert::Buttons::YesNo) == alert::Selection::No)
                     return -1;
-            } catch (libbf::gui::secret_write_failed_exception) {
+            } catch (libbf::os::secret_write_failed_exception) {
                 alert::show(
                         "Unable to save credentials to store. The program will continue as "
                         "normal, but you will have to re-enter your details when you next "

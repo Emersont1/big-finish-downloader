@@ -1,4 +1,4 @@
-#include <libbf/gui/secret_storage.hpp>
+#include <libbf/os/secret_storage.hpp>
 
 #include <libsecret/secret.h>
 

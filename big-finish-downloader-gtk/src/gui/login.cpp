@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include <libbf/gui/modules/login.hpp>
-#include <libbf/gui/secret_storage.hpp>
+#include <libbf/os/secret_storage.hpp>
 
 #include <glade_login.hpp>
 

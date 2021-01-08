@@ -20,29 +20,29 @@ int libbf::gui::main_window::download(libbf::download value, std::shared_future<
         return v.wait_for(std::chrono::milliseconds(1)) == std::future_status::timeout;
     };
 
-    if (value.m4b_available && prefer_m4b) {
+    if (value.m4b_available && settings.get_prefer_m4b()) {
         status_ii = "Downloading Main Feature";
         std::string path = value.download_m4b(cookie, progress_callback);
         status_ii = "Extracting Main Feature";
-        helper::extract_zip(dest_dir, path, unzip_callback);
+        helper::extract_zip(settings.get_path(), path, unzip_callback);
         std::filesystem::remove(path);
-    } else if (fallback_mp3 || !prefer_m4b) {
+    } else if (settings.get_fallback_mp3() || !settings.get_prefer_m4b()) {
         status_ii = "Downloading Main Feature";
         std::string path = value.download_mp3(cookie, progress_callback);
         status_ii = "Extracting Main Feature";
-        helper::extract_zip(dest_dir, path, unzip_callback);
+        helper::extract_zip(settings.get_path(), path, unzip_callback);
         std::filesystem::remove(path);
     }
-    if (download_extras) {
+    if (settings.get_download_extras()) {
         for (auto bonus : value.supplementary_media) {
             status_ii = "Downloading Additional Feature - " + bonus.first;
             auto res = value.download_extra(bonus, cookie, progress_callback);
             if (mime::extension(res.second) == "zip") {
                 status_ii = "Extracting Bonus Feature - " + bonus.first;
-                helper::extract_zip(dest_dir, res.first, unzip_callback);
+                helper::extract_zip(settings.get_path(), res.first, unzip_callback);
 
             } else {
-                auto p = std::filesystem::path(dest_dir) / value.name /
+                auto p = settings.get_path() / value.name /
                          (bonus.first + "." + mime::extension(res.second));
                 std::filesystem::create_directories(p.parent_path());
                 std::filesystem::copy_file(res.first, p);

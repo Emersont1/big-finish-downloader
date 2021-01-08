@@ -2,7 +2,6 @@ project(BigFinish)
 cmake_minimum_required(VERSION 3.10)
 
 find_package(PkgConfig REQUIRED)
-pkg_search_module(LIBSECRET REQUIRED libsecret-1)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 
 include(${CMAKE_SOURCE_DIR}/bin2h.cmake)
@@ -17,8 +16,8 @@ include(${CMAKE_SOURCE_DIR}/gsettings.cmake)
 include_directories(
     include
     ${CMAKE_SOURCE_DIR}/libbf/include
+    ${CMAKE_SOURCE_DIR}/libbf-os/include
 
-    ${LIBSECRET_INCLUDE_DIRS}
     ${GTK3_INCLUDE_DIRS}
     ${CMAKE_BINARY_DIR}
 )
@@ -27,8 +26,6 @@ add_executable(big-finish-downloader-gtk
     src/main.cpp
     src/zip.cpp
     src/mime.cpp
-    src/libsecret/cookie_schema.cpp
-    src/libsecret/secret_storage.cpp
     src/gui/alert_box.cpp
     src/gui/login.cpp
     src/gui/main_window/download.cpp
@@ -50,8 +47,7 @@ add_executable(big-finish-downloader-gtk
 
 target_link_libraries(big-finish-downloader-gtk
     CONAN_PKG::libzippp
-    bf
-    ${LIBSECRET_LIBRARIES}
+    bf-os
     ${GTK3_LIBRARIES}
     pthread
     dl

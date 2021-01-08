@@ -1,4 +1,4 @@
-#include <libbf/gui/secret_storage.hpp>
+#include <libbf/os/secret_storage.hpp>
 
 // relies on exports from big-finish-downloader-gtk as its currently not in its
 // own library

@@ -7,6 +7,7 @@
 
 #include <libbf/downloads.hpp>
 #include <libbf/gui/modules/preferences_window.hpp>
+#include <libbf/os/settings.hpp>
 
 #include <gtk/gtk.h>
 
@@ -25,9 +26,7 @@ class main_window {
     std::vector<int> downloaded_ids;
     std::map<std::string, bool> shoud_download;
 
-    GSettings* settings;
-    std::string dest_dir;
-    bool prefer_m4b, fallback_mp3, download_extras;
+    libbf::os::settings settings;
 
     std::unique_ptr<libbf::gui::preferences_window> p;
 

@@ -3,7 +3,7 @@
 #include <libbf/gui/alert_box.hpp>
 #include <libbf/gui/modules/main_window.hpp>
 #include <libbf/gui/modules/preferences_window.hpp>
-#include <libbf/gui/secret_storage.hpp>
+#include <libbf/os/secret_storage.hpp>
 
 #include <glade_prefs.hpp>
 
@@ -74,7 +74,7 @@ void libbf::gui::preferences_window::logout_cb(GtkWidget* sender, void* d) {
                          "Confirm Logout", alert::Style::Question, alert::Buttons::YesNo);
 
     if (x == alert::Selection::Yes) {
-        libbf::gui::revoke();
+        libbf::os::revoke();
         gtk_widget_destroy(l->window);
         gtk_main_quit();
     }

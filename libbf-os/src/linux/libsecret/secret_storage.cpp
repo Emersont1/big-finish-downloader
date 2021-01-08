@@ -1,13 +1,13 @@
 #include <iostream>
 
-#include <libbf/gui/exceptions.hpp>
-#include <libbf/gui/secret_storage.hpp>
+#include <libbf/os/exceptions.hpp>
+#include <libbf/os/secret_storage.hpp>
 
 #include <libsecret/secret.h>
 
 const SecretSchema* cookie_schema(void) G_GNUC_CONST;
 
-void libbf::gui::store(libbf::login_cookie l) {
+void libbf::os::store(libbf::login_cookie l) {
     GError* error = nullptr;
     nlohmann::json j = l;
     secret_password_store_sync(cookie_schema(), SECRET_COLLECTION_DEFAULT, "Big Finish Login",
@@ -15,11 +15,11 @@ void libbf::gui::store(libbf::login_cookie l) {
 
     if (error != nullptr) {
         g_error_free(error);
-        throw libbf::gui::secret_write_failed_exception();
+        throw libbf::os::secret_write_failed_exception();
     }
 }
 
-libbf::login_cookie libbf::gui::retrieve() {
+libbf::login_cookie libbf::os::retrieve() {
     GError* error = nullptr;
 
     /* The attributes used to lookup the password should conform to the schema. */
@@ -29,10 +29,10 @@ libbf::login_cookie libbf::gui::retrieve() {
     if (error != nullptr) {
         /* ... handle the failure here */
         g_error_free(error);
-        throw libbf::gui::secret_not_found_exception();
+        throw libbf::os::secret_not_found_exception();
 
     } else if (password == nullptr) {
-        throw libbf::gui::secret_not_found_exception();
+        throw libbf::os::secret_not_found_exception();
 
     } else {
         auto j = nlohmann::json::parse((char*) password);
@@ -42,7 +42,7 @@ libbf::login_cookie libbf::gui::retrieve() {
     }
 }
 
-void libbf::gui::revoke() {
+void libbf::os::revoke() {
     GError* error = nullptr;
     secret_password_clear_sync(cookie_schema(), nullptr, &error, "site", "bigfinish.com", nullptr);
 }
