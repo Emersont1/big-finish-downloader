@@ -40,5 +40,6 @@ class download {
 
     static downloads_t get_downloads(login_cookie& cookie);
 };
-
+void from_json(const nlohmann::json& j, download& p);
+void to_json(nlohmann::json& j, const download& p);
 } // namespace libbf

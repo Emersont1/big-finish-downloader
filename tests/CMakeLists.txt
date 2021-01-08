@@ -24,3 +24,6 @@ target_link_libraries(download_file_test bf)
 
 add_executable(glade_login_test glade_login_test.cpp)
 target_link_libraries(glade_login_test ${GTK3_LIBRARIES})
+
+add_executable(api_login_test api_login_test.cpp)
+target_link_libraries(api_login_test cpr)
