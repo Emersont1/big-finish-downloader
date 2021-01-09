@@ -3,7 +3,6 @@
 #include <iostream>
 #include <thread>
 
-#include <cpr/cpr.h>
 #include <mime.h>
 
 #include <libbf/gui/modules/main_window.hpp>
@@ -22,13 +21,13 @@ int libbf::gui::main_window::download(libbf::download value, std::shared_future<
 
     if (value.m4b_available && settings.get_prefer_m4b()) {
         status_ii = "Downloading Main Feature";
-        std::string path = value.download_m4b(cookie, progress_callback);
+        auto path = value.download_m4b(cookie, progress_callback);
         status_ii = "Extracting Main Feature";
         helper::extract_zip(settings.get_path(), path, unzip_callback);
         std::filesystem::remove(path);
     } else if (settings.get_fallback_mp3() || !settings.get_prefer_m4b()) {
         status_ii = "Downloading Main Feature";
-        std::string path = value.download_mp3(cookie, progress_callback);
+        auto path = value.download_mp3(cookie, progress_callback);
         status_ii = "Extracting Main Feature";
         helper::extract_zip(settings.get_path(), path, unzip_callback);
         std::filesystem::remove(path);

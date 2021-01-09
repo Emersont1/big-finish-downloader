@@ -15,7 +15,7 @@ include_directories(
     ${GLIB_INCLUDE_DIRS}
 )
 
-add_library(bf-os
+add_library(bf-os SHARED
     src/linux/libsecret/cookie_schema.cpp
     src/linux/libsecret/secret_storage.cpp
     src/linux/settings.cpp

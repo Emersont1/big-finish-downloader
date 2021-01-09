@@ -1,8 +1,12 @@
 project(BigFinish)
 cmake_minimum_required(VERSION 3.10)
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+find_package(PkgConfig)
+if(${PkgConfig_FOUND})
+    pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+else()
+    find_package(GTK REQUIRED)
+endif()
 
 find_package(nlohmann_json REQUIRED)
 find_package(libzippp REQUIRED)
@@ -21,9 +25,12 @@ include_directories(
     include
     ${CMAKE_SOURCE_DIR}/libbf/include
     ${CMAKE_SOURCE_DIR}/libbf-os/include
+    ${CMAKE_SOURCE_DIR}/ext/cpr/include
 
     ${GTK3_INCLUDE_DIRS}
+    ${BZIP2_INCLUDE_DIR}
     ${CMAKE_BINARY_DIR}
+    ${CMAKE_BINARY_BIN}/_deps/curl-src/include
 )
 
 add_executable(big-finish-downloader-gtk 
@@ -52,7 +59,12 @@ add_executable(big-finish-downloader-gtk
 target_link_libraries(big-finish-downloader-gtk
     libzippp::libzippp
     bf-os
-    ${GTK3_LIBRARIES}
+
     pthread
     dl
 )
+if(NOT WIN32)
+target_link_libraries(big-finish-downloader-gtk ${GTK3_LIBRARIES})
+else()
+target_link_libraries(big-finish-downloader-gtk GTK)
+endif()

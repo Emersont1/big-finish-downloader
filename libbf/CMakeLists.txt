@@ -9,7 +9,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/ext/cpr/include
 )
 message( ${_VCPKG_INSTALLED_DIR}/include)
-add_library(bf
+add_library(bf SHARED
     src/login.cpp
     src/downloads.cpp
     src/downloads_parse.cpp

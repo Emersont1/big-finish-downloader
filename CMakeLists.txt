@@ -10,7 +10,10 @@ configure_file("${CMAKE_SOURCE_DIR}/config.hpp.in" "${CMAKE_BINARY_DIR}/config.h
 include_directories(${CMAKE_BINARY_BIN})
 
 include(${CMAKE_SOURCE_DIR}/pmm.cmake)
-set(PACKAGES nlohmann-json libzippp lexbor)
+set(PACKAGES nlohmann-json libzippp)
+if(WIN32)
+list(APPEND PACKAGES openssl GTK)
+endif()
 pmm(VCPKG REVISION 2020.11 REQUIRES ${PACKAGES})
 
 add_subdirectory(ext)
