@@ -26,4 +26,7 @@ target_link_libraries(bf-os
     ${LIBSECRET_LIBRARIES}
     ${GLIB_LIBRARIES}
 )
+
+include(${CMAKE_SOURCE_DIR}/gsettings.cmake)
+add_schemas(bf-os "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()

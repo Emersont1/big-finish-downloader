@@ -1,12 +1,14 @@
 project(BigFinish)
 cmake_minimum_required(VERSION 3.10)
 
+find_package(nlohmann_json REQUIRED)
+
 include_directories(
     include
     ${CMAKE_SOURCE_DIR}/ext/lexbor/source
     ${CMAKE_SOURCE_DIR}/ext/cpr/include
 )
-
+message( ${_VCPKG_INSTALLED_DIR}/include)
 add_library(bf
     src/login.cpp
     src/downloads.cpp
@@ -17,4 +19,5 @@ add_library(bf
 target_link_libraries(bf
     cpr
     lexbor
+    nlohmann_json::nlohmann_json
 )
