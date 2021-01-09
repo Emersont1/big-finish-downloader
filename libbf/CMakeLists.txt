@@ -7,8 +7,10 @@ include_directories(
     include
     ${CMAKE_SOURCE_DIR}/ext/lexbor/source
     ${CMAKE_SOURCE_DIR}/ext/cpr/include
+
+    ${CMAKE_BINARY_DIR}/_deps/curl-src/include
 )
-message( ${_VCPKG_INSTALLED_DIR}/include)
+
 add_library(bf SHARED
     src/login.cpp
     src/downloads.cpp

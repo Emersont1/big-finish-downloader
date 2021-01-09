@@ -30,7 +30,7 @@ include_directories(
     ${GTK3_INCLUDE_DIRS}
     ${BZIP2_INCLUDE_DIR}
     ${CMAKE_BINARY_DIR}
-    ${CMAKE_BINARY_BIN}/_deps/curl-src/include
+    ${CMAKE_BINARY_DIR}/_deps/curl-src/include
 )
 
 add_executable(big-finish-downloader-gtk 

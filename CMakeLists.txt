@@ -16,6 +16,10 @@ list(APPEND PACKAGES openssl GTK)
 endif()
 pmm(VCPKG REVISION 2020.11 REQUIRES ${PACKAGES})
 
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin CACHE PATH "")
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib CACHE PATH "")
+
+
 add_subdirectory(ext)
 
 add_subdirectory(libbf)
