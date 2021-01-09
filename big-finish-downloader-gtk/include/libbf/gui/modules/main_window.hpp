@@ -13,7 +13,7 @@
 
 namespace libbf::gui {
 class main_window {
-    std::string cache;
+    std::filesystem::path cache;
 
     std::promise<void> quit;
     std::shared_future<void> quitter;
