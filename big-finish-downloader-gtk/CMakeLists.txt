@@ -4,14 +4,18 @@ cmake_minimum_required(VERSION 3.10)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 
+find_package(nlohmann_json REQUIRED)
+find_package(libzippp REQUIRED)
+find_package(BZip2 REQUIRED)
+find_package(OpenSSL REQUIRED)
+find_package(ZLIB REQUIRED)
+
 include(${CMAKE_SOURCE_DIR}/bin2h.cmake)
 
 bin2h(SOURCE_FILE "glade/Login.glade" HEADER_FILE "${CMAKE_BINARY_DIR}/glade_login.hpp" VARIABLE_NAME "glade_login_str")
 bin2h(SOURCE_FILE "glade/Main.glade" HEADER_FILE "${CMAKE_BINARY_DIR}/glade_main.hpp" VARIABLE_NAME "glade_main_str")
 bin2h(SOURCE_FILE "glade/Preferences.glade" HEADER_FILE "${CMAKE_BINARY_DIR}/glade_prefs.hpp" VARIABLE_NAME "glade_prefs_str")
 bin2h(SOURCE_FILE "${CMAKE_SOURCE_DIR}/ext/db.json" HEADER_FILE "${CMAKE_BINARY_DIR}/db.hpp" VARIABLE_NAME "db_json")
-
-include(${CMAKE_SOURCE_DIR}/gsettings.cmake)
 
 include_directories(
     include
@@ -46,11 +50,9 @@ add_executable(big-finish-downloader-gtk
 )
 
 target_link_libraries(big-finish-downloader-gtk
-    CONAN_PKG::libzippp
+    libzippp::libzippp
     bf-os
     ${GTK3_LIBRARIES}
     pthread
     dl
 )
-
-add_schemas(big-finish-downloader-gtk "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")

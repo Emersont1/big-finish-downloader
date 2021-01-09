@@ -10,12 +10,10 @@ configure_file("${CMAKE_SOURCE_DIR}/config.hpp.in" "${CMAKE_BINARY_DIR}/config.h
 include_directories(${CMAKE_BINARY_BIN})
 
 include(${CMAKE_SOURCE_DIR}/pmm.cmake)
-pmm(CONAN DEBUG)
+set(PACKAGES nlohmann-json libzippp)
+pmm(VCPKG REVISION 2020.11 REQUIRES ${PACKAGES})
 
 add_subdirectory(ext)
-
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
 
 add_subdirectory(libbf)
 add_subdirectory(libbf-os)
