@@ -24,7 +24,7 @@ int libbf::gui::main_window::update_func(void* d) {
         auto a = gtk_tree_view_get_model(m->view_downloading);
         GtkTreeIter iter;
         if (gtk_tree_model_get_iter_first(a, &iter)) {
-            bool y;
+            std::uint64_t y = false;
             do {
                 int id;
                 gtk_tree_model_get(a, &iter, 1, &y, 3, &id, -1);
