@@ -1,6 +1,7 @@
 #include <gio/gio.h>
 
 #include <libbf/os/settings.hpp>
+#include <libbf/os/dirs.hpp>
 
 libbf::os::settings::settings() {
     data = (void*) g_settings_new("uk.et1.big-finish");
@@ -46,4 +47,8 @@ void libbf::os::settings::set_path(std::filesystem::path x) {
     }
 
     g_settings_set_string((GSettings*) data, "download-directory", path.c_str());
+}
+
+std::filesystem::path libbf::os::get_cache() {
+        return std::filesystem::path(std::getenv("HOME"))/".cache"/"big-finish";
 }
