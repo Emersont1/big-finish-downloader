@@ -72,3 +72,24 @@ target_link_libraries(big-finish-downloader-gtk
 
     )
 endif()
+
+# download theme
+if(WIN32)
+file(DOWNLOAD https://github.com/B00merang-Project/Windows-10/archive/3.2.zip ${CMAKE_BINARY_DIR}/win10.zip)
+file(ARCHIVE_EXTRACT INPUT ${CMAKE_BINARY_DIR}/win10.zip DESTINATION ${CMAKE_BINARY_DIR}/win10)
+file(MAKE_DIRECTORY ${directory}${CMAKE_BINARY_DIR}/share/themes/Windows10/gtk-3.0/)
+file(COPY ${CMAKE_BINARY_DIR}/win10/Windows-10-3.2/gtk-3.20 DESTINATION ${CMAKE_BINARY_DIR}/bin/share/themes/Windows10/gtk-3.0/)
+
+file(DOWNLOAD https://download.gnome.org/sources/adwaita-icon-theme/3.38/adwaita-icon-theme-3.38.0.tar.xz ${CMAKE_BINARY_DIR}/adwaita.tar.xz)
+file(ARCHIVE_EXTRACT INPUT ${CMAKE_BINARY_DIR}/adwaita.tar.xz DESTINATION ${CMAKE_BINARY_DIR}/adwaita)
+file(MAKE_DIRECTORY ${directory}${CMAKE_BINARY_DIR}/share/icons/)
+file(COPY ${CMAKE_BINARY_DIR}/adwaita/adwaita-icon-theme-3.38.0/Adwaita DESTINATION ${CMAKE_BINARY_DIR}/bin/share/icons)
+
+file(DOWNLOAD http://icon-theme.freedesktop.org/releases/hicolor-icon-theme-0.17.tar.xz ${CMAKE_BINARY_DIR}/hicolor.tar.xz)
+file(ARCHIVE_EXTRACT INPUT ${CMAKE_BINARY_DIR}/hicolor.tar.xz DESTINATION ${CMAKE_BINARY_DIR}/hicolor)
+file(MAKE_DIRECTORY ${directory}${CMAKE_BINARY_DIR}/share/icons/hicolor)
+file(COPY ${CMAKE_BINARY_DIR}/hicolor/hicolor-icon-theme-0.17/index.theme DESTINATION ${CMAKE_BINARY_DIR}/bin/share/icons/hicolor)
+
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/bin/etc/gtk-3.0)
+file(COPY ${CMAKE_SOURCE_DIR}/big-finish-downloader-gtk/settings.ini DESTINATION ${CMAKE_BINARY_DIR}/bin/etc/gtk-3.0)
+endif()
