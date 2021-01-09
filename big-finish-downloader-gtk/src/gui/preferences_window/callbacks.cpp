@@ -15,22 +15,23 @@ void libbf::gui::preferences_window::cancel_button_cb(GtkWidget* sender, void* d
 void libbf::gui::preferences_window::save_button_cb(GtkWidget* sender, void* d) {
     auto l = (libbf::gui::preferences_window*) d;
 
-    g_settings_set_boolean(l->settings, "prefer-m4b",
+    l->parent->settings.set_prefer_m4b(
                            gtk_switch_get_active((GtkSwitch*) l->m4b_slider));
-    g_settings_set_boolean(l->settings, "fallback-mp3",
+    l->parent->settings.set_fallback_mp3(
                            gtk_switch_get_active((GtkSwitch*) l->fallback_slider));
-    g_settings_set_boolean(l->settings, "download-extras",
+    l->parent->settings.set_download_extras(
                            gtk_switch_get_active((GtkSwitch*) l->bonus_slider));
 
     // now flatten the path
     std::string path(gtk_link_button_get_uri((GtkLinkButton*) l->pathlabel));
-    auto p = "file://" + std::string(std::getenv("HOME"));
+    std::string p = "file://";
 
     if (path.rfind(p, 0) == 0) {
-        path = "~" + path.substr(p.size());
+        path = path.substr(p.size());
     }
 
-    g_settings_set_string(l->settings, "download-directory", path.c_str());
+    l->parent->settings.set_path(path);
+
     gtk_widget_destroy(l->window);
 
     if (l->changed_dir) {

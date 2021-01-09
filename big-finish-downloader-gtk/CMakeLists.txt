@@ -59,12 +59,16 @@ add_executable(big-finish-downloader-gtk
 target_link_libraries(big-finish-downloader-gtk
     libzippp::libzippp
     bf-os
-
-    pthread
-    dl
 )
 if(NOT WIN32)
-target_link_libraries(big-finish-downloader-gtk ${GTK3_LIBRARIES})
+target_link_libraries(big-finish-downloader-gtk ${GTK3_LIBRARIES} pthread dl)
 else()
-target_link_libraries(big-finish-downloader-gtk GTK)
+target_link_libraries(big-finish-downloader-gtk
+    ${VCPKG_CMAKE_FIND_ROOT_PATH}/lib/gtk-3.0.lib
+    ${VCPKG_CMAKE_FIND_ROOT_PATH}/lib/gdk-3.0.lib
+    ${VCPKG_CMAKE_FIND_ROOT_PATH}/lib/glib-2.0.lib
+    ${VCPKG_CMAKE_FIND_ROOT_PATH}/lib/gobject-2.0.lib
+    ${VCPKG_CMAKE_FIND_ROOT_PATH}/lib/gdk_pixbuf-2.0.lib
+
+    )
 endif()

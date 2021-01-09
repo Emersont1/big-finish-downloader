@@ -2,15 +2,15 @@
 #include <filesystem>
 #include <iostream>
 
+#include <libbf/gui/modules/main_window.hpp>
 #include <libbf/gui/modules/preferences_window.hpp>
 #include <libbf/os/secret_storage.hpp>
+#include <libbf/os/settings.hpp>
 
 #include <glade_prefs.hpp>
 
 libbf::gui::preferences_window::preferences_window(libbf::gui::main_window* parent)
         : parent(parent), changed_dir(false) {
-    settings = g_settings_new("uk.et1.big-finish");
-
     GtkBuilder* builder = gtk_builder_new();
 
     gtk_builder_add_from_string(builder, (const gchar*) GLADE_PREFS_STR.data(),
@@ -29,21 +29,14 @@ libbf::gui::preferences_window::preferences_window(libbf::gui::main_window* pare
     pathlabel = GTK_WIDGET(gtk_builder_get_object(builder, "pathlabel"));
 
     // set items to default settings values
-    gtk_switch_set_active((GtkSwitch*) m4b_slider, g_settings_get_boolean(settings, "prefer-m4b"));
-    gtk_switch_set_active((GtkSwitch*) fallback_slider,
-                          g_settings_get_boolean(settings, "fallback-mp3"));
-    gtk_switch_set_active((GtkSwitch*) bonus_slider,
-                          g_settings_get_boolean(settings, "download-extras"));
+    gtk_switch_set_active((GtkSwitch*) m4b_slider, parent->settings.get_prefer_m4b());
+    gtk_switch_set_active((GtkSwitch*) fallback_slider, parent->settings.get_fallback_mp3());
+    gtk_switch_set_active((GtkSwitch*) bonus_slider, parent->settings.get_download_extras());
 
-    std::string p(g_settings_get_string(settings, "download-directory"));
-    if (p[0] == '~') {
-        p = std::getenv("HOME") + p.substr(1);
-    }
-
-    gtk_link_button_set_uri((GtkLinkButton*) pathlabel, ("file://" + p).c_str());
+    gtk_link_button_set_uri((GtkLinkButton*) pathlabel, ("file://" + parent->settings.get_path().string()).c_str());
     gtk_button_set_label(
             (GtkButton*) pathlabel,
-            (std::string("Currently: ") + g_settings_get_string(settings, "download-directory"))
+            (std::string("Currently: ") + parent->settings.get_path().string())
                     .c_str());
 
     g_signal_connect(browse_button, "clicked", G_CALLBACK(&change_dir_cb), this);

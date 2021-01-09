@@ -7,9 +7,11 @@
 
 libbf::gui::login::login() {
     GtkBuilder* builder = gtk_builder_new();
-
+    GError* x=nullptr;
     gtk_builder_add_from_string(builder, (const gchar*) GLADE_LOGIN_STR.data(),
-                                GLADE_LOGIN_STR.size(), nullptr);
+                                GLADE_LOGIN_STR.size(), &x);
+    if (x!=nullptr)
+    std::cout << x->message << std::endl;
 
     window = GTK_WIDGET(gtk_builder_get_object(builder, "login_window"));
     gtk_builder_connect_signals(builder, NULL);

@@ -12,7 +12,7 @@ include_directories(
 )
 
 add_library(bf SHARED
-    src/login.cpp
+    src/login_req.cpp
     src/downloads.cpp
     src/downloads_parse.cpp
     src/downloads_scraper.cpp

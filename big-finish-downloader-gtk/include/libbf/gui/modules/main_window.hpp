@@ -26,8 +26,6 @@ class main_window {
     std::vector<int> downloaded_ids;
     std::map<std::string, bool> shoud_download;
 
-    libbf::os::settings settings;
-
     std::unique_ptr<libbf::gui::preferences_window> p;
 
     GtkWidget* title_bar;
@@ -63,6 +61,7 @@ class main_window {
     void add_to_view(std::pair<libbf::download, GdkPixbuf*>&);
 
   public:
+    libbf::os::settings settings;
     main_window(libbf::login_cookie);
     ~main_window();
     void changed_dir();
