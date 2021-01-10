@@ -2,6 +2,8 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 
+#include <libbf/os/dirs.hpp>
+
 #include <libbf/gui/modules/main_window.hpp>
 
 void libbf::gui::main_window::load_downloaded() {
@@ -16,7 +18,7 @@ void libbf::gui::main_window::load_downloaded() {
     }
 
     gtk_link_button_set_uri((GtkLinkButton*) dest_dir_button,
-                            ("file://" + settings.get_path().string()).c_str());
+                            (libbf::os::file_prefix() + settings.get_path().string()).c_str());
     gtk_button_set_label((GtkButton*) dest_dir_button,
                          ("Open Library folder (" + settings.get_path().string() + ")").c_str());
 }

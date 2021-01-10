@@ -4,6 +4,7 @@
 #include <libbf/gui/modules/main_window.hpp>
 #include <libbf/gui/modules/preferences_window.hpp>
 #include <libbf/os/secret_storage.hpp>
+#include <libbf/os/dirs.hpp>
 
 #include <glade_prefs.hpp>
 
@@ -24,11 +25,11 @@ void libbf::gui::preferences_window::save_button_cb(GtkWidget* sender, void* d) 
 
     // now flatten the path
     std::string path(gtk_link_button_get_uri((GtkLinkButton*) l->pathlabel));
-    std::string p = "file://";
-
+    std::string p = libbf::os::file_prefix();
+    if(!p.empty()){
     if (path.rfind(p, 0) == 0) {
         path = path.substr(p.size());
-    }
+    }}
 
     l->parent->settings.set_path(path);
 
@@ -55,12 +56,9 @@ void libbf::gui::preferences_window::change_dir_cb(GtkWidget* sender, void* d) {
     if (res == GTK_RESPONSE_ACCEPT) {
         auto filename = gtk_file_chooser_get_filename(chooser);
         std::string path(filename);
-        auto p = std::string(std::getenv("HOME"));
+        auto p = libbf::os::get_home();
         std::string p2 = path;
-        if (path.rfind(p, 0) == 0) {
-            p2 = "~" + path.substr(p.size());
-        }
-        gtk_link_button_set_uri((GtkLinkButton*) l->pathlabel, ("file://" + path).c_str());
+        gtk_link_button_set_uri((GtkLinkButton*) l->pathlabel, (libbf::os::file_prefix() + path).c_str());
         gtk_button_set_label((GtkButton*) l->pathlabel, ("Currently: " + p2).c_str());
         g_free(filename);
         l->changed_dir = true;

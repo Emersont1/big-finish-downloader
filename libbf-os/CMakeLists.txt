@@ -10,8 +10,6 @@ find_package(PkgConfig)
 if(${PkgConfig_FOUND})
     pkg_search_module(LIBSECRET REQUIRED libsecret-1)
     pkg_check_modules(GLIB REQUIRED glib-2.0)
-else()
-    find_package(GLib REQUIRED)
 endif()
 
 include_directories(
@@ -26,20 +24,39 @@ if(UNIX AND NOT MACOSX)
     list(APPEND SOURCES
         src/linux/libsecret/cookie_schema.cpp
         src/linux/libsecret/secret_storage.cpp
+        src/linux/dirs.cpp
+    )
+elseif(WIN32)
+    list(APPEND SOURCES
+        src/windows/dirs.cpp
+        src/none/secrets.cpp
     )
 else()
-    list(APPEND SOURCES  src/none.cpp)
+    list(APPEND SOURCES  src/none/secrets.cpp)
 endif()
 
 add_library(bf-os SHARED
     ${SOURCES}
 )
 
-target_link_libraries(bf-os
-    bf
-    ${LIBSECRET_LIBRARIES}
-    ${GLIB_LIBRARIES}
-)
 
 include(${CMAKE_SOURCE_DIR}/gsettings.cmake)
-add_schemas(bf-os "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
+
+if(NOT WIN32)
+    target_link_libraries(bf-os
+        bf
+        ${LIBSECRET_LIBRARIES}
+        ${GLIB_LIBRARIES}
+    )
+    add_schemas(bf-os "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}")
+else()
+    target_link_libraries(bf-os
+        bf
+        ${VCPKG_DIR}/lib/gio-2.0.lib
+    )
+    message(${VCPKG_DIR})
+
+    set(GSETTINGS_COMPILE_IN_PLACE OFF CACHE BOOL "" FORCE)
+    add_schemas(bf-os "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}" "${VCPKG_DIR}/tools/glib/glib-compile-schemas.exe")
+endif()
+

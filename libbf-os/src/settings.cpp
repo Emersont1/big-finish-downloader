@@ -34,21 +34,17 @@ void libbf::os::settings::set_download_extras(bool x) {
 std::filesystem::path libbf::os::settings::get_path() {
     auto x = std::string(g_settings_get_string((GSettings*) data, "download-directory"));
     if (x[0] == '~')
-        return std::getenv("HOME") + x.substr(1);
+        return libbf::os::get_home()/ x.substr(2);
     else
         return x;
 }
 
 void libbf::os::settings::set_path(std::filesystem::path x) {
     auto path = x.string();
-    auto h = std::string(std::getenv("HOME"));
+    auto h = libbf::os::get_home().string();
     if (path.rfind(h, 0) == 0) {
         path = "~" + path.substr(h.size());
     }
 
     g_settings_set_string((GSettings*) data, "download-directory", path.c_str());
-}
-
-std::filesystem::path libbf::os::get_cache() {
-        return std::filesystem::path(std::getenv("HOME"))/".cache"/"big-finish";
 }
