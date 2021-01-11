@@ -44,4 +44,4 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: windows-installer
-        path: ${{github.workspace}}/build/${{env.BUILD_TYPE}}/Big Finish Downloader-*.exe
+        path: ${{github.workspace}}/build/*.exe
