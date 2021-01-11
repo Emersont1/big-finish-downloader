@@ -41,6 +41,11 @@ jobs:
       shell: bash
       run: cmake --build . --config $BUILD_TYPE
 
+    - name: Build Installer
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      run: C:/Program Files/CMake/bin/cpack --config $BUILD_TYPE
+
     - uses: actions/upload-artifact@v2
       with:
         name: windows-installer
