@@ -48,7 +48,7 @@ if(NOT WIN32)
         ${LIBSECRET_LIBRARIES}
         ${GLIB_LIBRARIES}
     )
-    add_schemas(bf-os "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}")
+    add_schemas(bf-os "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_BINARY_DIR}")
 else()
     target_link_libraries(bf-os
         bf
@@ -57,6 +57,6 @@ else()
     message(${VCPKG_DIR})
 
     set(GSETTINGS_COMPILE_IN_PLACE OFF CACHE BOOL "" FORCE)
-    add_schemas(bf-os "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}" "${VCPKG_DIR}/tools/glib/glib-compile-schemas.exe")
+    add_schemas(bf-os "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "${VCPKG_DIR}/tools/glib/glib-compile-schemas.exe")
 endif()
 

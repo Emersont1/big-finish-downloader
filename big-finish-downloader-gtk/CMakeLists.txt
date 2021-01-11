@@ -58,6 +58,7 @@ ${CMAKE_BINARY_DIR}/glade_main.hpp
 if(WIN32)
     add_executable(big-finish-downloader-gtk WIN32
         src/winmain.cpp # only gets used on windows
+        ${CMAKE_SOURCE_DIR}/icons/icons.rc
         ${SOURCES}
     )
 else()
@@ -82,14 +83,5 @@ target_link_libraries(big-finish-downloader-gtk
 
     )
     set(GSETTINGS_COMPILE_IN_PLACE OFF CACHE BOOL "" FORCE)
-    add_schemas(big-finish-downloader-gtk "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}" "${VCPKG_DIR}/tools/glib/glib-compile-schemas.exe")
-endif()
-
-# download theme
-if(WIN32)
-file(DOWNLOAD https://github.com/Emersont1/win-gtk-base/archive/v3.zip ${CMAKE_BINARY_DIR}/content.zip)
-file(ARCHIVE_EXTRACT INPUT ${CMAKE_BINARY_DIR}/content.zip DESTINATION ${CMAKE_BINARY_DIR}/content)
-file(MAKE_DIRECTORY ${directory}${CMAKE_BINARY_DIR}/share)
-file(COPY ${CMAKE_BINARY_DIR}/content/win-gtk-base-3/share DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE} FOLLOW_SYMLINK_CHAIN)
-
+    add_schemas(big-finish-downloader-gtk "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "${VCPKG_DIR}/tools/glib/glib-compile-schemas.exe")
 endif()
