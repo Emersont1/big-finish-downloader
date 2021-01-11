@@ -15,4 +15,4 @@ ninja
 ```
 
 # Icon Attribution
-The Tardus Icon was made by [Smash Icons](https://www.flaticon.com/authors/smashicons) from [Flaticon.com](https://www.flaticon.com/)
+The Tardis Icon was made by [Smash Icons](https://www.flaticon.com/authors/smashicons) from [Flaticon.com](https://www.flaticon.com/)
