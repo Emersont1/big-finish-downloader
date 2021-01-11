@@ -16,8 +16,7 @@ void libbf::gui::main_window::widgets() {
     g_signal_connect(window, "destroy", G_CALLBACK(&close_cb), this);
 
     status_bar = GTK_WIDGET(gtk_builder_get_object(builder, "status_bar"));
-    gtk_label_set_text((GtkLabel*) status_bar,
-                       ("You are logged in as: " + cookie.get_email()).c_str());
+    gtk_label_set_text((GtkLabel*) status_bar, "You are logged in");
 
     title_bar = GTK_WIDGET(gtk_builder_get_object(builder, "title_bar"));
     gtk_header_bar_set_subtitle((GtkHeaderBar*) title_bar,

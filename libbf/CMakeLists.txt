@@ -10,7 +10,6 @@ include_directories(
 add_library(bf
     src/login.cpp
     src/downloads.cpp
-    src/downloads_parse.cpp
     src/downloads_scraper.cpp
 )
 
