@@ -44,7 +44,7 @@ jobs:
     - name: Build Installer
       working-directory: ${{github.workspace}}/build
       shell: bash
-      run: C:/Program Files/CMake/bin/cpack --config $BUILD_TYPE
+      run: C:/Program\ Files/CMake/bin/cpack --config $BUILD_TYPE
 
     - uses: actions/upload-artifact@v2
       with:
