@@ -29,7 +29,7 @@ if(UNIX AND NOT MACOSX)
 elseif(WIN32)
     list(APPEND SOURCES
         src/windows/dirs.cpp
-        src/none/secrets.cpp
+        src/windows/secrets.cpp
     )
 else()
     list(APPEND SOURCES  src/none/secrets.cpp)
