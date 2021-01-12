@@ -13,7 +13,7 @@ if(WIN32)
 
   # download theme
 
-  set(CONT_VERS 5)
+  set(CONT_VERS 8)
 
   if(NOT EXISTS ${CMAKE_BINARY_DIR}/content.zip)
   file(DOWNLOAD https://github.com/Emersont1/win-gtk-base/archive/v${CONT_VERS}.zip ${CMAKE_BINARY_DIR}/content.zip)
