@@ -31,30 +31,6 @@
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkHeaderBar" id="title_bar">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="title" translatable="yes">Big Finish Downloader</property>
-            <property name="subtitle" translatable="yes">Version 0.1</property>
-            <property name="show-close-button">True</property>
-            <child>
-              <object class="GtkButton" id="pref_button">
-                <property name="label">gtk-preferences</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <property name="use-stock">True</property>
-                <property name="always-show-image">True</property>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
           <!-- n-columns=2 n-rows=3 -->
           <object class="GtkGrid">
             <property name="visible">True</property>
@@ -349,6 +325,30 @@
           </packing>
         </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="title_bar">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="title" translatable="yes">Big Finish Downloader</property>
+            <property name="subtitle" translatable="yes">Version 0.1</property>
+            <property name="show-close-button">True</property>
+            <child>
+              <object class="GtkButton" id="pref_button">
+                <property name="label">gtk-preferences</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="use-stock">True</property>
+                <property name="always-show-image">True</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
     </child>
   </object>
 </interface>
