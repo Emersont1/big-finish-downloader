@@ -16,8 +16,6 @@ class preferences_window {
     GtkWidget* pathlabel;
     GtkWidget* window;
 
-    GSettings* settings;
-
     libbf::gui::main_window* parent;
     bool changed_dir;
 

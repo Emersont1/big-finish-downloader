@@ -7,7 +7,7 @@
 
 void helper::extract_zip(std::filesystem::path out, std::filesystem::path in,
                          helper::progress_callback progress) {
-    libzippp::ZipArchive zf(in);
+    libzippp::ZipArchive zf(in.string());
     zf.open(libzippp::ZipArchive::ReadOnly);
 
     std::vector<libzippp::ZipEntry> entries = zf.getEntries();

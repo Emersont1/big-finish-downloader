@@ -3,7 +3,8 @@
 #include <libbf/gui/alert_box.hpp>
 #include <libbf/gui/modules/main_window.hpp>
 #include <libbf/gui/modules/preferences_window.hpp>
-#include <libbf/gui/secret_storage.hpp>
+#include <libbf/os/dirs.hpp>
+#include <libbf/os/secret_storage.hpp>
 
 #include <glade_prefs.hpp>
 
@@ -15,22 +16,21 @@ void libbf::gui::preferences_window::cancel_button_cb(GtkWidget* sender, void* d
 void libbf::gui::preferences_window::save_button_cb(GtkWidget* sender, void* d) {
     auto l = (libbf::gui::preferences_window*) d;
 
-    g_settings_set_boolean(l->settings, "prefer-m4b",
-                           gtk_switch_get_active((GtkSwitch*) l->m4b_slider));
-    g_settings_set_boolean(l->settings, "fallback-mp3",
-                           gtk_switch_get_active((GtkSwitch*) l->fallback_slider));
-    g_settings_set_boolean(l->settings, "download-extras",
-                           gtk_switch_get_active((GtkSwitch*) l->bonus_slider));
+    l->parent->settings.set_prefer_m4b(gtk_switch_get_active((GtkSwitch*) l->m4b_slider));
+    l->parent->settings.set_fallback_mp3(gtk_switch_get_active((GtkSwitch*) l->fallback_slider));
+    l->parent->settings.set_download_extras(gtk_switch_get_active((GtkSwitch*) l->bonus_slider));
 
     // now flatten the path
     std::string path(gtk_link_button_get_uri((GtkLinkButton*) l->pathlabel));
-    auto p = "file://" + std::string(std::getenv("HOME"));
-
-    if (path.rfind(p, 0) == 0) {
-        path = "~" + path.substr(p.size());
+    std::string p = libbf::os::file_prefix();
+    if (!p.empty()) {
+        if (path.rfind(p, 0) == 0) {
+            path = path.substr(p.size());
+        }
     }
 
-    g_settings_set_string(l->settings, "download-directory", path.c_str());
+    l->parent->settings.set_path(path);
+
     gtk_widget_destroy(l->window);
 
     if (l->changed_dir) {
@@ -54,12 +54,10 @@ void libbf::gui::preferences_window::change_dir_cb(GtkWidget* sender, void* d) {
     if (res == GTK_RESPONSE_ACCEPT) {
         auto filename = gtk_file_chooser_get_filename(chooser);
         std::string path(filename);
-        auto p = std::string(std::getenv("HOME"));
+        auto p = libbf::os::get_home();
         std::string p2 = path;
-        if (path.rfind(p, 0) == 0) {
-            p2 = "~" + path.substr(p.size());
-        }
-        gtk_link_button_set_uri((GtkLinkButton*) l->pathlabel, ("file://" + path).c_str());
+        gtk_link_button_set_uri((GtkLinkButton*) l->pathlabel,
+                                (libbf::os::file_prefix() + path).c_str());
         gtk_button_set_label((GtkButton*) l->pathlabel, ("Currently: " + p2).c_str());
         g_free(filename);
         l->changed_dir = true;
@@ -74,7 +72,7 @@ void libbf::gui::preferences_window::logout_cb(GtkWidget* sender, void* d) {
                          "Confirm Logout", alert::Style::Question, alert::Buttons::YesNo);
 
     if (x == alert::Selection::Yes) {
-        libbf::gui::revoke();
+        libbf::os::revoke();
         gtk_widget_destroy(l->window);
         gtk_main_quit();
     }

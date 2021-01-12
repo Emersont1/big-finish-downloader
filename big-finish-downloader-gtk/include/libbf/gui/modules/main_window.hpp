@@ -7,12 +7,13 @@
 
 #include <libbf/downloads.hpp>
 #include <libbf/gui/modules/preferences_window.hpp>
+#include <libbf/os/settings.hpp>
 
 #include <gtk/gtk.h>
 
 namespace libbf::gui {
 class main_window {
-    std::string cache;
+    std::filesystem::path cache;
 
     std::promise<void> quit;
     std::shared_future<void> quitter;
@@ -24,10 +25,6 @@ class main_window {
     std::vector<std::pair<libbf::download, GdkPixbuf*>> items;
     std::vector<int> downloaded_ids;
     std::map<std::string, bool> shoud_download;
-
-    GSettings* settings;
-    std::string dest_dir;
-    bool prefer_m4b, fallback_mp3, download_extras;
 
     std::unique_ptr<libbf::gui::preferences_window> p;
 
@@ -64,6 +61,7 @@ class main_window {
     void add_to_view(std::pair<libbf::download, GdkPixbuf*>&);
 
   public:
+    libbf::os::settings settings;
     main_window(libbf::login_cookie);
     ~main_window();
     void changed_dir();

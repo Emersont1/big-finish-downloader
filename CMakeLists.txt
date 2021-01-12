@@ -10,15 +10,40 @@ configure_file("${CMAKE_SOURCE_DIR}/config.hpp.in" "${CMAKE_BINARY_DIR}/config.h
 include_directories(${CMAKE_BINARY_BIN})
 
 include(${CMAKE_SOURCE_DIR}/pmm.cmake)
-pmm(CONAN DEBUG)
+set(PACKAGES nlohmann-json libzippp)
+if(WIN32)
+list(APPEND PACKAGES openssl GTK curl)
+endif()
+pmm(VCPKG REVISION 2020.11 REQUIRES ${PACKAGES})
 
-add_subdirectory(ext)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin CACHE PATH "")
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib CACHE PATH "")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib)
+# Second, for multi-config builds (e.g. msvc)
+foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
+    string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG2)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG2} ${CMAKE_BINARY_DIR}/bin CACHE PATH "")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG2} ${CMAKE_BINARY_DIR}/lib CACHE PATH "")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG2} ${CMAKE_BINARY_DIR}/lib CACHE PATH "")
+endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+if(WIN32)
+set(VCPKG_DIR ${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET} CACHE PATH "")
+endif()
+
+add_subdirectory(ext EXCLUDE_FROM_ALL)
 
 add_subdirectory(libbf)
+add_subdirectory(libbf-os)
 
 add_subdirectory(big-finish-downloader-gtk)
 
-add_subdirectory(tests)
+option(BUILD_TESTS OFF "build Tests")
+if(BUILD_TESTS)
+    add_subdirectory(tests)
+endif()
+
+include(install.cmake)
