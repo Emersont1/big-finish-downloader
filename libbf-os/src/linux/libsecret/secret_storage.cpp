@@ -11,7 +11,8 @@ void libbf::os::store(libbf::login_cookie l) {
     GError* error = nullptr;
     nlohmann::json j = l;
     secret_password_store_sync(cookie_schema(), SECRET_COLLECTION_DEFAULT, "Big Finish Login",
-                               j.dump().c_str(), nullptr, &error, "site", "bigfinish.com", nullptr);
+                               j.dump().c_str(), nullptr, &error, "version", "1", "email",
+                               l.get_email().c_str(), nullptr);
 
     if (error != nullptr) {
         g_error_free(error);
@@ -23,21 +24,38 @@ libbf::login_cookie libbf::os::retrieve() {
     GError* error = nullptr;
 
     /* The attributes used to lookup the password should conform to the schema. */
-    gchar* password = secret_password_lookup_sync(cookie_schema(), nullptr, &error, "site",
-                                                  "bigfinish.com", nullptr);
+    GList* secret = secret_password_search_sync(cookie_schema(), SECRET_SEARCH_NONE, nullptr,
+                                                &error, "version", "1", nullptr);
 
     if (error != nullptr) {
         /* ... handle the failure here */
         g_error_free(error);
         throw libbf::os::secret_not_found_exception();
 
-    } else if (password == nullptr) {
+    } else if (secret == nullptr) {
         throw libbf::os::secret_not_found_exception();
 
     } else {
-        auto j = nlohmann::json::parse((char*) password);
+        auto retrievable = SECRET_RETRIEVABLE(secret->data);
+        auto value = secret_retrievable_retrieve_secret_sync(retrievable, nullptr, &error);
+        if (error != nullptr) {
+            /* ... handle the failure here */
+            g_error_free(error);
+            throw libbf::os::secret_not_found_exception();
+        }
+        if (value == nullptr) {
+            throw libbf::os::secret_not_found_exception();
+        }
+        gsize length;
+        auto pass = secret_value_get(value, &length);
+        std::string secret_json(pass);
 
-        secret_password_free(password);
+        auto attr = secret_retrievable_get_attributes(retrievable);
+        std::string email((char*) g_hash_table_lookup(attr, "email"));
+
+        auto j = nlohmann::json::parse(secret_json);
+
+        g_list_free(secret);
         return j;
     }
 }
