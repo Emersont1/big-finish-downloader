@@ -4,9 +4,9 @@
 
 #include <libbf/gui/modules/main_window.hpp>
 #include <libbf/gui/modules/preferences_window.hpp>
+#include <libbf/os/dirs.hpp>
 #include <libbf/os/secret_storage.hpp>
 #include <libbf/os/settings.hpp>
-#include <libbf/os/dirs.hpp>
 
 #include <glade_prefs.hpp>
 
@@ -34,11 +34,12 @@ libbf::gui::preferences_window::preferences_window(libbf::gui::main_window* pare
     gtk_switch_set_active((GtkSwitch*) fallback_slider, parent->settings.get_fallback_mp3());
     gtk_switch_set_active((GtkSwitch*) bonus_slider, parent->settings.get_download_extras());
 
-    gtk_link_button_set_uri((GtkLinkButton*) pathlabel, (libbf::os::file_prefix() + parent->settings.get_path().string()).c_str());
+    gtk_link_button_set_uri(
+            (GtkLinkButton*) pathlabel,
+            (libbf::os::file_prefix() + parent->settings.get_path().string()).c_str());
     gtk_button_set_label(
             (GtkButton*) pathlabel,
-            (std::string("Currently: ") + parent->settings.get_path().string())
-                    .c_str());
+            (std::string("Currently: ") + parent->settings.get_path().string()).c_str());
 
     g_signal_connect(browse_button, "clicked", G_CALLBACK(&change_dir_cb), this);
     g_signal_connect(cancel_button, "clicked", G_CALLBACK(&cancel_button_cb), this);

@@ -71,6 +71,7 @@ target_link_libraries(big-finish-downloader-gtk
     libzippp::libzippp
     bf-os
 )
+
 if(NOT WIN32)
 target_link_libraries(big-finish-downloader-gtk ${GTK3_LIBRARIES} pthread dl)
 else()

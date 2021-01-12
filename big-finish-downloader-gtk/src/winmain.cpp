@@ -3,6 +3,6 @@
 
 int main(int argc, char** argv);
 
-void WinMain(){
+void WinMain() {
     main(0, nullptr);
 }

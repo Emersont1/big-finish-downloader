@@ -1,7 +1,7 @@
 #include <gio/gio.h>
 
-#include <libbf/os/settings.hpp>
 #include <libbf/os/dirs.hpp>
+#include <libbf/os/settings.hpp>
 
 libbf::os::settings::settings() {
     data = (void*) g_settings_new("uk.et1.big-finish");
@@ -34,7 +34,7 @@ void libbf::os::settings::set_download_extras(bool x) {
 std::filesystem::path libbf::os::settings::get_path() {
     auto x = std::string(g_settings_get_string((GSettings*) data, "download-directory"));
     if (x[0] == '~')
-        return libbf::os::get_home()/ x.substr(2);
+        return libbf::os::get_home() / x.substr(2);
     else
         return x;
 }
