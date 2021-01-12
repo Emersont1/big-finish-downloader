@@ -13,11 +13,11 @@ if(WIN32)
 
   # download theme
   if(NOT EXISTS ${CMAKE_BINARY_DIR}/content.zip)
-  file(DOWNLOAD https://github.com/Emersont1/win-gtk-base/archive/v3.zip ${CMAKE_BINARY_DIR}/content.zip)
+  file(DOWNLOAD https://github.com/Emersont1/win-gtk-base/archive/v4.zip ${CMAKE_BINARY_DIR}/content.zip)
   endif()
   file(ARCHIVE_EXTRACT INPUT ${CMAKE_BINARY_DIR}/content.zip DESTINATION ${CMAKE_BINARY_DIR}/content)
   file(MAKE_DIRECTORY ${directory}${CMAKE_BINARY_DIR}/share)
-  file(COPY ${CMAKE_BINARY_DIR}/content/win-gtk-base-3/share DESTINATION ${CMAKE_BINARY_DIR} FOLLOW_SYMLINK_CHAIN)
+  file(COPY ${CMAKE_BINARY_DIR}/content/win-gtk-base-4/share DESTINATION ${CMAKE_BINARY_DIR} FOLLOW_SYMLINK_CHAIN)
 
   set(CPACK_GENERATOR NSIS)
   set(CPACK_PACKAGE_NAME "Big Finish Downloader")
