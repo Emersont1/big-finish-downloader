@@ -10,36 +10,13 @@ url="https://github.com/Emersont1/big-finish-downloader"
 license=('MIT')
 depends=(gtk3 libsecret curl)
 makedepends=(cmake gcc)
-source=("git+https://github.com/Emersont1/$pkgname/#tag=v$origver")
+source=("https://github.com/Emersont1/big-finish-downloader/releases/download/v1.0-beta-1/bin.zip")
 
 md5sums=('SKIP')
 sha256sums=('SKIP')
 
-prepare() {
-if [ ! -d $srcdir/$pkgname/build ]; then
-    mkdir $srcdir/$pkgname/build
-fi
-cd $srcdir/$pkgname/build
-git submodule update --init --recursive
-cmake ..
-}
-
-build() {
-cd $srcdir/$pkgname/build
-make -j$(nproc)
-}
-
-check() {
-    if [ -f $srcdir/$pkgname/build/share/glib-2.0/schemas/gschemas.compiled ]; then
-         rm $srcdir/$pkgname/build/share/glib-2.0/schemas/gschemas.compiled
-    fi
-}
-
 package() {
-    mkdir $pkgdir/usr
-    cd $srcdir/$pkgname/build
-    make DESTDIR=$pkgdir/usr install
-    chmod 755 $pkgdir/usr/bin/big-finish-downloader-gtk
-    install -Dm644 $srcdir/$pkgname/icons/tardis.svg $pkgdir/usr/share/pixmaps/big-finish-downloader.svg
-    install -Dm644 $srcdir/$pkgname/packaging/Big-Finish-Downloader.desktop $pkgdir/usr/share/applications/big-finish-downloader.desktop
+    install -Ddm755 $srcdir/bin/ $pkgdir/usr
+    install -Ddm644 $srcdir/lib/ $pkgdir/usr
+    install -Ddm644 $srcdir/share/ $pkgdir/usr
 }

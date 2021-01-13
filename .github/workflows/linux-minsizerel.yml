@@ -45,8 +45,8 @@ jobs:
       working-directory: ${{github.workspace}}/build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --build . --config $BUILD_TYPE
-    
+      run: make
+  
     - name: Delete Precompiled Schemas
       working-directory: ${{github.workspace}}/build
       shell: bash
@@ -56,12 +56,12 @@ jobs:
       working-directory: ${{github.workspace}}/build
       shell: bash
       run: |
-        make DESTDIR=out install
-        chmod 755 out/bin/big-finish-downloader-gtk
-        install -Dm644 ../icons/tardis.svg out/share/pixmaps/big-finish-downloader.svg
-        install -Dm644 ../packaging/Big-Finish-Downloader.desktop out/share/applications/big-finish-downloader.desktop
+        make DESTDIR=$GITHUB_WORKSPACE/out install
+        chmod 755 $GITHUB_WORKSPACE/out/bin/big-finish-downloader-gtk
+        install -Dm644 ../icons/tardis.svg $GITHUB_WORKSPACE/out/share/pixmaps/big-finish-downloader.svg
+        install -Dm644 ../packaging/Big-Finish-Downloader.desktop $GITHUB_WORKSPACE/out/share/applications/big-finish-downloader.desktop
 
     - uses: actions/upload-artifact@v2
       with:
         name: bin
-        path: ${{github.workspace}}/build/out
+        path: ${{github.workspace}}/out
