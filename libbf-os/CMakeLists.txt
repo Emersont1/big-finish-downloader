@@ -48,6 +48,7 @@ if(NOT WIN32)
         ${LIBSECRET_LIBRARIES}
         ${GLIB_LIBRARIES}
     )
+    set(GSETTINGS_COMPILE_IN_PLACE OFF CACHE BOOL "" FORCE)
     add_schemas(bf-os "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" "")
 else()
     target_link_libraries(bf-os
