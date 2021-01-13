@@ -58,11 +58,13 @@ ${CMAKE_BINARY_DIR}/glade_main.hpp
 if(WIN32)
     add_executable(big-finish-downloader-gtk WIN32
         src/winmain.cpp # only gets used on windows
+        src/gui/linkbutton/windows.cpp
         ${CMAKE_SOURCE_DIR}/icons/icons.rc
         ${SOURCES}
     )
 else()
     add_executable(big-finish-downloader-gtk
+        src/gui/linkbutton/linux.cpp
         ${SOURCES}
     )
 endif()
