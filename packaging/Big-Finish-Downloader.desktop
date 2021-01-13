@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Big Finish Downloader
+TryExec=big-finish-downloader-gtk
+Icon=big-finish-downloader
+Type=Application
+Categories=GTK;GNOME;Utility;
