@@ -1,4 +1,4 @@
-name: CMake
+name: Linux Release (CMake)
 
 on: [push]
 
