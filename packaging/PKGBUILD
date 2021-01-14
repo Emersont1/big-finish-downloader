@@ -19,5 +19,4 @@ package() {
     install -Ddm755 $srcdir/bin/ $pkgdir/usr
     install -Ddm644 $srcdir/lib/ $pkgdir/usr
     install -Ddm644 $srcdir/share/ $pkgdir/usr
-    glib-compile-schemas /app/share/glib-2.0/schemas
 }
