@@ -13,6 +13,11 @@
       This is a program downloads your titles from the big finish website into a folder of your choosing
     </p>
   </description>
+  <content_rating type="oars-1.1" />
+  <url type="homepage">https://github.com/Emersont1/big-finish-downloader</url>
+  <releases>
+    <release version="1.0.0.3" date="2021-01-15"/>
+	</releases>
   
   <launchable type="desktop-id">Big-Finish-Downloader.desktop</launchable>
   <screenshots>
