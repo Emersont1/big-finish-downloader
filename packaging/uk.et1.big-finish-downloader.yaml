@@ -15,14 +15,17 @@ modules:
   - name: files
     buildsystem: simple
     build-commands:
-      - tar -xvf bin.tar.gz
-      - cp -r bin /app
-      - cp -r lib /app
-      - cp -r share /app
-      - ls /app/bin
-      - chmod 755 /app/bin/big-finish-downloader-gtk
-      - glib-compile-schemas /app/share/glib-2.0/schemas
+      - mkdir build
+      - cd build
+      - cmake .. -DCMAKE_BUILD_TYPE=MinSizeRel
+      - make
+      - make DESTDIR=${FLATPAK_DEST} install
+      - chmod 755 ${FLATPAK_DEST}/bin/big-finish-downloader-gtk
+      - install -Dm644 -t ${FLATPAK_DEST}/share/pixmaps ../icons/tardis.svg
+      - install -Dm644 -t ${FLATPAK_DEST}/share/applications ../packaging/Big-Finish-Downloader.desktop
+      - install -Dm644 -t "${FLATPAK_DEST}/share/appdata/" ../packaging/uk.et1.big-finish-downloader.metainfo.xml
+      
     sources:
-      - type: file
-        url: https://github.com/Emersont1/big-finish-downloader/releases/download/v1.0-beta-2/bin.tar.gz
-        sha256: 70160c9a5ac4a31d4f6d88cb82572e87640d6f191fde348e763925b9371d2940
+      - type: git
+        url: https://github.com/Emersont1/big-finish-downloader
+        tag: v1.0-beta-3
