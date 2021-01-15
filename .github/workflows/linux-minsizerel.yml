@@ -60,7 +60,7 @@ jobs:
         chmod 755 $GITHUB_WORKSPACE/out/bin/big-finish-downloader-gtk
         install -Dm644 ../icons/tardis.svg $GITHUB_WORKSPACE/out/share/pixmaps/big-finish-downloader.svg
         install -Dm644 ../packaging/Big-Finish-Downloader.desktop $GITHUB_WORKSPACE/out/share/applications/big-finish-downloader.desktop
-        install -Dm644 ../packaging/uk.et1.big-finish-downloader.metainfo.xml $GITHUB_WORKSPACE/out/share/metainfo/uk.et1.bigfinishdownloader.metainfo.xml
+        install -Dm644 ../packaging/uk.et1.big-finish-downloader.metainfo.xml $GITHUB_WORKSPACE/out/share/metainfo/uk.et1.big-finish-downloader.metainfo.xml
 
     - name: Install
       working-directory: ${{github.workspace}}/out
