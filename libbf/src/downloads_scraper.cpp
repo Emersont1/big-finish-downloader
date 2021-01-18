@@ -6,6 +6,8 @@
 #include <lexbor/html/interfaces/link_element.h>
 #include <lexbor/html/parser.h>
 
+#include <spdlog/spdlog.h>
+
 #include <libbf/downloads.hpp>
 #include <libbf/exceptions.hpp>
 
@@ -15,6 +17,8 @@ std::vector<libbf::download> libbf::download::get_downloads(libbf::login_cookie&
     std::string url = "/customers/my_account/";
     std::vector<libbf::download> elems;
     while (true) {
+        spdlog::info("Loading Page {}", url);
+
         cpr::Response r = cpr::Get(cpr::Url{"https://www.bigfinish.com" + url},
                                    cpr::Cookies{{"CakeCookie[Customer]", cookie.get_customer()},
                                                 {"CAKEPHP", cookie.get_cakephp()}});
@@ -35,6 +39,8 @@ std::vector<libbf::download> libbf::download::get_downloads(libbf::login_cookie&
         status = lxb_dom_elements_by_class_name(lxb_dom_interface_element(document->body),
                                                 collection,
                                                 (const lxb_char_t*) "account-release-download", 24);
+
+        spdlog::info("Found {} elements", lxb_dom_collection_length(collection));
 
         for (size_t i = 0; i < lxb_dom_collection_length(collection); i++) {
             lxb_dom_element_t* element = lxb_dom_collection_element(collection, i);
@@ -59,7 +65,11 @@ std::vector<libbf::download> libbf::download::get_downloads(libbf::login_cookie&
                 url = u;
                 lxb_dom_collection_destroy(nextPage, true);
                 lxb_html_document_destroy(document);
+
+                spdlog::info("Got another page");
             } else {
+                spdlog::info("No Next page link, returning items {}", elems.size());
+
                 lxb_dom_collection_destroy(nextPage, true);
                 lxb_html_document_destroy(document);
                 return elems;

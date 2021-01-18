@@ -1,5 +1,7 @@
 #include <libbf/gui/modules/main_window.hpp>
 
+#include <spdlog/spdlog.h>
+
 #include <iostream>
 
 int libbf::gui::main_window::update_func(void* d) {
@@ -8,11 +10,14 @@ int libbf::gui::main_window::update_func(void* d) {
     gtk_progress_bar_set_fraction((GtkProgressBar*) m->progress_bar, m->download_progress);
     gtk_label_set_text((GtkLabel*) m->downloading_status_ii, m->status_ii.c_str());
 
-    if (!m->items_fut.valid() && m->items.size() == 0)
+    if (!m->items_fut.valid() && m->items.size() == 0) { // maybe Reload periodically?
+        spdlog::info("Loading entries");
         m->items_fut =
                 std::async(std::launch::async, &libbf::gui::main_window::get_items, m, m->cookie);
+    }
     if (m->items_fut.valid()) {
         if (m->items_fut.wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
+            spdlog::info("finished loading entries, adding to UI");
             m->items = m->items_fut.get();
             for (auto x = m->items.begin(); x != m->items.end(); ++x) {
                 m->add_to_view(*x);
@@ -58,6 +63,8 @@ int libbf::gui::main_window::update_func(void* d) {
         }
     } else if (m->downloader.wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
         int a = m->downloader.get();
+        spdlog::info("Finished Downloading item {}", a);
+
         m->downloaded_ids.push_back(a);
         auto item = std::find_if(m->items.begin(), m->items.end(),
                                  [&](std::pair<libbf::download, GdkPixbuf*> i) {
