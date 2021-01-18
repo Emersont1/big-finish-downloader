@@ -3,6 +3,9 @@
 #include <config.hpp>
 #include <glade_main.hpp>
 
+
+void link_cb(GtkWidget*);
+
 void libbf::gui::main_window::widgets() {
     GtkBuilder* builder = gtk_builder_new();
 
@@ -10,7 +13,8 @@ void libbf::gui::main_window::widgets() {
                                 GLADE_MAIN_STR.size(), nullptr);
 
     window = GTK_WIDGET(gtk_builder_get_object(builder, "downloader"));
-    gtk_window_set_decorated((GtkWindow*) window, false);
+    //gtk_window_set_decorated((GtkWindow*) window, false);
+    //gtk_window_set_resizable((GtkWindow*) window, true);
     gtk_builder_connect_signals(builder, nullptr);
 
     g_signal_connect(window, "destroy", G_CALLBACK(&close_cb), this);
@@ -40,6 +44,7 @@ void libbf::gui::main_window::widgets() {
     auto x = (GtkCellRendererToggle*) gtk_builder_get_object(builder, "col_download_toggle");
 
     g_signal_connect(x, "toggled", G_CALLBACK(&toggle_cb), this);
+    g_signal_connect(dest_dir_button, "clicked", G_CALLBACK(&link_cb), nullptr);
     g_object_unref(builder);
 
     gtk_widget_show(window);

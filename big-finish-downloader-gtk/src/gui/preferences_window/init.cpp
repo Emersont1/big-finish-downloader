@@ -10,6 +10,8 @@
 
 #include <glade_prefs.hpp>
 
+void link_cb(GtkWidget*);
+
 libbf::gui::preferences_window::preferences_window(libbf::gui::main_window* parent)
         : parent(parent), changed_dir(false) {
     GtkBuilder* builder = gtk_builder_new();
@@ -39,13 +41,14 @@ libbf::gui::preferences_window::preferences_window(libbf::gui::main_window* pare
             (libbf::os::file_prefix() + parent->settings.get_path().string()).c_str());
     gtk_button_set_label(
             (GtkButton*) pathlabel,
-            (std::string("Currently: ") + parent->settings.get_path().string()).c_str());
+            (std::string("Currently: ") + parent->settings.get_path().generic_string()).c_str());
 
     g_signal_connect(browse_button, "clicked", G_CALLBACK(&change_dir_cb), this);
     g_signal_connect(cancel_button, "clicked", G_CALLBACK(&cancel_button_cb), this);
     g_signal_connect(logout_button, "clicked", G_CALLBACK(&logout_cb), this);
     g_signal_connect(save_button, "clicked", G_CALLBACK(&save_button_cb), this);
     g_signal_connect(window, "destroy", G_CALLBACK(&cancel_button_cb), this);
+    g_signal_connect(pathlabel, "clicked", G_CALLBACK(&link_cb), nullptr);
 
     g_object_unref(builder);
 
