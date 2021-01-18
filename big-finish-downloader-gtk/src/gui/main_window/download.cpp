@@ -51,7 +51,7 @@ int libbf::gui::main_window::download(libbf::download value, std::shared_future<
                                                           : "No Bonus Features To Download");
 
         for (auto bonus : value.supplementary_media) {
-            spdlog::info("Downloading Additional Feature - {}", bonus.first;);
+            spdlog::info("Downloading Additional Feature - {}", bonus.first);
             status_ii = "Downloading Additional Feature - " + bonus.first;
             auto res = value.download_extra(bonus, cookie, progress_callback);
 

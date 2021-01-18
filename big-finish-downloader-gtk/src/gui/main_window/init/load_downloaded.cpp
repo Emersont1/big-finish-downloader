@@ -2,6 +2,8 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 
+#include <spdlog/spdlog.h>
+
 #include <libbf/os/dirs.hpp>
 
 #include <libbf/gui/modules/main_window.hpp>

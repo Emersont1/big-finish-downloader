@@ -1,7 +1,11 @@
+#include <iomanip>
+#include <sstream>
+
 #include <libbf/exceptions.hpp>
 #include <libbf/gui/alert_box.hpp>
 #include <libbf/gui/modules/login.hpp>
 #include <libbf/gui/modules/main_window.hpp>
+#include <libbf/os/dirs.hpp>
 #include <libbf/os/exceptions.hpp>
 #include <libbf/os/secret_storage.hpp>
 
@@ -12,7 +16,12 @@ namespace alert = libbf::gui::alert;
 
 int main(int argc, char** argv) {
     try {
-        auto logger = spdlog::basic_logger_mt("basic_logger", "logs/basic-log.txt");
+        std::time_t t = std::time(nullptr);
+        std::tm tm = *std::localtime(&t);
+        std::stringstream stream;
+        stream << std::put_time(&tm, "%c %Z");
+        auto logger = spdlog::basic_logger_mt(
+                "log", (libbf::os::get_cache() / "logs" / stream.str()).string());
         spdlog::set_default_logger(logger);
         spdlog::flush_every(std::chrono::seconds(3));
     } catch (const spdlog::spdlog_ex& ex) {
