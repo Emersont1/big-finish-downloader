@@ -13,8 +13,8 @@ void libbf::gui::main_window::widgets() {
                                 GLADE_MAIN_STR.size(), nullptr);
 
     window = GTK_WIDGET(gtk_builder_get_object(builder, "downloader"));
-    //gtk_window_set_decorated((GtkWindow*) window, false);
-    //gtk_window_set_resizable((GtkWindow*) window, true);
+    // gtk_window_set_decorated((GtkWindow*) window, false);
+    // gtk_window_set_resizable((GtkWindow*) window, true);
     gtk_builder_connect_signals(builder, nullptr);
 
     g_signal_connect(window, "destroy", G_CALLBACK(&close_cb), this);
