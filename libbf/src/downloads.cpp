@@ -6,8 +6,8 @@
 #include <vector>
 
 #include <cpr/cpr.h>
-
 #include <spdlog/spdlog.h>
+#include <utils.hpp>
 
 #include <libbf/downloads.hpp>
 
@@ -107,5 +107,18 @@ std::pair<std::filesystem::path, std::string> libbf::download::download_extra(
         spdlog::info("Header[{}] = {}", x.first, x.second);
     }
 
-    return std::make_pair(path, r.header["content-type"]);
+    // parse "Content-Disposition"
+    std::stringstream s;
+    s << r.header["Content-Disposition"];
+    std::string value, extension;
+    while (std::getline(s, value, ';')) {
+        trim(value);
+        if (value.substr(0, 10) == "filename=\"") {
+            value.pop_back();
+            extension = value.substr(value.find_last_of(".") + 1);
+        }
+    }
+
+
+    return std::make_pair(path, extension);
 }
