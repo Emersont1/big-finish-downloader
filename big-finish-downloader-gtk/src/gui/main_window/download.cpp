@@ -6,6 +6,7 @@
 #include <mime.h>
 
 #include <libbf/gui/modules/main_window.hpp>
+#include <utils.hpp>
 #include <zip_helper.hpp>
 
 int libbf::gui::main_window::download(libbf::download value, std::shared_future<void> v) {
@@ -41,9 +42,12 @@ int libbf::gui::main_window::download(libbf::download value, std::shared_future<
                 helper::extract_zip(settings.get_path(), res.first, unzip_callback);
 
             } else {
-                auto p = settings.get_path() / value.name /
+                std::string name = replace_all(value.name, ": ", " - ");
+                auto p = settings.get_path() / name /
                          (bonus.first + "." + mime::extension(res.second));
                 std::filesystem::create_directories(p.parent_path());
+                if (std::filesystem::exists(p))
+                    std::filesystem::remove(p);
                 std::filesystem::copy_file(res.first, p);
             }
             std::filesystem::remove(res.first);
