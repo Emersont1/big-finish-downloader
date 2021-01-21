@@ -5,8 +5,8 @@
 
 #include <mime.h>
 
-#include <utils.hpp>
 #include <libbf/gui/modules/main_window.hpp>
+#include <utils.hpp>
 #include <zip_helper.hpp>
 
 int libbf::gui::main_window::download(libbf::download value, std::shared_future<void> v) {
