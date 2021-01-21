@@ -46,6 +46,8 @@ int libbf::gui::main_window::download(libbf::download value, std::shared_future<
                 auto p = settings.get_path() / name /
                          (bonus.first + "." + mime::extension(res.second));
                 std::filesystem::create_directories(p.parent_path());
+                if (std::filesystem::exists(p))
+                    std::filesystem::remove(p);
                 std::filesystem::copy_file(res.first, p);
             }
             std::filesystem::remove(res.first);
