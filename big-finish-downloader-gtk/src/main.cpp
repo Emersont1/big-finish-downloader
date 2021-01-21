@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
         std::time_t t = std::time(nullptr);
         std::tm tm = *std::localtime(&t);
         std::stringstream stream;
-        stream << std::put_time(&tm, "%c %Z");
+        stream << std::put_time(&tm, "%Y-%m-%d %H-%M-%S");
         auto logger = spdlog::basic_logger_mt(
                 "log", (libbf::os::get_cache() / "logs" / stream.str()).string());
         spdlog::set_default_logger(logger);
