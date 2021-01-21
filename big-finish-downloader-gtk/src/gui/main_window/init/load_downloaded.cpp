@@ -2,6 +2,8 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 
+#include <spdlog/spdlog.h>
+
 #include <libbf/os/dirs.hpp>
 
 #include <libbf/gui/modules/main_window.hpp>
@@ -10,11 +12,14 @@ void libbf::gui::main_window::load_downloaded() {
     downloaded_ids.clear();
     std::ifstream i(settings.get_path() / ".downloaded.json");
 
+    spdlog::info("loaded {}", (settings.get_path() / ".downloaded.json").string());
+
     if (i.is_open()) {
         nlohmann::json j;
         i >> j;
         downloaded_ids = j["downloaded_ids"].get<std::vector<int>>();
         shoud_download = j["shoud_download"].get<std::map<std::string, bool>>();
+        spdlog::info("data: ", j.dump());
     }
 
     gtk_link_button_set_uri((GtkLinkButton*) dest_dir_button,

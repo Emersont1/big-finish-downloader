@@ -2,6 +2,7 @@ project(BigFinish)
 cmake_minimum_required(VERSION 3.10)
 
 find_package(nlohmann_json REQUIRED)
+find_package(spdlog REQUIRED)
 
 include_directories(
     include
@@ -22,4 +23,5 @@ target_link_libraries(bf
     cpr
     lexbor
     nlohmann_json::nlohmann_json
+    spdlog::spdlog
 )

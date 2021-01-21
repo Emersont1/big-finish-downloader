@@ -10,7 +10,7 @@ configure_file("${CMAKE_SOURCE_DIR}/config.hpp.in" "${CMAKE_BINARY_DIR}/config.h
 include_directories(${CMAKE_BINARY_BIN})
 
 include(${CMAKE_SOURCE_DIR}/pmm.cmake)
-set(PACKAGES nlohmann-json libzippp)
+set(PACKAGES nlohmann-json libzippp spdlog)
 if(WIN32)
 list(APPEND PACKAGES openssl GTK curl)
 endif()

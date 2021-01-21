@@ -7,6 +7,8 @@
 
 #include <cpr/cpr.h>
 
+#include <spdlog/spdlog.h>
+
 #include <libbf/downloads.hpp>
 
 std::filesystem::path tempname() {
@@ -21,6 +23,9 @@ std::filesystem::path libbf::download::download_mp3(
         libbf::login_cookie& cookie,
         std::function<bool(size_t, size_t, size_t, size_t)> progress_callback) {
     std::filesystem::path path = tempname();
+
+    spdlog::info("Downloading MP3 of \"{}\" to {}", name, path.generic_string());
+
     std::ofstream of(path, std::ios::binary);
 
     const cpr::WriteCallback cb([&](std::string data) -> bool {
@@ -33,6 +38,13 @@ std::filesystem::path libbf::download::download_mp3(
                                cpr::Cookies{{"CakeCookie[Customer]", cookie.get_customer()},
                                             {"CAKEPHP", cookie.get_cakephp()}},
                                cb, cpr::ProgressCallback{progress_callback});
+    spdlog::info("Download: Got Status Code: {}", r.status_code);
+    if (r.status_code != 200) {
+        spdlog::warn(r.error.message);
+    }
+    for (auto& x : r.header) {
+        spdlog::info("Header[{}] = {}", x.first, x.second);
+    }
     return path;
 }
 
@@ -40,6 +52,9 @@ std::filesystem::path libbf::download::download_m4b(
         libbf::login_cookie& cookie,
         std::function<bool(size_t, size_t, size_t, size_t)> progress_callback) {
     std::filesystem::path path = tempname();
+
+    spdlog::info("Downloading M4B of \"{}\" to {}", name, path.generic_string());
+
     std::ofstream of(path, std::ios::binary);
 
     const cpr::WriteCallback cb([&](std::string data) -> bool {
@@ -52,6 +67,13 @@ std::filesystem::path libbf::download::download_m4b(
                                cpr::Cookies{{"CakeCookie[Customer]", cookie.get_customer()},
                                             {"CAKEPHP", cookie.get_cakephp()}},
                                cb, cpr::ProgressCallback{progress_callback});
+    spdlog::info("Download: Got Status Code: {}", r.status_code);
+    if (r.status_code != 200) {
+        spdlog::warn(r.error.message);
+    }
+    for (auto& x : r.header) {
+        spdlog::info("Header[{}] = {}", x.first, x.second);
+    }
     return path;
 }
 
@@ -59,6 +81,10 @@ std::pair<std::filesystem::path, std::string> libbf::download::download_extra(
         std::pair<std::string, int> extra, libbf::login_cookie& cookie,
         std::function<bool(size_t, size_t, size_t, size_t)> progress_callback) {
     std::filesystem::path path = tempname();
+
+    spdlog::info("Downloading Bonus Content \"{} - {}\" to {}", name, extra.second,
+                 path.generic_string());
+
     std::ofstream of(path, std::ios::binary);
 
     const cpr::WriteCallback cb([&](std::string data) -> bool {
@@ -72,6 +98,14 @@ std::pair<std::filesystem::path, std::string> libbf::download::download_extra(
                      cpr::Cookies{{"CakeCookie[Customer]", cookie.get_customer()},
                                   {"CAKEPHP", cookie.get_cakephp()}},
                      cb, cpr::ProgressCallback{progress_callback});
+
+    spdlog::info("Download: Got Status Code: {}", r.status_code);
+    if (r.status_code != 200) {
+        spdlog::warn(r.error.message);
+    }
+    for (auto& x : r.header) {
+        spdlog::info("Header[{}] = {}", x.first, x.second);
+    }
 
     return std::make_pair(path, r.header["content-type"]);
 }

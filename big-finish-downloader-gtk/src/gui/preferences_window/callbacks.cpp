@@ -6,6 +6,8 @@
 #include <libbf/os/dirs.hpp>
 #include <libbf/os/secret_storage.hpp>
 
+#include <spdlog/spdlog.h>
+
 #include <glade_prefs.hpp>
 
 void libbf::gui::preferences_window::cancel_button_cb(GtkWidget* sender, void* d) {
@@ -34,7 +36,7 @@ void libbf::gui::preferences_window::save_button_cb(GtkWidget* sender, void* d) 
     gtk_widget_destroy(l->window);
 
     if (l->changed_dir) {
-        std::cout << std::endl;
+        spdlog::info("Directory has been changed");
         l->parent->changed_dir();
     }
 }

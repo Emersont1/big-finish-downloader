@@ -4,13 +4,16 @@
 
 #include <libzippp/libzippp.h>
 
+#include <spdlog/spdlog.h>
 
 void helper::extract_zip(std::filesystem::path out, std::filesystem::path in,
                          helper::progress_callback progress) {
+    spdlog::info("Extracting Archive {} to {}", in.string(), out.string());
     libzippp::ZipArchive zf(in.string());
     zf.open(libzippp::ZipArchive::ReadOnly);
 
     std::vector<libzippp::ZipEntry> entries = zf.getEntries();
+    spdlog::info("Zip has {} entries", entries.size());
     int i = 0;
     for (auto it = entries.begin(); it != entries.end(); ++it) {
         progress(i, entries.size());
@@ -24,4 +27,5 @@ void helper::extract_zip(std::filesystem::path out, std::filesystem::path in,
     }
 
     zf.close();
+    spdlog::info("Done Extracting");
 }

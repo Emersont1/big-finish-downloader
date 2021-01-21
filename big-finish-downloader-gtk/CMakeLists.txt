@@ -12,6 +12,7 @@ find_package(nlohmann_json REQUIRED)
 find_package(libzippp REQUIRED)
 find_package(BZip2 REQUIRED)
 find_package(OpenSSL REQUIRED)
+find_package(spdlog REQUIRED)
 find_package(ZLIB REQUIRED)
 
 include(${CMAKE_SOURCE_DIR}/bin2h.cmake)
@@ -72,6 +73,7 @@ endif()
 target_link_libraries(big-finish-downloader-gtk
     libzippp::libzippp
     bf-os
+    spdlog::spdlog
 )
 
 if(NOT WIN32)

@@ -3,6 +3,8 @@
 #include <libbf/os/exceptions.hpp>
 #include <libbf/os/secret_storage.hpp>
 
+#include <spdlog/spdlog.h>
+
 #include <libsecret/secret.h>
 
 const SecretSchema* cookie_schema(void) G_GNUC_CONST;
@@ -21,6 +23,8 @@ void libbf::os::store(libbf::login_cookie l) {
 }
 
 libbf::login_cookie libbf::os::retrieve() {
+    spdlog::info("retrieving secret");
+
     GError* error = nullptr;
 
     /* The attributes used to lookup the password should conform to the schema. */
@@ -62,5 +66,6 @@ libbf::login_cookie libbf::os::retrieve() {
 
 void libbf::os::revoke() {
     GError* error = nullptr;
+    spdlog::info("revoke called");
     secret_password_clear_sync(cookie_schema(), nullptr, &error, "site", "bigfinish.com", nullptr);
 }
