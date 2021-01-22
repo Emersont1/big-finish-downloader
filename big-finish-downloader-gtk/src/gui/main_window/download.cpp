@@ -3,8 +3,6 @@
 #include <iostream>
 #include <thread>
 
-#include <mime.h>
-
 #include <spdlog/spdlog.h>
 
 #include <libbf/gui/modules/main_window.hpp>
@@ -28,7 +26,6 @@ int libbf::gui::main_window::download(libbf::download value, std::shared_future<
             spdlog::info("Cancelled Download");
         return a;
     };
-
     if (value.m4b_available && settings.get_prefer_m4b()) {
         spdlog::info("Downloading Main Feature");
         status_ii = "Downloading Main Feature";
@@ -57,15 +54,18 @@ int libbf::gui::main_window::download(libbf::download value, std::shared_future<
             auto res = value.download_extra(bonus, cookie, progress_callback);
 
             spdlog::info("downloaded file with MIME type {}", res.second);
-            if (mime::extension(res.second) == "zip") {
+            std::string name = replace_all(value.name, ": ", " - ");
+
+            if (res.second == "zip") {
                 spdlog::info("Extracting Bonus Feature");
+                auto p = settings.get_path() / name;
+                std::filesystem::create_directories(p);
                 status_ii = "Extracting Bonus Feature - " + bonus.first;
-                helper::extract_zip(settings.get_path(), res.first, unzip_callback);
+                helper::extract_zip(p, res.first, unzip_callback);
 
             } else {
-                std::string name = replace_all(value.name, ": ", " - ");
-                auto p = settings.get_path() / name /
-                         (bonus.first + "." + mime::extension(res.second));
+                std::string dot = bonus.first.back() == '.' ? "" : ".";
+                auto p = settings.get_path() / name / (bonus.first + dot + res.second);
                 spdlog::info("Saving to path {}", p.string());
                 std::filesystem::create_directories(p.parent_path());
                 if (std::filesystem::exists(p))

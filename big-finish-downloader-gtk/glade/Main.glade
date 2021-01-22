@@ -54,6 +54,8 @@
                 <property name="can-focus">False</property>
                 <property name="hexpand">True</property>
                 <property name="vexpand">False</property>
+                <property name="justify">center</property>
+                <property name="wrap">True</property>
                 <property name="yalign">1</property>
               </object>
               <packing>
@@ -81,6 +83,8 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="hexpand">True</property>
+                <property name="justify">center</property>
+                <property name="wrap">True</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
@@ -315,6 +319,10 @@
           <object class="GtkLabel" id="status_bar">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="margin-start">5</property>
+            <property name="margin-end">5</property>
+            <property name="margin-top">5</property>
+            <property name="margin-bottom">5</property>
             <property name="xpad">5</property>
             <property name="xalign">1</property>
           </object>
@@ -328,27 +336,22 @@
     </child>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="title_bar">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="title" translatable="yes">Big Finish Downloader</property>
+        <property name="subtitle" translatable="yes">Version 0.1</property>
+        <property name="show-close-button">True</property>
+        <child>
+          <object class="GtkButton" id="pref_button">
+            <property name="label">gtk-preferences</property>
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="title" translatable="yes">Big Finish Downloader</property>
-            <property name="subtitle" translatable="yes">Version 0.1</property>
-            <property name="show-close-button">True</property>
-            <child>
-              <object class="GtkButton" id="pref_button">
-                <property name="label">gtk-preferences</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <property name="use-stock">True</property>
-                <property name="always-show-image">True</property>
-              </object>
-            </child>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="use-stock">True</property>
+            <property name="always-show-image">True</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
+        </child>
+      </object>
     </child>
   </object>
 </interface>
