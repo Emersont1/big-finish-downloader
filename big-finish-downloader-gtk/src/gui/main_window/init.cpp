@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include <filesystem>
-#include <fstream>
 #include <iostream>
 
 #include <libbf/os/dirs.hpp>
@@ -26,11 +25,4 @@ libbf::gui::main_window::main_window(libbf::login_cookie c) : cookie(c) {
     load_downloaded();
 }
 
-libbf::gui::main_window::~main_window() {
-    quit.set_value();
-    std::ofstream o(settings.get_path() / ".downloaded.json");
-    nlohmann::json j;
-    j["downloaded_ids"] = downloaded_ids;
-    j["shoud_download"] = shoud_download;
-    o << j;
-}
+libbf::gui::main_window::~main_window() {}
