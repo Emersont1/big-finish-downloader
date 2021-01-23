@@ -46,7 +46,7 @@ add_subdirectory(ext EXCLUDE_FROM_ALL)
 add_subdirectory(libbf)
 add_subdirectory(libbf-os)
 
-if(BUILD_APP)
+if(BUILD_GTK)
     add_subdirectory(big-finish-downloader-gtk)
 endif()
 
