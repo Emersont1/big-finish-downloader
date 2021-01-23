@@ -29,7 +29,6 @@ class server {
     std::filesystem::path dest_path = std::filesystem::current_path() / "Music";
 
   public:
-
     server();
     void add_login(libbf::login_cookie);
     void refresh_downloads();

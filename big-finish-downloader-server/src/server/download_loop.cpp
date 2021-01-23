@@ -2,8 +2,8 @@
 
 #include <fstream>
 
-#include <spdlog/spdlog.h>
 #include <cpr/cpr.h>
+#include <spdlog/spdlog.h>
 
 #include <utils.hpp>
 #include <zip_helper.hpp>
@@ -34,7 +34,7 @@ void libbf::server::server::download_loop() {
         auto x = download_queue.pop();
         auto& value = x.first;
         auto& cookie = x.second;
-        
+
         std::string name = replace_all(value.name, ": ", " - ");
 
         if (value.m4b_available) {
@@ -80,10 +80,10 @@ void libbf::server::server::download_loop() {
         }
 
         // Download Cover JPG
-            std::ofstream of(dest_path / name /+ "cover.jpg", std::ios::binary);
-            cpr::Response r = cpr::Get(
-                    cpr::Url{"https://www.bigfinish.com/image/release/" + std::to_string(value.image_number) + "/large.jpg"});
-            of.write(r.text.c_str(), r.text.size());
-            of.close();
+        std::ofstream of(dest_path / name / +"cover.jpg", std::ios::binary);
+        cpr::Response r = cpr::Get(cpr::Url{"https://www.bigfinish.com/image/release/" +
+                                            std::to_string(value.image_number) + "/large.jpg"});
+        of.write(r.text.c_str(), r.text.size());
+        of.close();
     }
 }

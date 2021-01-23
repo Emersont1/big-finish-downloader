@@ -3,7 +3,6 @@
 #include <libbf/server/server.hpp>
 
 int main() {
-
     libbf::server::server download_server;
     std::cout << "Enter Email" << std::endl;
     std::string email;
@@ -17,7 +16,8 @@ int main() {
     std::cout << l << std::endl;
     download_server.add_login(l);
     download_server.refresh_downloads();
-    while (true);
-    
+    while (true)
+        ;
+
     return 0;
 }
