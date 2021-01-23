@@ -32,5 +32,6 @@ class server {
     server();
     void add_login(libbf::login_cookie);
     void refresh_downloads();
+    std::vector<std::pair<libbf::download, std::shared_ptr<libbf::login_cookie>>> get_queue();
 };
 } // namespace libbf::server

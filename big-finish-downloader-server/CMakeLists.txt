@@ -17,6 +17,10 @@ include_directories(
 
 add_executable(big-finish-downloaderd
     src/main.cpp
+    src/api_server/add_login.cpp
+    src/api_server/errors.cpp
+    src/api_server/get_queue.cpp
+    src/api_server/init.cpp
     src/server/download_loop.cpp
     src/server/init.cpp
     src/server/refresh_downloads.cpp
@@ -31,4 +35,4 @@ target_link_libraries(big-finish-downloaderd
     spdlog::spdlog
 )
 
-target_link_libraries(big-finish-downloaderd pthread dl)
+target_link_libraries(big-finish-downloaderd gcov pthread dl)

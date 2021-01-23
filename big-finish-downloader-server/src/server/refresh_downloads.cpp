@@ -27,3 +27,8 @@ void libbf::server::server::refresh_downloads() {
 void libbf::server::server::add_login(libbf::login_cookie cookie) {
     logins.push_back(std::make_shared<libbf::login_cookie>(cookie));
 }
+
+std::vector<std::pair<libbf::download, std::shared_ptr<libbf::login_cookie>>>
+libbf::server::server::get_queue() {
+    return download_queue.elements();
+}
