@@ -46,19 +46,3 @@ jobs:
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: make
-
-    - name: Install
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      run: |
-        make DESTDIR=$GITHUB_WORKSPACE/out install
-
-    - name: Install
-      working-directory: ${{github.workspace}}/out
-      shell: bash
-      run: tar -czf ../bin.tar.gz *
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: bin
-        path: ${{github.workspace}}/bin.tar.gz
