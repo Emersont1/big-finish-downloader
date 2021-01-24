@@ -19,6 +19,7 @@ include_directories(
 )
 set(SOURCES
     src/settings.cpp
+    src/logging.cpp
 )
 if(UNIX AND NOT MACOSX)
     list(APPEND SOURCES

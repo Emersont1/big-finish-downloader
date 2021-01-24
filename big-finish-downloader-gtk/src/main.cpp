@@ -5,8 +5,10 @@
 #include <libbf/gui/alert_box.hpp>
 #include <libbf/gui/modules/login.hpp>
 #include <libbf/gui/modules/main_window.hpp>
+#include <libbf/logging.hpp>
 #include <libbf/os/dirs.hpp>
 #include <libbf/os/exceptions.hpp>
+#include <libbf/os/logging.hpp>
 #include <libbf/os/secret_storage.hpp>
 
 #include <spdlog/sinks/basic_file_sink.h>
@@ -24,6 +26,10 @@ int main(int argc, char** argv) {
                 "log", (libbf::os::get_cache() / "logs" / stream.str()).string());
         spdlog::set_default_logger(logger);
         spdlog::flush_every(std::chrono::seconds(3));
+
+        // Register in DLLs
+        libbf::register_logger_default(logger);
+        libbf::os::register_logger_default(logger);
     } catch (const spdlog::spdlog_ex& ex) {
         std::cout << "Log init failed: " << ex.what() << std::endl;
         return 1;
