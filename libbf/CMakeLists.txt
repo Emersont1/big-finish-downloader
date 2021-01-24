@@ -17,6 +17,7 @@ add_library(bf SHARED
     src/downloads.cpp
     src/downloads_parse.cpp
     src/downloads_scraper.cpp
+    src/logging.cpp
 )
 
 target_link_libraries(bf
