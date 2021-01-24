@@ -14,6 +14,6 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v5
         with:
           registry: ghcr.io
-          image: ${{ github.repository }}
+          image: ${{ steps.repo.outputs.lowercase }}
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }} 

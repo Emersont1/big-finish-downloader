@@ -8,23 +8,24 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Checkout
         uses: actions/checkout@v2
         with:
           submodules: recursive
+      - uses: ASzc/change-string-case-action@v1
+        id: repo
+        with:
+          string: ${{github.repository}}
       - uses: mr-smithers-excellent/docker-build-push@v5
         with:
           registry: ghcr.io
-          image: ${{ github.repository }}
+          image: ${{ steps.repo.outputs.lowercase }}
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }} 
       - uses: mr-smithers-excellent/docker-build-push@v5
         with:
           registry: ghcr.io
-          image: ${{ github.repository }}
+          image: ${{ steps.repo.outputs.lowercase }}
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }} 
           tags: latest
