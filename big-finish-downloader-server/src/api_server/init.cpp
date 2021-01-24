@@ -27,6 +27,9 @@ void libbf::server::api_server::setup_route() {
     Pistache::Rest::Routes::Get(
             router, "/refresh_queue",
             Pistache::Rest::Routes::bind(&libbf::server::api_server::refresh_queue, this));
+    Pistache::Rest::Routes::Get(
+            router, "/get_status",
+            Pistache::Rest::Routes::bind(&libbf::server::api_server::get_status, this));
 }
 
 void libbf::server::api_server::refresh_queue(const Pistache::Http::Request& req,

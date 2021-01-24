@@ -23,6 +23,7 @@ class api_server {
     void add_login(const Pistache::Http::Request& req, Pistache::Http::ResponseWriter response);
     void refresh_queue(const Pistache::Http::Request& req, Pistache::Http::ResponseWriter response);
     void get_queue(const Pistache::Http::Request& req, Pistache::Http::ResponseWriter response);
+    void get_status(const Pistache::Http::Request& req, Pistache::Http::ResponseWriter response);
 
     static void write_error(Pistache::Http::ResponseWriter& response, Pistache::Http::Code e,
                             std::string errormsg = "");

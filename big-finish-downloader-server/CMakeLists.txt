@@ -20,6 +20,7 @@ add_executable(big-finish-downloaderd
     src/api_server/add_login.cpp
     src/api_server/errors.cpp
     src/api_server/get_queue.cpp
+    src/api_server/get_status.cpp
     src/api_server/init.cpp
     src/server/download_loop.cpp
     src/server/init.cpp
