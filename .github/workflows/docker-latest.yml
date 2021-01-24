@@ -18,11 +18,13 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v5
         with:
           registry: ghcr.io
+          image: ${{ github.repository }}
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }} 
       - uses: mr-smithers-excellent/docker-build-push@v5
         with:
           registry: ghcr.io
+          image: ${{ github.repository }}
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }} 
           tags: latest
