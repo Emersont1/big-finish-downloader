@@ -1,10 +1,14 @@
-FROM archlinux:latest as base
+FROM debian:unstable-slim as base
 
-RUN pacman -Syu --noconfirm curl unzip zip bzip2 libzip fmt spdlog
+RUN apt-get -y update; \
+    apt-get -y upgrade; \
+    apt-get -y install curl unzip zip bzip2 libzip-dev libfmt-dev libspdlog-dev;
 
 FROM base as builder
 
-RUN pacman -Syu --noconfirm base-devel cmake ninja git
+RUN apt-get -y install gcc-10 g++-10 cmake ninja-build git pkg-config libglib2.0-dev libsecret-1-dev
+ENV CXX=g++-10
+ENV CX=gcc-10
 
 COPY . /usr/src/
 
@@ -22,3 +26,4 @@ COPY --from=builder /usr/local/lib /usr/lib
 RUN chmod +x /usr/bin/big-finish-downloaderd
 RUN ls /usr/lib
 ENTRYPOINT ["big-finish-downloaderd"]
+EXPOSE 8000
