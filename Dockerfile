@@ -1,4 +1,4 @@
-FROM archlinux as base
+FROM archlinux:latest as base
 
 RUN pacman -Syu --noconfirm curl unzip zip bzip2 libzip fmt spdlog
 
@@ -8,9 +8,9 @@ RUN pacman -Syu --noconfirm base-devel cmake ninja git
 
 COPY . /usr/src/
 
-RUN mkdir /usr/src/build; \
-    cd /usr/src/build;  \
-    cmake .. -DCMAKE_BUILD_TYPE=MinSizeRel -DBUILD_SERVER=ON -DBUILD_GTK=OFF; make; make DESTDIR=/usr/local install
+RUN mkdir /usr/src/build;
+WORKDIR /usr/src/build
+RUN cmake .. -DCMAKE_BUILD_TYPE=MinSizeRel -DBUILD_SERVER=ON -DBUILD_GTK=OFF; make; make DESTDIR=/usr/local install
 
 RUN ls /usr/local/lib
 
