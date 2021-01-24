@@ -1,0 +1,31 @@
+name: Build Docker Image for Tag
+
+on:
+  create:
+    tags:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: ASzc/change-string-case-action@v1
+        id: repo
+        with:
+          string: ${{github.repository}}
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          registry: ghcr.io
+          image: ${{ steps.repo.outputs.lowercase }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.CR_PAT }}
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          registry: ghcr.io
+          image: ${{ steps.repo.outputs.lowercase }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.CR_PAT }}
+          tags: latest

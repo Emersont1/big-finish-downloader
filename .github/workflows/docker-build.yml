@@ -1,0 +1,21 @@
+name: Build Docker Image
+on: push
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: ASzc/change-string-case-action@v1
+        id: repo
+        with:
+          string: ${{github.repository}}
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          registry: ghcr.io
+          image: ${{ steps.repo.outputs.lowercase }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.CR_PAT }}
