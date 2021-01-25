@@ -57,15 +57,16 @@ void libbf::server::server::download_loop() {
         img_number = value.image_number;
         spdlog::info(status_i);
 
-        std::string name = replace_all(value.name, ": ", " - ");
-
+        std::string _name = replace_all(value.name, ": ", "/");
+        std::string name = replace_all(_name, " - ", "/");
+        std::filesystem::create_directories(dest_path/name);
         if (value.m4b_available) {
             status_ii = "Downloading Main Feature";
             spdlog::info(status_ii);
             auto path = value.download_m4b(*cookie, progress_callback);
             status_ii = "Extracting Main Feature";
             spdlog::info(status_ii);
-            helper::extract_zip(dest_path, path, unzip_callback);
+            helper::extract_zip(dest_path/name, path, unzip_callback);
             std::filesystem::remove(path);
         } else {
             status_ii = "Downloading Main Feature";
@@ -74,7 +75,7 @@ void libbf::server::server::download_loop() {
             status_ii = "Extracting Main Feature";
             spdlog::info(status_ii);
 
-            helper::extract_zip(dest_path, path, unzip_callback);
+            helper::extract_zip(dest_path/name, path, unzip_callback);
             std::filesystem::remove(path);
         }
 
@@ -108,7 +109,8 @@ void libbf::server::server::download_loop() {
         }
 
         // Download Cover JPG
-        std::ofstream of(dest_path / name / +"cover.jpg", std::ios::binary);
+        spdlog::info((dest_path / name / "cover.jpg").string());
+        std::ofstream of(dest_path / name / "cover.jpg", std::ios::binary);
         cpr::Response r = cpr::Get(cpr::Url{"https://www.bigfinish.com/image/release/" +
                                             std::to_string(value.image_number) + "/large.jpg"});
         of.write(r.text.c_str(), r.text.size());

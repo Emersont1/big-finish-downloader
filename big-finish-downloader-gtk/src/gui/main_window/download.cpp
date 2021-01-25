@@ -26,13 +26,20 @@ int libbf::gui::main_window::download(libbf::download value, std::shared_future<
             spdlog::info("Cancelled Download");
         return a;
     };
+
+     std::string _name = replace_all(value.name, ": ", "/");
+        std::string name = replace_all(_name, " - ", "/");
+                auto p = settings.get_path() / name;
+                std::filesystem::create_directories(p);
+
+
     if (value.m4b_available && settings.get_prefer_m4b()) {
         spdlog::info("Downloading Main Feature");
         status_ii = "Downloading Main Feature";
         auto path = value.download_m4b(cookie, progress_callback);
         status_ii = "Extracting Main Feature";
         spdlog::info("Extracting Main Feature");
-        helper::extract_zip(settings.get_path(), path, unzip_callback);
+        helper::extract_zip(p, path, unzip_callback);
         std::filesystem::remove(path);
     } else if (settings.get_fallback_mp3() || !settings.get_prefer_m4b()) {
         spdlog::info("Downloading Main Feature");
@@ -41,7 +48,7 @@ int libbf::gui::main_window::download(libbf::download value, std::shared_future<
         spdlog::info("Extracting Main Feature");
 
         status_ii = "Extracting Main Feature";
-        helper::extract_zip(settings.get_path(), path, unzip_callback);
+        helper::extract_zip(p, path, unzip_callback);
         std::filesystem::remove(path);
     }
     if (settings.get_download_extras()) {
@@ -54,23 +61,20 @@ int libbf::gui::main_window::download(libbf::download value, std::shared_future<
             auto res = value.download_extra(bonus, cookie, progress_callback);
 
             spdlog::info("downloaded file with MIME type {}", res.second);
-            std::string name = replace_all(value.name, ": ", " - ");
 
             if (res.second == "zip") {
                 spdlog::info("Extracting Bonus Feature");
-                auto p = settings.get_path() / name;
-                std::filesystem::create_directories(p);
                 status_ii = "Extracting Bonus Feature - " + bonus.first;
                 helper::extract_zip(p, res.first, unzip_callback);
 
             } else {
                 std::string dot = bonus.first.back() == '.' ? "" : ".";
-                auto p = settings.get_path() / name / (bonus.first + dot + res.second);
-                spdlog::info("Saving to path {}", p.string());
-                std::filesystem::create_directories(p.parent_path());
-                if (std::filesystem::exists(p))
-                    std::filesystem::remove(p);
-                std::filesystem::copy_file(res.first, p);
+                auto p2 = p / (bonus.first + dot + res.second);
+                spdlog::info("Saving to path {}", p2.string());
+                std::filesystem::create_directories(p2.parent_path());
+                if (std::filesystem::exists(p2))
+                    std::filesystem::remove(p2);
+                std::filesystem::copy_file(res.first, p2);
             }
             std::filesystem::remove(res.first);
             status_ii = "";
