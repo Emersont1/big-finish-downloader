@@ -14,7 +14,7 @@ std::filesystem::path libbf::os::get_home() {
 std::filesystem::path libbf::os::get_music() {
     std::string music_path("\0", _MAX_PATH);
 
-    if (SHGetSpecialFolderPath(nullptr,music_path.data(), CSIDL_MYMUSIC, true)) {
+    if (SHGetSpecialFolderPath(nullptr, music_path.data(), CSIDL_MYMUSIC, true)) {
         return std::filesystem::path(music_path);
     }
     return libbf::os::get_home() / "Music";
