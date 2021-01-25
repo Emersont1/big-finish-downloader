@@ -27,10 +27,10 @@ int libbf::gui::main_window::download(libbf::download value, std::shared_future<
         return a;
     };
 
-     std::string _name = replace_all(value.name, ": ", "/");
-        std::string name = replace_all(_name, " - ", "/");
-                auto p = settings.get_path() / name;
-                std::filesystem::create_directories(p);
+    std::string _name = replace_all(value.name, ": ", "/");
+    std::string name = replace_all(_name, " - ", "/");
+    auto p = settings.get_path() / name;
+    std::filesystem::create_directories(p);
 
 
     if (value.m4b_available && settings.get_prefer_m4b()) {
