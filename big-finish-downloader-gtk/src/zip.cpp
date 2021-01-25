@@ -18,7 +18,8 @@ void helper::extract_zip(std::filesystem::path out, std::filesystem::path in,
     for (auto it = entries.begin(); it != entries.end(); ++it) {
         progress(i, entries.size());
 
-        std::filesystem::path o_path = out / it->getName();
+        std::filesystem::path o_path = out / std::filesystem::path(it->getName()).filename();
+        spdlog::info ("file {}", o_path.string());
         std::filesystem::create_directories(o_path.parent_path());
         std::ofstream output(o_path);
         it->readContent(output);
