@@ -59,6 +59,7 @@ class main_window {
     int download(libbf::download, std::shared_future<void>);
 
     void add_to_view(std::pair<libbf::download, GdkPixbuf*>&);
+    void download_complete();
 
   public:
     libbf::os::settings settings;

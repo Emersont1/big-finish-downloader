@@ -54,12 +54,10 @@ int libbf::gui::main_window::update_func(void* d) {
                 }
             } while (gtk_tree_model_iter_next(a, &iter));
             if (!y) {
-                gtk_label_set_text((GtkLabel*) m->downloading_label, "Downloads Complete.");
-                m->status_ii = "";
-                m->download_progress = 1.0;
-                gtk_image_set_from_icon_name((GtkImage*) m->thumbnail, "media-optical",
-                                             GTK_ICON_SIZE_DIALOG);
+                m->download_complete();
             }
+        } else {
+            m->download_complete();
         }
     } else if (m->downloader.wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
         int a = m->downloader.get();
@@ -76,4 +74,11 @@ int libbf::gui::main_window::update_func(void* d) {
     }
 
     return 1;
+}
+
+void libbf::gui::main_window::download_complete() {
+    gtk_label_set_text((GtkLabel*) downloading_label, "Downloads Complete.");
+    status_ii = "";
+    download_progress = 1.0;
+    gtk_image_set_from_icon_name((GtkImage*) thumbnail, "media-optical", GTK_ICON_SIZE_DIALOG);
 }
