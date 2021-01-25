@@ -37,7 +37,7 @@
     </key>
 
     <key name='download-directory' type='s'>
-      <default>"~/Music"</default>
+      <default>""</default>
       <summary>Downloads extras from titles</summary>
       <description>
         Some titles have extras bundled, this will download them alongside the audiobooks
