@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Big Finish Downloader
+Exec=big-finish-downloader-gtk
 TryExec=big-finish-downloader-gtk
 Icon=uk.et1.big-finish-downloader
 Type=Application

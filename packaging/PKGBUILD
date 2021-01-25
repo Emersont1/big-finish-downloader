@@ -5,7 +5,7 @@ pkgrel=3
 origver=1.0.2
 
 pkgdesc="A GTK tool to manage your Big Finish Library"
-arch=("any")
+arch=("x86_64")
 url="https://github.com/Emersont1/big-finish-downloader"
 license=('MIT')
 depends=(gtk3 libsecret curl)
@@ -15,8 +15,12 @@ source=("https://github.com/Emersont1/big-finish-downloader/releases/download/v$
 md5sums=('SKIP')
 sha256sums=('SKIP')
 
+prepare() {
+    rm $srcdir/lib/libcurl.so
+}
+
 package() {
-    install -Ddm755 $srcdir/bin/ $pkgdir/usr
-    install -Ddm644 $srcdir/lib/ $pkgdir/usr
-    install -Ddm644 $srcdir/share/ $pkgdir/usr
+    mkdir $pkgdir/usr; chmod 755 $pkgdir/usr
+    cp -r $srcdir/{lib,bin,share} $pkgdir/usr
+
 }
