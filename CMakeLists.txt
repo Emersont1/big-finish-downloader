@@ -1,6 +1,6 @@
 cmake_policy(SET CMP0048 NEW)
 
-project(BigFinish VERSION 1.0.2)
+project(BigFinish VERSION 1.0.3)
 cmake_minimum_required(VERSION 3.10)
 
 # Use C++ 17
