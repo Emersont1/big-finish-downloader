@@ -28,7 +28,6 @@ int main(int argc, char** argv) {
         spdlog::flush_every(std::chrono::seconds(3));
 
         // Register in DLLs
-        libbf::register_logger_default(logger);
         libbf::os::register_logger_default(logger);
     } catch (const spdlog::spdlog_ex& ex) {
         std::cout << "Log init failed: " << ex.what() << std::endl;

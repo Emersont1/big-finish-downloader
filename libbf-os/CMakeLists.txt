@@ -19,18 +19,19 @@ include_directories(
 )
 set(SOURCES
     src/settings.cpp
-    src/logging.cpp
 )
 if(UNIX AND NOT MACOSX)
     list(APPEND SOURCES
         src/linux/libsecret/cookie_schema.cpp
         src/linux/libsecret/secret_storage.cpp
         src/linux/dirs.cpp
+        src/linux/logging.cpp
     )
 elseif(WIN32)
     list(APPEND SOURCES
         src/windows/dirs.cpp
         src/windows/secrets.cpp
+        src/windows/logging.cpp
     )
 else()
     list(APPEND SOURCES  src/none/secrets.cpp)
