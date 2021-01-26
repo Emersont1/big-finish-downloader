@@ -36,6 +36,15 @@
       </description>
     </key>
 
+    <key name='download-automatically' type='b'>
+      <default>true</default>
+      <summary>Automatically Download titles</summary>
+      <description>
+        Whether to Automatically start downloading the queue
+      </description>
+    </key>
+
+
     <key name='download-directory' type='s'>
       <default>""</default>
       <summary>Downloads extras from titles</summary>

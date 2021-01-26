@@ -33,7 +33,7 @@ void libbf::gui::main_window::add_to_view(std::pair<libbf::download, GdkPixbuf*>
         downloaded_ids.end()) {
         gtk_list_store_insert_with_values(list_downloaded, nullptr, -1, 0, x.first.name.c_str(), 1,
                                           x.second, -1);
-    } else {
+    } else if(x.first.image_number!=currently_downloading){
         bool e = shoud_download.count(std::to_string(x.first.image_number)) &&
                  shoud_download[std::to_string(x.first.image_number)];
         gtk_list_store_insert_with_values(list_downloading, nullptr, -1, 0, x.first.name.c_str(), 1,
