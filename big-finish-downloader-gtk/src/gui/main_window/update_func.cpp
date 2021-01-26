@@ -53,10 +53,10 @@ int libbf::gui::main_window::update_func(void* d) {
                     break;
                 }
             } while (gtk_tree_model_iter_next(a, &iter));
-            if (!y) {
+            if (!y && m->items.size() != 0) {
                 m->download_complete();
             }
-        } else {
+        } else if(m->items.size() != 0){
             m->download_complete();
         }
     } else if (m->downloader.wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
