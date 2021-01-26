@@ -2,7 +2,9 @@
 #include <libbf/gui/modules/main_window.hpp>
 
 void libbf::gui::main_window::refresh_button_cb(GtkWidget* wid, void* d) {
-    std::cout << "trigger a refresh" << std::endl;
+    auto m = (libbf::gui::main_window*) d;
+    m->items_fut =
+            std::async(std::launch::async, &libbf::gui::main_window::get_items, m, m->cookie);
 }
 void libbf::gui::main_window::start_download_cb(GtkWidget* wid, void* d) {
     auto m = (libbf::gui::main_window*) d;
@@ -20,11 +22,11 @@ void libbf::gui::main_window::stop_now_cb(GtkWidget* wid, void* d) {
     // Stop the Download!
     m->quit.set_value();
     if (m->downloader.valid()) {
-        int a = m->downloader.get();
+        m->downloader.get();
 
         auto item = std::find_if(m->items.begin(), m->items.end(),
                                  [&](std::pair<libbf::download, GdkPixbuf*> i) {
-                                     return i.first.image_number == a;
+                                     return i.first.image_number == m->currently_downloading;
                                  });
         if (item != m->items.end())
             m->add_to_view(*item);

@@ -19,6 +19,8 @@ int libbf::gui::main_window::update_func(void* d) {
         if (m->items_fut.wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
             spdlog::info("finished loading entries, adding to UI");
             m->items = m->items_fut.get();
+            gtk_list_store_clear(m->list_downloaded);
+            gtk_list_store_clear(m->list_downloading);
             for (auto x = m->items.begin(); x != m->items.end(); ++x) {
                 m->add_to_view(*x);
             }
@@ -46,6 +48,7 @@ int libbf::gui::main_window::update_func(void* d) {
                         m->downloader =
                                 std::async(std::launch::async, &libbf::gui::main_window::download,
                                            m, item->first, m->quitter);
+                        m->currently_downloading = item->first.image_number;
                         gtk_label_set_text((GtkLabel*) m->downloading_label,
                                            ("Downloading: " + item->first.name).c_str());
 
@@ -69,13 +72,13 @@ int libbf::gui::main_window::update_func(void* d) {
                                          GTK_ICON_SIZE_DIALOG);
         }
     } else if (m->downloader.wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
-        int a = m->downloader.get();
-        spdlog::info("Finished Downloading item {}", a);
+        m->downloader.get();
+        spdlog::info("Finished Downloading item {}", m->currently_downloading);
 
-        m->downloaded_ids.push_back(a);
+        m->downloaded_ids.push_back(m->currently_downloading);
         auto item = std::find_if(m->items.begin(), m->items.end(),
                                  [&](std::pair<libbf::download, GdkPixbuf*> i) {
-                                     return i.first.image_number == a;
+                                     return i.first.image_number == m->currently_downloading;
                                  });
         if (item != m->items.end())
             m->add_to_view(*item);

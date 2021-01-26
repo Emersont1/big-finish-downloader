@@ -9,7 +9,7 @@
 #include <utils.hpp>
 #include <zip_helper.hpp>
 
-int libbf::gui::main_window::download(libbf::download value, std::shared_future<void> v) {
+void libbf::gui::main_window::download(libbf::download value, std::shared_future<void> v) {
     spdlog::info("Downloading item \"{}\"", value.name);
     auto progress_callback = [&](size_t downloadTotal, size_t downloadNow, size_t uploadTotal,
                                  size_t uploadNow) {
@@ -80,6 +80,4 @@ int libbf::gui::main_window::download(libbf::download value, std::shared_future<
             status_ii = "";
         }
     }
-
-    return value.image_number;
 }
