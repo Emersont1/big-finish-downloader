@@ -35,6 +35,11 @@ class main_window {
     GtkWidget* dest_dir_button;
     GtkWidget* window;
 
+    GtkWidget* refresh_button;
+    GtkWidget* start_download;
+    GtkWidget* stop_after;
+    GtkWidget* stop_now;
+
     GtkListStore* list_downloading;
     GtkListStore* list_downloaded;
     GtkTreeView* view_downloading;
@@ -49,6 +54,11 @@ class main_window {
     static void close_cb(GtkWidget*, void*);
     static void prefs_cb(GtkWidget*, void*);
     static void toggle_cb(GtkCellRendererToggle*, char*, void*);
+
+    static void refresh_button_cb(GtkWidget*, void*);
+    static void start_download_cb(GtkWidget*, void*);
+    static void stop_after_cb(GtkWidget*, void*);
+    static void stop_now_cb(GtkWidget*, void*);
 
     static int update_func(void*);
 

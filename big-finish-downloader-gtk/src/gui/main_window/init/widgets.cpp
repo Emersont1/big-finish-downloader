@@ -35,6 +35,15 @@ void libbf::gui::main_window::widgets() {
     thumbnail = GTK_WIDGET(gtk_builder_get_object(builder, "thumbnail"));
     gtk_image_set_from_icon_name((GtkImage*) thumbnail, "media-optical", GTK_ICON_SIZE_DIALOG);
 
+    refresh_button = GTK_WIDGET(gtk_builder_get_object(builder, "refresh_button"));
+    g_signal_connect(refresh_button, "clicked", G_CALLBACK(&refresh_button_cb), this);
+    start_download = GTK_WIDGET(gtk_builder_get_object(builder, "start_download"));
+    g_signal_connect(start_download, "clicked", G_CALLBACK(&start_download_cb), this);
+    stop_after = GTK_WIDGET(gtk_builder_get_object(builder, "stop_after"));
+    g_signal_connect(stop_after, "clicked", G_CALLBACK(&stop_after_cb), this);
+    stop_now = GTK_WIDGET(gtk_builder_get_object(builder, "stop_now"));
+    g_signal_connect(stop_now, "clicked", G_CALLBACK(&stop_now_cb), this);
+
     downloading_label = GTK_WIDGET(gtk_builder_get_object(builder, "downloading_status_i"));
     downloading_status_ii = GTK_WIDGET(gtk_builder_get_object(builder, "downloading_status_ii"));
 

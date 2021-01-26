@@ -26,38 +26,47 @@ int libbf::gui::main_window::update_func(void* d) {
     }
 
     if (!m->downloader.valid()) {
-        auto a = gtk_tree_view_get_model(m->view_downloading);
-        GtkTreeIter iter;
-        if (gtk_tree_model_get_iter_first(a, &iter)) {
-            std::uint64_t y = false;
-            do {
-                int id;
-                gtk_tree_model_get(a, &iter, 1, &y, 3, &id, -1);
-                if (y) {
-                    auto item = std::find_if(m->items.begin(), m->items.end(),
-                                             [&](std::pair<libbf::download, GdkPixbuf*> i) {
-                                                 return i.first.image_number == id;
-                                             });
-                    if (item == m->items.end()) {
-                        return 1;
+        if (m->settings.get_download_automatically()) {
+            auto a = gtk_tree_view_get_model(m->view_downloading);
+            GtkTreeIter iter;
+            if (gtk_tree_model_get_iter_first(a, &iter)) {
+                std::uint64_t y = false;
+                do {
+                    int id;
+                    gtk_tree_model_get(a, &iter, 1, &y, 3, &id, -1);
+                    if (y) {
+                        auto item = std::find_if(m->items.begin(), m->items.end(),
+                                                 [&](std::pair<libbf::download, GdkPixbuf*> i) {
+                                                     return i.first.image_number == id;
+                                                 });
+                        if (item == m->items.end()) {
+                            return 1;
+                        }
+
+                        m->downloader =
+                                std::async(std::launch::async, &libbf::gui::main_window::download,
+                                           m, item->first, m->quitter);
+                        gtk_label_set_text((GtkLabel*) m->downloading_label,
+                                           ("Downloading: " + item->first.name).c_str());
+
+                        gtk_image_set_from_pixbuf((GtkImage*) m->thumbnail, item->second);
+                        gtk_list_store_remove(GTK_LIST_STORE(a), &iter);
+                        break;
                     }
-
-                    m->downloader =
-                            std::async(std::launch::async, &libbf::gui::main_window::download, m,
-                                       item->first, m->quitter);
-                    gtk_label_set_text((GtkLabel*) m->downloading_label,
-                                       ("Downloading: " + item->first.name).c_str());
-
-                    gtk_image_set_from_pixbuf((GtkImage*) m->thumbnail, item->second);
-                    gtk_list_store_remove(GTK_LIST_STORE(a), &iter);
-                    break;
+                } while (gtk_tree_model_iter_next(a, &iter));
+                if (!y && m->items.size() != 0) {
+                    m->download_complete();
                 }
-            } while (gtk_tree_model_iter_next(a, &iter));
-            if (!y && m->items.size() != 0) {
+            } else if (m->items.size() != 0) {
                 m->download_complete();
             }
-        } else if(m->items.size() != 0){
-            m->download_complete();
+        } else {
+            gtk_label_set_text((GtkLabel*) m->downloading_label,
+                               "Downloads Paused or not started.");
+            m->status_ii = "";
+            m->download_progress = 0.0;
+            gtk_image_set_from_icon_name((GtkImage*) m->thumbnail, "media-optical",
+                                         GTK_ICON_SIZE_DIALOG);
         }
     } else if (m->downloader.wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
         int a = m->downloader.get();
