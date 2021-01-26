@@ -15,6 +15,8 @@ class settings {
     void set_fallback_mp3(bool);
     bool get_download_extras();
     void set_download_extras(bool);
+    bool get_download_automatically();
+    void set_download_automatically(bool);
 
     std::filesystem::path get_path();
     void set_path(std::filesystem::path);

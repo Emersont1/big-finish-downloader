@@ -31,6 +31,14 @@ void libbf::os::settings::set_download_extras(bool x) {
     g_settings_set_boolean((GSettings*) data, "download-extras", x);
 }
 
+bool libbf::os::settings::get_download_automatically() {
+    return g_settings_get_boolean((GSettings*) data, "download-automatically");
+}
+
+void libbf::os::settings::set_download_automatically(bool x) {
+    g_settings_set_boolean((GSettings*) data, "download-automatically", x);
+}
+
 std::filesystem::path libbf::os::settings::get_path() {
     auto x = std::string(g_settings_get_string((GSettings*) data, "download-directory"));
     if (x != "")
