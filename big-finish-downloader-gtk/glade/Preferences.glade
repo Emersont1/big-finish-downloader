@@ -5,6 +5,11 @@
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
+    <property name="valign">center</property>
+    <property name="margin-start">5</property>
+    <property name="margin-end">5</property>
+    <property name="margin-top">5</property>
+    <property name="margin-bottom">5</property>
     <property name="icon-name">folder</property>
   </object>
   <object class="GtkImage" id="image3">
@@ -206,11 +211,16 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="browse_button">
-                    <property name="label" translatable="yes">Browse</property>
+                    <property name="label" translatable="yes">Change Output
+Directory</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
                     <property name="image">image1</property>
+                    <property name="relief">half</property>
+                    <property name="always-show-image">True</property>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>

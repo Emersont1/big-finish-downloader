@@ -17,7 +17,8 @@ class main_window {
 
     std::promise<void> quit;
     std::shared_future<void> quitter;
-    std::future<int> downloader;
+    std::future<void> downloader;
+    int currently_downloading;
     std::atomic<double> download_progress;
     std::string status_ii;
 
@@ -35,6 +36,11 @@ class main_window {
     GtkWidget* dest_dir_button;
     GtkWidget* window;
 
+    GtkWidget* refresh_button;
+    GtkWidget* start_download;
+    GtkWidget* stop_after;
+    GtkWidget* stop_now;
+
     GtkListStore* list_downloading;
     GtkListStore* list_downloaded;
     GtkTreeView* view_downloading;
@@ -50,15 +56,21 @@ class main_window {
     static void prefs_cb(GtkWidget*, void*);
     static void toggle_cb(GtkCellRendererToggle*, char*, void*);
 
+    static void refresh_button_cb(GtkWidget*, void*);
+    static void start_download_cb(GtkWidget*, void*);
+    static void stop_after_cb(GtkWidget*, void*);
+    static void stop_now_cb(GtkWidget*, void*);
+
     static int update_func(void*);
 
     std::vector<std::pair<libbf::download, GdkPixbuf*>> get_items(libbf::login_cookie c);
 
     void widgets();
     void load_downloaded();
-    int download(libbf::download, std::shared_future<void>);
+    void download(libbf::download, std::shared_future<void>);
 
     void add_to_view(std::pair<libbf::download, GdkPixbuf*>&);
+    void download_complete();
 
   public:
     libbf::os::settings settings;
