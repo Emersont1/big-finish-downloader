@@ -85,7 +85,6 @@ void libbf::gui::main_window::download(libbf::download value, std::shared_future
             }
             std::filesystem::remove(res.first);
             status_ii = "";
-            
         }
     }
     if (cancelled)
