@@ -67,5 +67,5 @@ libbf::login_cookie libbf::os::retrieve() {
 void libbf::os::revoke() {
     GError* error = nullptr;
     spdlog::info("revoke called");
-    secret_password_clear_sync(cookie_schema(), nullptr, &error, "site", "bigfinish.com", nullptr);
+    secret_password_clear_sync(cookie_schema(), nullptr, &error, "version", "1", nullptr);
 }

@@ -59,14 +59,14 @@ void libbf::server::server::download_loop() {
 
         std::string _name = replace_all(value.name, ": ", "/");
         std::string name = replace_all(_name, " - ", "/");
-        std::filesystem::create_directories(dest_path/name);
+        std::filesystem::create_directories(dest_path / name);
         if (value.m4b_available) {
             status_ii = "Downloading Main Feature";
             spdlog::info(status_ii);
             auto path = value.download_m4b(*cookie, progress_callback);
             status_ii = "Extracting Main Feature";
             spdlog::info(status_ii);
-            helper::extract_zip(dest_path/name, path, unzip_callback);
+            helper::extract_zip(dest_path / name, path, unzip_callback);
             std::filesystem::remove(path);
         } else {
             status_ii = "Downloading Main Feature";
@@ -75,7 +75,7 @@ void libbf::server::server::download_loop() {
             status_ii = "Extracting Main Feature";
             spdlog::info(status_ii);
 
-            helper::extract_zip(dest_path/name, path, unzip_callback);
+            helper::extract_zip(dest_path / name, path, unzip_callback);
             std::filesystem::remove(path);
         }
 
