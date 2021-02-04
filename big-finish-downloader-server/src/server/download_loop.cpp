@@ -30,8 +30,11 @@ void libbf::server::server::download_loop() {
     while (!close) {
         std::cout << "loop!" << std::endl;
         {
-            std::ofstream out(dest_path / "data.json", std::ios::out);
-            if (out.is_open()) {
+            std::cout << "writing file" << std::endl;
+            std::ofstream out;
+            out.exceptions ( std::ifstream::failbit | std::ifstream::badbit );
+            try {
+                out.open (dest_path / "data.json");
                 nlohmann::json j;
                 j["ids"] = downloaded_ids;
 
@@ -42,7 +45,11 @@ void libbf::server::server::download_loop() {
                                });
                 j["logins"] = _logins;
                 out << j;
+                out.close();
             }
+            catch (std::ifstream::failure e) {
+                std::cerr << "Exception opening/reading/closing file"<<std::endl;
+            }   
         }
         if (download_queue.size() == 0) {
             std::this_thread::sleep_for(5s);
